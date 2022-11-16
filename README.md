@@ -11,6 +11,11 @@ in Android Studio goto File -> New -> Project from Version Control.
 
 ## Contributing
 
+**IMPORTANT: Do _not_ commit directly to main branch. Checkout a new 
+branch and open pull requests to merge to main.** 
+*I would protect the main branch, but the repository needs to be public 
+or the org needs to be paid.*
+
 We will be feature branching. Open a new branch and pull request to merge 
 to main.
 
