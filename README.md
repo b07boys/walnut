@@ -13,3 +13,12 @@ in Android Studio goto File -> New -> Project from Version Control.
 
 We will be feature branching. Open a new branch and pull request to merge 
 to main.
+
+If .gitignore isn't working, proceed to untrack all files in .gitignore 
+using the following:
+
+```
+git rm -r --cached .
+git add .
+git commit -m "My .gitignore is fixed besties!!!"
+```
