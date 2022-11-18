@@ -5,10 +5,10 @@ Walnut is a course scheduler application created for the purposes of the
 CSCB07 Group Project in Fall 2022.
 
 Group Members:
-Lucas Ilea
-Nate Robbins
-Francis Ayyad
-Elena Manneh
+Lucas Ilea,
+Nate Robbins,
+Francis Ayyad,
+Elena Manneh,
 Louis Ren
 
 ## Development
