@@ -1,6 +1,5 @@
 package org.b07boys.walnut;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class CourseCatalog {
@@ -9,7 +8,7 @@ public class CourseCatalog {
     private static HashSet<Course> courses;
 
     private CourseCatalog(){
-        courses = new HashSet<>();
+        courses = new HashSet<Course>();
     }
 
     public static CourseCatalog getInstance()
@@ -32,5 +31,17 @@ public class CourseCatalog {
         return courses;
     }
 
+    /**
+     * Checks whether a course is already present in the catalog.
+     *
+     * @param code the code of the Course to check
+     * @return true if course already exits, false otherwise.
+     */
+    public static boolean checkCourse(String code){
+        for(Course course : courses) {
+            if (code.equals(course.getCode())) return true;
+        }
+        return false;
+    }
 
 }
