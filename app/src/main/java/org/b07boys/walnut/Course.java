@@ -8,13 +8,13 @@ public class Course {
     private Course[] prerequisites;
     private String name;
     private String code;
-    private Session[] offering_sessions;
+    private Session[] offeringSessions;
 
-    public Course(String code, String name, Session[] offering_sessions, Course[] prerequisites) {
+    public Course(String code, String name, Session[] offeringSessions, Course[] prerequisites) {
         this.prerequisites = prerequisites;
         this.name = name;
         this.code = code;
-        this.offering_sessions = offering_sessions;
+        this.offeringSessions = offeringSessions;
     }
 
     public Course[] getPrerequisites() {
@@ -29,8 +29,8 @@ public class Course {
         return code;
     }
 
-    public Session[] getOffering_sessions() {
-        return offering_sessions;
+    public Session[] getOfferingSessions() {
+        return offeringSessions;
     }
 
     public void setPrerequisites(Course[] prerequisites) {
@@ -41,15 +41,15 @@ public class Course {
         this.name = name;
     }
 
-    public void setOffering_sessions(Session[] offering_sessions) {
-        this.offering_sessions = offering_sessions;
+    public void setOfferingSessions(Session[] offeringSessions) {
+        this.offeringSessions = offeringSessions;
     }
 
     @Override
     public String toString() {
         return code + ": " + name +
                 "\nPrerequisites: " + Arrays.toString(prerequisites) +
-                "\nOffered in: " + Arrays.toString(offering_sessions);
+                "\nOffered in: " + Arrays.toString(offeringSessions);
     }
 
     @Override
