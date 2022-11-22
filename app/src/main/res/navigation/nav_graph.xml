@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainPage">
+    app:startDestination="@id/homescreenFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -12,11 +12,19 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mainPage"
-            app:destination="@id/mainPage" />
+            app:destination="@id/homescreenFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainPage"
+        android:id="@+id/homescreenFragment"
         android:name="org.b07boys.walnut.HomescreenFragment"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_homescreen" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="org.b07boys.walnut.SignUpFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

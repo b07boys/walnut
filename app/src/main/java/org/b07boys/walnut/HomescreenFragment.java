@@ -3,10 +3,16 @@ package org.b07boys.walnut;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
 
@@ -18,6 +24,8 @@ import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
 public class HomescreenFragment extends Fragment {
 
     private FragmentHomescreenBinding binding;
+
+    private TextView email;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,6 +72,7 @@ public class HomescreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomescreenBinding.inflate(inflater, container, false);
+        email = binding.textView;
         return binding.getRoot();
     }
 
@@ -71,5 +80,14 @@ public class HomescreenFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //TODO: refactor
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
+        else email.setText("User: " + currentUser.getEmail());
     }
 }
