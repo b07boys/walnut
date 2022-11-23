@@ -109,15 +109,10 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     }
 
     @Override
-    public void showSnackbar(String message) {
+    public void showSnackbar(String message, String retryMessage) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.loginButton)
-                .setAction("Try again", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        presenter.login(getEmail(), getPassword());
-                    }
-                })
+                .setAction(retryMessage, view -> presenter.login(getEmail(), getPassword()))
                 .show();
     }
 
@@ -140,6 +135,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
         return binding.emailTextField.getText().toString();
     }
     private String getPassword() {
-        return binding.emailTextField.getText().toString();
+        return binding.passwordTextField.getText().toString();
     }
 }
