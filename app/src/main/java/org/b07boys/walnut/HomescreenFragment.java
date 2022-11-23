@@ -25,8 +25,6 @@ public class HomescreenFragment extends Fragment {
 
     private FragmentHomescreenBinding binding;
 
-    private TextView email;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,7 +70,6 @@ public class HomescreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomescreenBinding.inflate(inflater, container, false);
-        email = binding.textView;
         return binding.getRoot();
     }
 
@@ -85,9 +82,11 @@ public class HomescreenFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //TODO: refactor
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
-        else email.setText("User: " + currentUser.getEmail());
+
+        if (isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
+    }
+
+    private boolean isLoggedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() == null;
     }
 }
