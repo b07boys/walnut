@@ -1,10 +1,11 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.presenters;
 
-import androidx.fragment.app.Fragment;
+import org.b07boys.walnut.auth.AuthenticationModel;
 
 public class SignUpPresenter {
-    private View view;
-    private AuthenticationModel auth;
+
+    private final View view;
+    private final AuthenticationModel auth;
 
     public SignUpPresenter(View view, AuthenticationModel auth) {
         this.view = view;

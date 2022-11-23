@@ -1,7 +1,5 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +17,10 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
+import org.b07boys.walnut.auth.AuthenticationModel;
+import org.b07boys.walnut.presenters.LoginPresenter;
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 
 /**
@@ -92,35 +91,24 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
         passwordEditText = binding.passwordTextField;
         passwordTextLayout = binding.passwordTextLayout;
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.homescreenFragment);
-                    //TODO: remove loginFragment from back stack
-                } else {
-                    //TODO: Use a callback to directly get the state of the login call to know when or not to show this, login can fail by incorrect auth or empty fields which we want to note specifically
-                    showToast("Email or password is incorrect");
-                    passwordEditText.setText("");
-                }
+        loginButton.setOnClickListener(view -> {
+            presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.homescreenFragment);
+                //TODO: remove loginFragment from back stack
+            } else {
+                //TODO: Use a callback to directly get the state of the login call to know when or not to show this, login can fail by incorrect auth or empty fields which we want to note specifically
+                showToast("Email or password is incorrect");
+                passwordEditText.setText("");
+            }
 
-            }
         });
-        registerText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.signInFragment);
-                //Toast.makeText(getActivity(), "registered", Toast.LENGTH_LONG).show();
-            }
+        registerText.setOnClickListener(view -> {
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.signInFragment);
+            //Toast.makeText(getActivity(), "registered", Toast.LENGTH_LONG).show();
         });
-        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            //TODO: figure out how to call on text changed
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                checkPasswordLengthError(view);
-            }
-        });
+        //TODO: figure out how to call on text changed
+        passwordEditText.setOnFocusChangeListener((view, b) -> checkPasswordLengthError(view));
         return binding.getRoot();
         //return inflater.inflate(R.layout.fragment_login, container, false);
     }

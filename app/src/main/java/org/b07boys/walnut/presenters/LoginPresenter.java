@@ -1,16 +1,10 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.presenters;
 
-import android.app.Activity;
-import androidx.fragment.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import com.google.firebase.auth.FirebaseUser;
+import org.b07boys.walnut.auth.AuthenticationModel;
 
 public class LoginPresenter {
-    private View view;
-    private AuthenticationModel authModel;
+    private final View view;
+    private final AuthenticationModel authModel;
 
     public LoginPresenter(View view, AuthenticationModel authModel) {
         this.view = view;
