@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.b07boys.walnut.R;
 
 public class MainActivity extends AppCompatActivity {
 

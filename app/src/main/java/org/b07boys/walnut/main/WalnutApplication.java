@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.main;
 
 import android.app.Application;
 import android.os.Build;
