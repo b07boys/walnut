@@ -1,6 +1,6 @@
-package org.b07boys.walnut.auth;
+package org.b07boys.walnut.presenters;
 
-import org.b07boys.walnut.auth.AuthenticationModel;
+import org.b07boys.walnut.models.AuthenticationModel;
 
 public class LoginPresenter {
     private final View view;
