@@ -10,9 +10,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
@@ -83,9 +87,8 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.emailTextField.setText(LoginFragmentArgs.fromBundle(getArguments()).getUserEmail());
-        binding.loginButton.setOnClickListener(v -> presenter.login(binding.emailTextField.getText().toString(),
-                binding.passwordTextField.getText().toString()));
-        binding.registerText.setOnClickListener(v -> Navigation.findNavController(getActivity(),
+        binding.loginButton.setOnClickListener(v -> presenter.login(getEmail(), getPassword()));
+        binding.signupButton.setOnClickListener(v -> Navigation.findNavController(getActivity(),
                 R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment()));
         binding.passwordTextField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -106,8 +109,16 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     }
 
     @Override
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    public void showSnackbar(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.loginButton)
+                .setAction("Try again", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.login(getEmail(), getPassword());
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -123,5 +134,12 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     @Override
     public void navigateToHomescreen() {
         Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToHomescreenFragment());
+    }
+
+    private String getEmail() {
+        return binding.emailTextField.getText().toString();
+    }
+    private String getPassword() {
+        return binding.emailTextField.getText().toString();
     }
 }

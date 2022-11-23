@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
@@ -91,8 +92,10 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     }
 
     @Override
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    public void showSnackbar(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.signUpButton)
+                .show();
     }
 
     @Override
