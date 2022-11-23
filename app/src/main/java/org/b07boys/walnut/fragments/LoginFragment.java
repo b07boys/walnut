@@ -1,4 +1,4 @@
-package org.b07boys.walnut.auth;
+package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,9 @@ import androidx.navigation.Navigation;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
+import org.b07boys.walnut.models.AuthenticationModel;
 
 /**
  * A simple {@link Fragment} subclass.
