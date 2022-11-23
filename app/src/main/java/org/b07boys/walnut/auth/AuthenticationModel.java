@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.auth;
 
 import androidx.annotation.NonNull;
 
@@ -10,13 +10,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AuthenticationModel {
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     public AuthenticationModel() {
         this.mAuth = FirebaseAuth.getInstance();
     }
 
-    void login(AuthStatusCallback authCallback, String email, String password) {
+    public void login(AuthStatusCallback authCallback, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -32,7 +32,7 @@ public class AuthenticationModel {
                 });
     }
     //TODO: use a callback here because signuppresenter cant tell if the user successfully signed up or not
-    void signUp(AuthStatusCallback authCallback, String email, String password) {
+    public void signUp(AuthStatusCallback authCallback, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

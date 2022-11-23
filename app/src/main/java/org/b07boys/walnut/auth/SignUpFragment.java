@@ -1,29 +1,22 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.auth;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
+import org.b07boys.walnut.databinding.FragmentSignUpBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomescreenFragment#newInstance} factory method to
+ * Use the {@link SignUpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomescreenFragment extends Fragment {
-
-    private FragmentHomescreenBinding binding;
+public class SignUpFragment extends Fragment implements SignUpPresenter.View {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +27,11 @@ public class HomescreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomescreenFragment() {
+    private FragmentSignUpBinding binding;
+
+    private SignUpPresenter presenter;
+
+    public SignUpFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +41,11 @@ public class HomescreenFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainPage.
+     * @return A new instance of fragment SignInFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomescreenFragment newInstance(String param1, String param2) {
-        HomescreenFragment fragment = new HomescreenFragment();
+    public static SignUpFragment newInstance(String param1, String param2) {
+        SignUpFragment fragment = new SignUpFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,30 +60,21 @@ public class HomescreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        presenter = new SignUpPresenter(this, new AuthenticationModel());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentHomescreenBinding.inflate(inflater, container, false);
+        binding = FragmentSignUpBinding.inflate(inflater, container, false);
+
+        binding.signUpButton.setOnClickListener(view -> presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
         return binding.getRoot();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
-    }
-
-    private boolean isLoggedIn() {
-        return FirebaseAuth.getInstance().getCurrentUser() == null;
+    public void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }
