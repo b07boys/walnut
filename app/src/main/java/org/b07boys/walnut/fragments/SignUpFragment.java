@@ -3,12 +3,14 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.presenters.SignUpPresenter;
 import org.b07boys.walnut.databinding.FragmentSignUpBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
@@ -78,5 +80,11 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     @Override
     public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToLoginScreen() {
+        //TODO: pass email to email text field in login screen
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(SignUpFragmentDirections.actionSignInFragmentToLoginFragment());
     }
 }
