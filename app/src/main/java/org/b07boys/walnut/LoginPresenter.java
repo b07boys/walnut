@@ -1,13 +1,5 @@
 package org.b07boys.walnut;
 
-import android.app.Activity;
-import androidx.fragment.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import com.google.firebase.auth.FirebaseUser;
-
 public class LoginPresenter {
     private View view;
     private AuthenticationModel authModel;
@@ -21,13 +13,22 @@ public class LoginPresenter {
         if (email.isEmpty() || password.isEmpty()) {
             view.showToast("Username or password cannot be empty");
         } else {
-            authModel.login(email, password);
-            view.showLoading();
+            authModel.login(new AuthStatusCallback() {
+                @Override
+                public void isAuthSuccessful(boolean success) {
+                    if (success) view.goToHomescreen();
+                    else {
+                        view.showToast("Email or password is incorrect");
+                        view.clearPasswordInput();
+                    }
+                }
+            }, email, password);
         }
     }
 
     public interface View {
-        void showLoading();
         void showToast(String message);
+        void clearPasswordInput();
+        void goToHomescreen();
     }
 }
