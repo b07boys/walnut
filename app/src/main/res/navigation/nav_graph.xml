@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="org.b07boys.walnut.LoginFragment"
+        android:name="org.b07boys.walnut.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/homescreenFragment"
-        android:name="org.b07boys.walnut.HomescreenFragment"
+        android:name="org.b07boys.walnut.fragments.HomescreenFragment"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_homescreen" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="org.b07boys.walnut.SignUpFragment"
+        android:name="org.b07boys.walnut.auth.SignUpFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_up" />
 </navigation>
