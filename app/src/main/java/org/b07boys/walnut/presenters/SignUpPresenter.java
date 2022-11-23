@@ -1,5 +1,7 @@
 package org.b07boys.walnut.presenters;
 
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+
 import org.b07boys.walnut.models.AuthenticationModel;
 
 public class SignUpPresenter {
@@ -13,20 +15,24 @@ public class SignUpPresenter {
 
     public void signUp(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            view.showToast("Username or password cannot be empty");
+            view.showSnackbar("Username or password cannot be empty", "");
         } else {
-            auth.signUp(success -> {
-                if (success) {
-                    view.showToast("Successfully registered"); // Move to login fragment, maybe pass the email? Check if we can getCurrentUser here, otherwise change callback to pass user from authmodel
-                    view.navigateToLoginScreen();
+            auth.signUp(e -> {
+                if (e == null) {
+                    view.signUpSuccess();
+                } else if (e instanceof FirebaseAuthWeakPasswordException) {
+                    view.showSnackbar("The password should be at least 6 characters", "");
                 }
-                else view.showToast("Registration failed");
+                else {
+                    view.showSnackbar(e.getMessage(), "Try again");
+                }
             }, email, password);
         }
     }
 
     public interface View {
-        void showToast(String message);
+        void showSnackbar(String message, String retryMessage);
         void navigateToLoginScreen();
+        void signUpSuccess();
     }
 }

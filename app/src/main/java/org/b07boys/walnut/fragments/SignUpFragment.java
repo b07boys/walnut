@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
@@ -76,7 +77,7 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
-        binding.signUpButton.setOnClickListener(view -> presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
+        binding.signUpButton.setOnClickListener(view -> presenter.signUp(getEmail(), getPassword()));
         binding.passwordTextField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -91,8 +92,11 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     }
 
     @Override
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    public void showSnackbar(String message, String retryMessage) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT)
+                .setAction(retryMessage, view -> presenter.signUp(getEmail(), getPassword()))
+                .setAnchorView(binding.signUpButton)
+                .show();
     }
 
     @Override
@@ -103,5 +107,18 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     public void checkPasswordLengthError(View view) {
         if (((TextInputEditText)view).getText().length() <= 5) binding.passwordTextLayout.setError("Password length must be greater than 5");
         else binding.passwordTextLayout.setErrorEnabled(false);
+    }
+
+    private String getEmail() {
+        return binding.emailTextField.getText().toString();
+    }
+    private String getPassword() {
+        return binding.passwordTextField.getText().toString();
+    }
+
+    @Override
+    public void signUpSuccess() {
+        showSnackbar("Successfully registered", "");
+        navigateToLoginScreen();
     }
 }

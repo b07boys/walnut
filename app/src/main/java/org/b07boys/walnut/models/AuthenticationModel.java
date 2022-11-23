@@ -1,10 +1,5 @@
 package org.b07boys.walnut.models;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,22 +19,21 @@ public class AuthenticationModel {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
-                        authCallback.isAuthSuccessful(true);
+                        authCallback.isAuthSuccessful(task.getException());
                     } else {
-                        authCallback.isAuthSuccessful(false);
+                        authCallback.isAuthSuccessful(task.getException());
                     }
                 });
     }
-    //TODO: use a callback here because signuppresenter cant tell if the user successfully signed up or not
     public void signUp(AuthStatusCallback authCallback, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        authCallback.isAuthSuccessful(true);
+                        authCallback.isAuthSuccessful(task.getException());
                         FirebaseUser user = mAuth.getCurrentUser();
                     } else {
-                        authCallback.isAuthSuccessful(false);
+                        authCallback.isAuthSuccessful(task.getException()); // Throwing an exception here isn't recognized by calling method
                     }
                 });
     }
