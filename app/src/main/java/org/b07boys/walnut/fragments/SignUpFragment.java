@@ -1,4 +1,4 @@
-package org.b07boys.walnut.auth;
+package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 
@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.b07boys.walnut.presenters.SignUpPresenter;
 import org.b07boys.walnut.databinding.FragmentSignUpBinding;
+import org.b07boys.walnut.models.AuthenticationModel;
 
 /**
  * A simple {@link Fragment} subclass.
