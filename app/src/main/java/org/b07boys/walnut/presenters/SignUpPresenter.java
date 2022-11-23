@@ -13,20 +13,20 @@ public class SignUpPresenter {
 
     public void signUp(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            view.showToast("Username or password cannot be empty");
+            view.showSnackbar("Username or password cannot be empty");
         } else {
             auth.signUp(success -> {
                 if (success) {
-                    view.showToast("Successfully registered"); // Move to login fragment, maybe pass the email? Check if we can getCurrentUser here, otherwise change callback to pass user from authmodel
+                    view.showSnackbar("Successfully registered"); // Move to login fragment, maybe pass the email? Check if we can getCurrentUser here, otherwise change callback to pass user from authmodel
                     view.navigateToLoginScreen();
                 }
-                else view.showToast("Registration failed");
+                else view.showSnackbar("Registration failed");
             }, email, password);
         }
     }
 
     public interface View {
-        void showToast(String message);
+        void showSnackbar(String message);
         void navigateToLoginScreen();
     }
 }
