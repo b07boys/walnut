@@ -33,10 +33,6 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
 
     private FragmentSignUpBinding binding;
 
-    private Button signUpButton;
-    private TextInputEditText emailEditText;
-    private TextInputEditText passwordEditText;
-
     private SignUpPresenter presenter;
 
     public SignUpFragment() {
@@ -76,17 +72,13 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
-        emailEditText = binding.emailTextField;
-        passwordEditText = binding.emailTextField;
-        signUpButton = binding.signUpButton;
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
+        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.signUp(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString());
             }
         });
-
         return binding.getRoot();
     }
 
