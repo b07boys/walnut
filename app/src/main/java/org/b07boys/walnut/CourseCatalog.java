@@ -8,7 +8,7 @@ public class CourseCatalog {
     private static HashSet<Course> courses;
 
     private CourseCatalog(){
-        courses = new HashSet<Course>();
+        courses = new HashSet<>();
     }
 
     public static CourseCatalog getInstance()
@@ -34,13 +34,10 @@ public class CourseCatalog {
     /**
      * Checks whether a course is already present in the catalog.
      *
-     * @param code the code of the Course to check
      * @return true if course already exits, false otherwise.
      */
-    public static boolean checkCourse(String code){
-        for(Course course : courses) {
-            if (code.equals(course.getCode())) return true;
-        }
+    public static boolean checkCourse(){
+        //TODO
         return false;
     }
 

@@ -1,50 +1,63 @@
 package org.b07boys.walnut;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
     enum Session{FALL, WINTER, SUMMER}
+    private Object UID;
     private Course[] prerequisites;
     private String name;
     private String code;
     private Session[] offeringSessions;
 
     public Course(String code, String name, Session[] offeringSessions, Course[] prerequisites) {
+        //TODO generate UID @Lucas
         this.prerequisites = prerequisites;
         this.name = name;
         this.code = code;
         this.offeringSessions = offeringSessions;
     }
 
+    public Object getUID() {
+        return UID;
+    }
+
     public Course[] getPrerequisites() {
         return prerequisites;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Session[] getOfferingSessions() {
-        return offeringSessions;
     }
 
     public void setPrerequisites(Course[] prerequisites) {
         this.prerequisites = prerequisites;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Session[] getOfferingSessions() {
+        return offeringSessions;
     }
 
     public void setOfferingSessions(Session[] offeringSessions) {
         this.offeringSessions = offeringSessions;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return code + ": " + name +
