@@ -1,6 +1,8 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,19 +76,27 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-
-        binding.loginButton.setOnClickListener(view -> presenter.login(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
-        binding.registerText.setOnClickListener(view -> {
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.signInFragment);
-        });
-        //TODO: figure out how to call on text changed
-        binding.passwordTextField.setOnFocusChangeListener((view, hasFocus) -> checkPasswordLengthError(view));
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.emailTextField.setText(LoginFragmentArgs.fromBundle(getArguments()).getUserEmail());
+        binding.loginButton.setOnClickListener(v -> presenter.login(binding.emailTextField.getText().toString(),
+                binding.passwordTextField.getText().toString()));
+        binding.registerText.setOnClickListener(v -> Navigation.findNavController(getActivity(),
+                R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment()));
+        binding.passwordTextField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkPasswordLengthError(binding.passwordTextField);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
 
     @Override

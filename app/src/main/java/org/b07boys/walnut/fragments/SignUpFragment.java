@@ -5,10 +5,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.presenters.SignUpPresenter;
@@ -72,8 +76,17 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
-
         binding.signUpButton.setOnClickListener(view -> presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
+        binding.passwordTextField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkPasswordLengthError(binding.passwordTextField);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
         return binding.getRoot();
     }
 
@@ -84,7 +97,11 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
 
     @Override
     public void navigateToLoginScreen() {
-        //TODO: pass email to email text field in login screen
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(SignUpFragmentDirections.actionSignInFragmentToLoginFragment());
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(SignUpFragmentDirections.actionSignInFragmentToLoginFragment().setUserEmail(binding.emailTextField.getText().toString()));
+    }
+
+    public void checkPasswordLengthError(View view) {
+        if (((TextInputEditText)view).getText().length() <= 5) binding.passwordTextLayout.setError("Password length must be greater than 5");
+        else binding.passwordTextLayout.setErrorEnabled(false);
     }
 }
