@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainPage">
+    app:startDestination="@id/homescreenFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="org.b07boys.walnut.LoginFragment"
+        android:name="org.b07boys.walnut.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mainPage"
-            app:destination="@id/mainPage" />
+            app:destination="@id/homescreenFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainPage"
-        android:name="org.b07boys.walnut.HomescreenFragment"
+        android:id="@+id/homescreenFragment"
+        android:name="org.b07boys.walnut.fragments.HomescreenFragment"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_homescreen" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="org.b07boys.walnut.fragments.SignUpFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

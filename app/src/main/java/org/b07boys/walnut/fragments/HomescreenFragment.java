@@ -1,13 +1,17 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
 
 /**
@@ -71,5 +75,16 @@ public class HomescreenFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
+    }
+
+    private boolean isLoggedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() == null;
     }
 }
