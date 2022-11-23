@@ -73,12 +73,7 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
 
-        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString());
-            }
-        });
+        binding.signUpButton.setOnClickListener(view -> presenter.signUp(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
         return binding.getRoot();
     }
 
