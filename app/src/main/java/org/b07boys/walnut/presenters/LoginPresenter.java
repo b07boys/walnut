@@ -16,7 +16,7 @@ public class LoginPresenter {
             view.showToast("Username or password cannot be empty");
         } else {
             authModel.login(success -> {
-                if (success) view.goToHomescreen();
+                if (success) view.navigateToHomescreen();
                 else {
                     view.showToast("Email or password is incorrect");
                     view.clearPasswordInput();
@@ -28,6 +28,6 @@ public class LoginPresenter {
     public interface View {
         void showToast(String message);
         void clearPasswordInput();
-        void goToHomescreen();
+        void navigateToHomescreen();
     }
 }
