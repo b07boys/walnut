@@ -43,12 +43,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     private String mParam1;
     private String mParam2;
 
-    private Button loginButton;
-    private TextView registerText;
-    private TextInputEditText emailEditText;
-    private TextInputEditText passwordEditText;
-    private TextInputLayout passwordTextLayout;
-
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -86,43 +80,14 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-        loginButton = binding.loginButton;
-        registerText = binding.registerText;
-        emailEditText = binding.emailTextField;
-        passwordEditText = binding.passwordTextField;
-        passwordTextLayout = binding.passwordTextLayout;
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.homescreenFragment);
-                    //TODO: remove loginFragment from back stack
-                } else {
-                    //TODO: Use a callback to directly get the state of the login call to know when or not to show this, login can fail by incorrect auth or empty fields which we want to note specifically
-                    showToast("Email or password is incorrect");
-                    passwordEditText.setText("");
-                }
-
-            }
+        binding.loginButton.setOnClickListener(view -> presenter.login(binding.emailTextField.getText().toString(), binding.passwordTextField.getText().toString()));
+        binding.registerText.setOnClickListener(view -> {
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.signInFragment);
         });
-        registerText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.signInFragment);
-                //Toast.makeText(getActivity(), "registered", Toast.LENGTH_LONG).show();
-            }
-        });
-        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            //TODO: figure out how to call on text changed
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                checkPasswordLengthError(view);
-            }
-        });
+        //TODO: figure out how to call on text changed
+        binding.passwordTextField.setOnFocusChangeListener((view, hasFocus) -> checkPasswordLengthError(view));
         return binding.getRoot();
-        //return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -137,17 +102,23 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     }
 
     @Override
-    public void showLoading() {
-        //TODO: do something
-    }
-
-    @Override
     public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void clearPasswordInput() {
+        binding.passwordTextField.setText("");
+    }
+
     public void checkPasswordLengthError(View view) {
-        if (((TextInputEditText)view).getText().length() <= 5) passwordTextLayout.setError("Password length must be greater than 5");
-        else passwordTextLayout.setErrorEnabled(false);
+        if (((TextInputEditText)view).getText().length() <= 5) binding.passwordTextLayout.setError("Password length must be greater than 5");
+        else binding.passwordTextLayout.setErrorEnabled(false);
+    }
+
+    @Override
+    public void goToHomescreen() {
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.homescreenFragment);
+        //TODO: pop login off backstack
     }
 }
