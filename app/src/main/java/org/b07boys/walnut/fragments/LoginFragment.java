@@ -111,8 +111,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     }
 
     @Override
-    public void goToHomescreen() {
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.homescreenFragment);
-        //TODO: pop login off backstack
+    public void navigateToHomescreen() {
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToHomescreenFragment());
     }
 }
