@@ -20,32 +20,26 @@ public class AuthenticationModel {
 
     public void login(AuthStatusCallback authCallback, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            authCallback.isAuthSuccessful(true);
-                        } else {
-                            authCallback.isAuthSuccessful(false);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        authCallback.isAuthSuccessful(true);
+                    } else {
+                        authCallback.isAuthSuccessful(false);
                     }
                 });
     }
     //TODO: use a callback here because signuppresenter cant tell if the user successfully signed up or not
     public void signUp(AuthStatusCallback authCallback, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            authCallback.isAuthSuccessful(true);
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            authCallback.isAuthSuccessful(false);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        authCallback.isAuthSuccessful(true);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                    } else {
+                        authCallback.isAuthSuccessful(false);
                     }
                 });
     }
