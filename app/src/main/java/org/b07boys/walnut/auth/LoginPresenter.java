@@ -1,8 +1,10 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.auth;
+
+import org.b07boys.walnut.auth.AuthenticationModel;
 
 public class LoginPresenter {
-    private View view;
-    private AuthenticationModel authModel;
+    private final View view;
+    private final AuthenticationModel authModel;
 
     public LoginPresenter(View view, AuthenticationModel authModel) {
         this.view = view;
@@ -13,14 +15,11 @@ public class LoginPresenter {
         if (email.isEmpty() || password.isEmpty()) {
             view.showToast("Username or password cannot be empty");
         } else {
-            authModel.login(new AuthStatusCallback() {
-                @Override
-                public void isAuthSuccessful(boolean success) {
-                    if (success) view.goToHomescreen();
-                    else {
-                        view.showToast("Email or password is incorrect");
-                        view.clearPasswordInput();
-                    }
+            authModel.login(success -> {
+                if (success) view.goToHomescreen();
+                else {
+                    view.showToast("Email or password is incorrect");
+                    view.clearPasswordInput();
                 }
             }, email, password);
         }
