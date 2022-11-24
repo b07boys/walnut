@@ -8,14 +8,15 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:text="Log in"
-        app:layout_constraintBottom_toTopOf="@+id/signup_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         style="@style/Widget.Material3.Button.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="Log in"
         app:icon="@drawable/ic_login_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -24,13 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Email"
-        app:startIconDrawable="@drawable/ic_email_icon"
         app:layout_constraintBottom_toTopOf="@+id/passwordTextLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTitle">
+        app:startIconDrawable="@drawable/ic_email_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailTextField"
@@ -60,36 +60,30 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/walnutLogoImage"
+    <TextView
+        android:id="@+id/loginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_background"
+        android:layout_marginTop="100dp"
+        android:paddingHorizontal="20dp"
+        android:text="Log in to your account"
+        android:textSize="44sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/loginTitle"
+        android:id="@+id/login_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Log in to your account"
-        android:textSize="44sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/walnutLogoImage" />
-
-    <Button
-        android:id="@+id/signup_button"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        app:icon="@drawable/ic_register_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Login to your account to add courses, view your schedule, and more."
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
