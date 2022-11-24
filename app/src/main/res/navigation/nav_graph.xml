@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="org.b07boys.walnut.WelcomeFragment"
+        android:name="org.b07boys.walnut.fragments.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
