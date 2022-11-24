@@ -3,6 +3,7 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,8 +89,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
         super.onViewCreated(view, savedInstanceState);
         binding.emailTextField.setText(LoginFragmentArgs.fromBundle(getArguments()).getUserEmail());
         binding.loginButton.setOnClickListener(v -> presenter.login(getEmail(), getPassword()));
-        binding.signupButton.setOnClickListener(v -> Navigation.findNavController(getActivity(),
-                R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment()));
         binding.passwordTextField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}

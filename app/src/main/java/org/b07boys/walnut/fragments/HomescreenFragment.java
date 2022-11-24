@@ -81,10 +81,10 @@ public class HomescreenFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.loginFragment);
+        if (!isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.welcomeFragment);
     }
 
     private boolean isLoggedIn() {
-        return FirebaseAuth.getInstance().getCurrentUser() == null;
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
 }
