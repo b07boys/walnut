@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 
@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentWelcomeBinding;
-import org.b07boys.walnut.fragments.LoginFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
