@@ -29,11 +29,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            boolean imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime());
+            int imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+
             ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             mlp.leftMargin = insets.left;
-            mlp.bottomMargin = insets.bottom;
+            mlp.bottomMargin = imeVisible ? imeHeight : insets.bottom;
             mlp.rightMargin = insets.right;
             v.setLayoutParams(mlp);
             return WindowInsetsCompat.CONSUMED;
