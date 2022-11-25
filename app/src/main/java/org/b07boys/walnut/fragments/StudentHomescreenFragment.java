@@ -16,10 +16,10 @@ import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomescreenFragment#newInstance} factory method to
+ * Use the {@link StudentHomescreenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomescreenFragment extends Fragment {
+public class StudentHomescreenFragment extends Fragment {
 
     private FragmentHomescreenBinding binding;
 
@@ -32,7 +32,7 @@ public class HomescreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomescreenFragment() {
+    public StudentHomescreenFragment() {
         // Required empty public constructor
     }
 
@@ -45,8 +45,8 @@ public class HomescreenFragment extends Fragment {
      * @return A new instance of fragment MainPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomescreenFragment newInstance(String param1, String param2) {
-        HomescreenFragment fragment = new HomescreenFragment();
+    public static StudentHomescreenFragment newInstance(String param1, String param2) {
+        StudentHomescreenFragment fragment = new StudentHomescreenFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
