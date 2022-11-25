@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.courses;
 
 import androidx.annotation.NonNull;
 
