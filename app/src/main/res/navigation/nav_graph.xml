@@ -22,9 +22,9 @@
     </fragment>
     <fragment
         android:id="@+id/homescreenFragment"
-        android:name="org.b07boys.walnut.fragments.HomescreenFragment"
+        android:name="org.b07boys.walnut.fragments.StudentHomescreenFragment"
         android:label="fragment_main_page"
-        tools:layout="@layout/fragment_homescreen" />
+        tools:layout="@layout/fragment_studenthomescreen" />
     <fragment
         android:id="@+id/signInFragment"
         android:name="org.b07boys.walnut.fragments.SignUpFragment"
