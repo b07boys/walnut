@@ -1,18 +1,18 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.b07boys.walnut.R;
-import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
+import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +21,7 @@ import org.b07boys.walnut.databinding.FragmentHomescreenBinding;
  */
 public class StudentHomescreenFragment extends Fragment {
 
-    private FragmentHomescreenBinding binding;
+    private @NonNull FragmentStudenthomescreenBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,7 +67,7 @@ public class StudentHomescreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentHomescreenBinding.inflate(inflater, container, false);
+        binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
