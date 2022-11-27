@@ -7,11 +7,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.auth.AccountUtils;
+import org.b07boys.walnut.auth.UserType;
 import org.b07boys.walnut.databinding.FragmentWelcomeBinding;
 
 /**
@@ -76,5 +82,15 @@ public class WelcomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.loginButton.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment()));
         binding.signupButton.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToSignInFragment()));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (AccountUtils.getUserType(currentUser) == UserType.ADMIN)
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAdminHomescreenFragment());
+        else if (AccountUtils.getUserType(currentUser) == UserType.STUDENT)
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment());
     }
 }

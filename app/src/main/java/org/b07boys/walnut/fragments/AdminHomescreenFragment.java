@@ -1,23 +1,21 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
+import org.b07boys.walnut.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StudentHomescreenFragment#newInstance} factory method to
+ * Use the {@link AdminHomescreenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentHomescreenFragment extends Fragment {
-
-    private @NonNull FragmentStudenthomescreenBinding binding;
+public class AdminHomescreenFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +26,7 @@ public class StudentHomescreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public StudentHomescreenFragment() {
+    public AdminHomescreenFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +36,11 @@ public class StudentHomescreenFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainPage.
+     * @return A new instance of fragment AdminHomescreenFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentHomescreenFragment newInstance(String param1, String param2) {
-        StudentHomescreenFragment fragment = new StudentHomescreenFragment();
+    public static AdminHomescreenFragment newInstance(String param1, String param2) {
+        AdminHomescreenFragment fragment = new AdminHomescreenFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,13 +61,6 @@ public class StudentHomescreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        return inflater.inflate(R.layout.fragment_admin_homescreen, container, false);
     }
 }

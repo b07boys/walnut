@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.presenters.LoginPresenter;
@@ -127,7 +128,9 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
 
     @Override
     public void navigateToHomescreen() {
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToHomescreenFragment());
+        String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (UID.equals("qVtJSWUhTsdckl2GAkxkPfzFhHz2")) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
+        else Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
     }
 
     private String getEmail() {
