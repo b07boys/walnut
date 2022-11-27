@@ -7,11 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 
 /**
