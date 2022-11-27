@@ -76,15 +76,4 @@ public class StudentHomescreenFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (!isLoggedIn()) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.welcomeFragment);
-    }
-
-    private boolean isLoggedIn() {
-        return FirebaseAuth.getInstance().getCurrentUser() != null;
-    }
 }
