@@ -6,14 +6,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
-    enum Session{FALL, WINTER, SUMMER}
     private Object UID;
     private Course[] prerequisites;
     private String name;
     private String code;
-    private Session[] offeringSessions;
+    private SessionTypeEnum[] offeringSessions;
 
-    public Course(String code, String name, Session[] offeringSessions, Course[] prerequisites) {
+    public Course(String code, String name, SessionTypeEnum[] offeringSessions, Course[] prerequisites) {
         //TODO generate UID @Lucas
         this.prerequisites = prerequisites;
         this.name = name;
@@ -49,11 +48,11 @@ public class Course {
         this.code = code;
     }
 
-    public Session[] getOfferingSessions() {
+    public SessionTypeEnum[] getOfferingSessions() {
         return offeringSessions;
     }
 
-    public void setOfferingSessions(Session[] offeringSessions) {
+    public void setOfferingSessions(SessionTypeEnum[] offeringSessions) {
         this.offeringSessions = offeringSessions;
     }
 
