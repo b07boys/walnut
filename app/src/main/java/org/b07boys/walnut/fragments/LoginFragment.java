@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.database.DatabaseNode;
 import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
@@ -128,8 +129,13 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
 
     @Override
     public void navigateToHomescreen() {
-        String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        if (UID.equals("qVtJSWUhTsdckl2GAkxkPfzFhHz2")) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
+
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseNode node = new DatabaseNode("admins");
+
+        if (node.keyExists("", userID))
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
+
         else Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
     }
 
