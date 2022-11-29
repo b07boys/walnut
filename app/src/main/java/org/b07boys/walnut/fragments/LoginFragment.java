@@ -133,10 +133,10 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
         else Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
     }
 
-    private String getEmail() {
+    public String getEmail() {
         return binding.emailTextField.getText().toString();
     }
-    private String getPassword() {
+    public String getPassword() {
         return binding.passwordTextField.getText().toString();
     }
 }
