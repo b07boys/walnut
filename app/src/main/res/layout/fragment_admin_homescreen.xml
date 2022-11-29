@@ -10,17 +10,16 @@
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
-        android:ems="10"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:hint="Search in this section by course code or title"
         android:textColor="#0B0A0A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="35dp"></EditText>
+        tools:layout_editor_absoluteY="16dp"></EditText>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
