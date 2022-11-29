@@ -48,21 +48,21 @@ public class SignUpPresenterUnitTests {
     FirebaseException exception;
 
     @Test
-    public void login_empty_email_and_password() {
+    public void sign_upempty_email_and_password() {
         SignUpPresenter presenter = new SignUpPresenter(signUpView, authModel);
         presenter.signUp("", "");
         verify(signUpView).showSnackbar("Username or password cannot be empty", "");
     }
 
     @Test
-    public void login_empty_email() {
+    public void sign_up_empty_email() {
         SignUpPresenter presenter = new SignUpPresenter(signUpView, authModel);
         presenter.signUp("", "whatever");
         verify(signUpView).showSnackbar("Username or password cannot be empty", "");
     }
 
     @Test
-    public void login_empty_password() {
+    public void sign_up_empty_password() {
         SignUpPresenter presenter = new SignUpPresenter(signUpView, authModel);
         presenter.signUp("whatever", "");
         verify(signUpView).showSnackbar("Username or password cannot be empty", "");
