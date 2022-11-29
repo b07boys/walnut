@@ -14,7 +14,6 @@ import org.b07boys.walnut.auth.AuthStatusCallback;
 import org.b07boys.walnut.fragments.LoginFragment;
 import org.b07boys.walnut.models.AuthenticationModel;
 import org.b07boys.walnut.presenters.LoginPresenter;
-import org.b07boys.walnut.presenters.SignUpPresenter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -37,16 +36,13 @@ public class LoginPresenterUnitTests {
     LoginFragment loginView;
 
     @Mock
-    SignUpPresenter.View signUpPresenterView;
-
-    @Mock
     AuthenticationModel authModel;
 
     @Mock
     FirebaseAuthInvalidUserException firebaseAuthInvalidUserException;
 
     @Mock
-    FirebaseException e;
+    FirebaseException exception;
 
     @Test
     public void login_empty_email_and_password() {
@@ -69,16 +65,13 @@ public class LoginPresenterUnitTests {
         verify(loginView).showSnackbar("Username or password cannot be empty", "");
     }
 
-    @Captor
-    private ArgumentCaptor<AuthStatusCallback> authStatusCallbackArgumentCaptor;
-
     @Test
     public void successful_login() {
         LoginPresenter presenter = new LoginPresenter(loginView, authModel);
         doAnswer(invocationOnMock -> {
             ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(null);
             return null;
-        }).when(authModel).login(any(AuthStatusCallback.class), anyString(), anyString());
+        }).when(authModel).login(any(AuthStatusCallback.class), eq("a@gmail.com"), eq("111111"));
         presenter.login("a@gmail.com", "111111"); //Valid credentials
         verify(loginView).navigateToHomescreen();
     }
@@ -89,7 +82,7 @@ public class LoginPresenterUnitTests {
         doAnswer(invocationOnMock -> {
             ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(firebaseAuthInvalidUserException);
             return null;
-        }).when(authModel).login(any(AuthStatusCallback.class), anyString(), anyString());
+        }).when(authModel).login(any(AuthStatusCallback.class), eq("a@gmail.com"), eq("111111"));
         presenter.login("a@gmail.com", "111111"); //Valid credentials
         verify(loginView).showSnackbar("The email or password does not exist", "");
     }
@@ -98,10 +91,10 @@ public class LoginPresenterUnitTests {
     public void login_failed_other_reason() {
         LoginPresenter presenter = new LoginPresenter(loginView, authModel);
         doAnswer(invocationOnMock -> {
-            ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(e);
+            ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(exception);
             return null;
-        }).when(authModel).login(any(AuthStatusCallback.class), anyString(), anyString());
-        when(e.getMessage()).thenReturn("");
+        }).when(authModel).login(any(AuthStatusCallback.class), eq("a@gmail.com"), eq("111111"));
+        when(exception.getMessage()).thenReturn("");
         presenter.login("a@gmail.com", "111111"); //Valid credentials
         verify(loginView).showSnackbar(anyString(), eq("Try again"));
         verify(loginView).clearPasswordInput();
