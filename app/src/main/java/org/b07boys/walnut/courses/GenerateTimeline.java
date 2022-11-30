@@ -1,18 +1,46 @@
 package org.b07boys.walnut.courses;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class GenerateTimeline {
 
-    /**
-     *
-     * @param timeline
-     * @param desiredCourses
-     * @param takenCourses
-     * @param maxCoursesPerSem
-     * @return
-     */
+    public static Timeline generateTimeline(User user, int maxCoursesPerSem){
+        ArrayList<Course> coursesTaken = user.getTakenCourses();
+        HashSet<Course> coursesDesired = getCoursesDesired(coursesTaken);
+        ArrayList<Timeline> timelines = new ArrayList<>();
+
+
+        int[] timeline = new int[coursesDesired.size()];
+
+        for(int i = 0; i < timeline.length; i++){
+            timeline[i]++;
+        }
+
+        while(true){
+            timeline[0]++;
+            for (int i = 0; i < timeline.length; i++){
+                if (timeline[i] == timeline.length){
+                    timeline[i] = 0;
+                    timeline[i+1]++;
+                }
+            }
+
+            break;
+        }
+
+
+
+        return null;
+    }
+
+    public static HashSet<Course> getCoursesDesired(ArrayList<Course> coursesTaken){
+        //TODO
+        return null;
+    }
+
+
     public static ArrayList<ArrayList<ArrayList<Course>>> generate(
             ArrayList<ArrayList<Course>> timeline, ArrayList<Course> desiredCourses,
             ArrayList<Course> takenCourses, int maxCoursesPerSem){
