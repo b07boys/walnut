@@ -2,6 +2,7 @@ package org.b07boys.walnut.presenters;
 
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import org.b07boys.walnut.auth.AuthStatusCallback;
 import org.b07boys.walnut.models.AuthenticationModel;
 
 public class LoginPresenter {
@@ -29,6 +30,20 @@ public class LoginPresenter {
                     view.clearPasswordInput();
                 }
             }, email, password);
+        }
+    }
+
+    public void resetPassword(String email) {
+        if (email.isEmpty()) {
+            view.showSnackbar("Please enter an email address", "");
+        } else {
+            authModel.resetPassword(e -> {
+                if (e == null) {
+                    view.showSnackbar("Password reset email sent!", "");
+                } else {
+                    view.showSnackbar(e.getMessage(), "Try again");
+                }
+            }, email);
         }
     }
 
