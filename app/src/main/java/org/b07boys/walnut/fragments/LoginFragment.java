@@ -77,6 +77,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+        binding.forgotPasswordText.setOnClickListener(view1 -> presenter.resetPassword(getEmail()));
     }
 
     @Override

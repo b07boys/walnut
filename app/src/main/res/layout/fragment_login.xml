@@ -24,8 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:hint="Email"
         app:layout_constraintBottom_toTopOf="@+id/passwordTextLayout"
@@ -43,15 +42,15 @@
         android:id="@+id/passwordTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:hint="Password"
-        app:startIconDrawable="@drawable/ic_password_icon"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailTextLayout">
+        app:layout_constraintTop_toBottomOf="@id/emailTextLayout"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        app:startIconDrawable="@drawable/ic_password_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTextField"
@@ -85,5 +84,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
+
+    <TextView
+        android:id="@+id/forgot_password_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Forgot password?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
