@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,13 +84,16 @@ public class AdminHomescreenFragment extends Fragment {
         Button button = view.findViewById(R.id.init_course_catalogue);
         button.setOnClickListener(clickView -> {
             CourseCatalog.getInstance();
-            CourseUtils.modifyCourse(
-                    "test_uid",
-                    "CSCA48",
-                    "theory of pee",
+            CourseUtils.createCourse(
+                    "CSCA57676",
+                    "theory of man",
                     new SessionType[]{SessionType.SUMMER},
-                    new String[]{"another_funny_id"}
-            );
+                    new String[]{"so_funny"}
+            ).addOnSuccessListener(task -> {
+                Log.d("CREATE_SUCCESS", "Added!");
+            }).addOnFailureListener(exception -> {
+                Log.w("CREATE_FAILURE", "failed create", exception);
+            });
         });
 
     }
