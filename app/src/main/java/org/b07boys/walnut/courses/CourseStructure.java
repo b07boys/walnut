@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class CourseStructure {
 
-    private Set<Course> courses;
+    private final Set<Course> courses;
 
     public CourseStructure(Set<Course> courses){
         this.courses = courses;
