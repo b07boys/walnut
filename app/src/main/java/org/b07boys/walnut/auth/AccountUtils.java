@@ -3,6 +3,7 @@ package org.b07boys.walnut.auth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.b07boys.walnut.database.DatabaseNodeEditor;
+import org.b07boys.walnut.database.DatabasePaths;
 import org.b07boys.walnut.database.PromiseReceivedData;
 
 public class AccountUtils {
@@ -14,7 +15,7 @@ public class AccountUtils {
             return;
         }
 
-        new DatabaseNodeEditor("admins").nodeSnapshot("").addOnCompleteListener(task -> {
+        new DatabaseNodeEditor(DatabasePaths.ADMINS.path).nodeSnapshot("").addOnCompleteListener(task -> {
             if (task.getResult().hasChild(currentUser.getUid()))
                 promise.onReceive(UserType.ADMIN);
             else
