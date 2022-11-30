@@ -1,13 +1,20 @@
 package org.b07boys.walnut.database;
 
-    private final String node;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-    public DatabaseNode(String node) {
-        this.node = node;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference(node);
-    }
+public class DatabaseNode {
 
-    public String getNode() {
-        return node;
-    }
-}
+     private final String node;
+     protected final DatabaseReference databaseReference;
+
+     public DatabaseNode(String node) {
+         this.node = node;
+         this.databaseReference = FirebaseDatabase.getInstance().getReference(node);
+     }
+
+     public String getNode() {
+         return node;
+     }
+
+ }
