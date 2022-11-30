@@ -91,6 +91,13 @@ public class AdminHomescreenFragment extends Fragment {
                 }
             }
 
+            /*CourseUtils.createCourse(
+                    "CSCA48",
+                    "paco",
+                    new SessionType[]{SessionType.FALL},
+                    new String[]{"test_uid"});
+             */
+
         });
 
     }
