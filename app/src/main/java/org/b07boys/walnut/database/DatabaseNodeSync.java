@@ -21,7 +21,9 @@ public abstract class DatabaseNodeSync<T extends DatabaseAdapter> extends Databa
     protected abstract void childAdded(T object, String key);
     protected abstract void childChanged(T object, String key);
     protected abstract void childRemoved(T object, String key);
-    protected abstract void childMoved(T object, String key);
+
+    //Not abstract since we likely won't need to depend on this method.
+    protected void childMoved(T object, String key) {}
 
     @Override
     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
