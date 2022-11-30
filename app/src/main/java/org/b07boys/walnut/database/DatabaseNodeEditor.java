@@ -12,16 +12,16 @@ public class DatabaseNodeEditor extends DatabaseNode {
         super(node);
     }
 
-    public <T extends DatabaseAdapter> Task<Void> writeAsChild(String path, T object) {
+    public  Task<Void> writeAsChild(String path, DatabaseAdapter adapter) {
 
         String key = databaseReference.child(path).push().getKey();
 
-        return modifyChild(path, key, object);
+        return modifyChild(path, key, adapter);
     }
 
-    public <T extends DatabaseAdapter> Task<Void> modifyChild(String path, String key, T object) {
+    public Task<Void> modifyChild(String path, String key, DatabaseAdapter adapter) {
 
-        Map<String, Object> childValues = object.toMap();
+        Map<String, Object> childValues = adapter.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + key, childValues);
