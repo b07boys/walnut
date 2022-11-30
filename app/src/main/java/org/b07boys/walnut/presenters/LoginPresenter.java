@@ -20,9 +20,7 @@ public class LoginPresenter {
         } else {
             authModel.login(e -> {
                 if (e == null) {
-
                     view.navigateToHomescreen();
-
                 }
                 else if (e instanceof FirebaseAuthInvalidUserException) {
                     view.showSnackbar("The email or password does not exist", "");
