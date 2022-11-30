@@ -26,8 +26,8 @@ public class DatabaseNode {
         return false;
     }
 
-    public boolean keyExists(String path, String key) {
-        return nodeSnapshot(path).getResult().hasChild(key);
+    public boolean keyExists(String path, String key, OnCompleteListener<DataSnapshot> listener) {
+        return nodeSnapshot(path).addOnCompleteListener(listener).getResult().hasChild(key);
     }
 
     public <T> T getValue(String path, Class<T> clazz) {
@@ -46,7 +46,7 @@ public class DatabaseNode {
         return String.valueOf(nodeSnapshot(path).addOnCompleteListener(listener).getResult().getValue());
     }
 
-    private Task<DataSnapshot> nodeSnapshot(String path) {
+    public Task<DataSnapshot> nodeSnapshot(String path) {
         return databaseReference.child(path).get();
     }
 
