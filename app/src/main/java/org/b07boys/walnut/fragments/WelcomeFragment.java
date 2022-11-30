@@ -65,6 +65,11 @@ public class WelcomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         AccountUtils.getUserType(currentUser, userType -> {
             if (userType == UserType.ADMIN)
@@ -72,11 +77,6 @@ public class WelcomeFragment extends Fragment {
             else if (userType == UserType.STUDENT)
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment());
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentWelcomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
