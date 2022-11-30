@@ -13,6 +13,11 @@ import android.widget.Button;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.CourseCatalog;
+import org.b07boys.walnut.courses.SessionType;
+import org.b07boys.walnut.database.DatabaseNode;
+import org.b07boys.walnut.database.DatabaseNodeEditor;
+import org.b07boys.walnut.database.DatabasePaths;
+import org.b07boys.walnut.database.adapters.CourseAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,7 +80,16 @@ public class AdminHomescreenFragment extends Fragment {
 
         //THIS IS JUST A TEST, YOU CAN SAFELY DELETE THIS AND THE BUTTON ASSOCIATED
         Button button = (Button) view.findViewById(R.id.init_course_catalogue);
-        button.setOnClickListener(clickView -> CourseCatalog.getInstance());
+        button.setOnClickListener(clickView -> {
+            CourseCatalog.getInstance();
+            CourseAdapter courseAdapter = new CourseAdapter(
+                    "CSCA08",
+                    "ur mom",
+                    new SessionType[]{SessionType.FALL},
+                    new String[] {"test_uid"}
+            );
+            new DatabaseNodeEditor(DatabasePaths.COURSES_AVAILABLE.path).writeAsChild("", courseAdapter);
+        });
 
     }
 
