@@ -1,24 +1,22 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.b07boys.walnut.R;
-import org.b07boys.walnut.presenters.SignUpPresenter;
 import org.b07boys.walnut.databinding.FragmentSignUpBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
+import org.b07boys.walnut.presenters.SignUpPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
