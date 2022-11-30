@@ -29,8 +29,8 @@ public class CourseCatalog {
         return catalog;
     }
 
-    public boolean addCourse(Course course){
-        return courses.add(course);
+    public void addCourse(Course course){
+        courses.add(course);
     }
 
     public boolean removeCourse(Course course){

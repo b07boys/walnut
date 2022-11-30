@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.CourseCatalog;
+import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.database.DatabaseNode;
 import org.b07boys.walnut.database.DatabaseNodeEditor;
@@ -79,16 +80,16 @@ public class AdminHomescreenFragment extends Fragment {
 
 
         //THIS IS JUST A TEST, YOU CAN SAFELY DELETE THIS AND THE BUTTON ASSOCIATED
-        Button button = (Button) view.findViewById(R.id.init_course_catalogue);
+        Button button = view.findViewById(R.id.init_course_catalogue);
         button.setOnClickListener(clickView -> {
             CourseCatalog.getInstance();
-            CourseAdapter courseAdapter = new CourseAdapter(
-                    "CSCA08",
-                    "ur mom",
-                    new SessionType[]{SessionType.FALL},
-                    new String[] {"test_uid"}
+            CourseUtils.modifyCourse(
+                    "test_uid",
+                    "CSCA48",
+                    "theory of pee",
+                    new SessionType[]{SessionType.SUMMER},
+                    new String[]{"another_funny_id"}
             );
-            new DatabaseNodeEditor(DatabasePaths.COURSES_AVAILABLE.path).writeAsChild("", courseAdapter);
         });
 
     }

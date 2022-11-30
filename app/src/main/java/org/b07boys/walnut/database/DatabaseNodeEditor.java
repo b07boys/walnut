@@ -15,12 +15,22 @@ public class DatabaseNodeEditor extends DatabaseNode {
     public <T extends DatabaseAdapter> void writeAsChild(String path, T object) {
 
         String key = databaseReference.child(path).push().getKey();
+
+        modifyChild(path, key, object);
+    }
+
+    public <T extends DatabaseAdapter> void modifyChild(String path, String key, T object) {
+
         Map<String, Object> childValues = object.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + key, childValues);
 
-        databaseReference.updateChildren(childUpdates);
+        databaseReference.child(path).updateChildren(childUpdates);
+    }
+
+    public void deleteValue(String path) {
+        databaseReference.child(path).removeValue();
     }
 
     public <T> void getValue(String path, Class<T> clazz, PromiseReceivedData<T> promise) {
