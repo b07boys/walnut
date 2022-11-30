@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.auth.AccountUtils;
 import org.b07boys.walnut.auth.UserType;
-import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
 import org.b07boys.walnut.presenters.LoginPresenter;
