@@ -3,36 +3,26 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.auth.AccountUtils;
 import org.b07boys.walnut.auth.UserType;
-import org.b07boys.walnut.database.DatabaseNode;
-import org.b07boys.walnut.database.PromiseReceivedData;
-import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
+import org.b07boys.walnut.presenters.LoginPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
