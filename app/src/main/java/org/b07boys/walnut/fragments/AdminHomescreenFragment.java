@@ -13,13 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.b07boys.walnut.R;
-import org.b07boys.walnut.courses.CourseCatalog;
+import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.CourseStructure;
 import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.SessionType;
-import org.b07boys.walnut.database.DatabaseNode;
-import org.b07boys.walnut.database.DatabaseNodeEditor;
-import org.b07boys.walnut.database.DatabasePaths;
-import org.b07boys.walnut.database.adapters.CourseAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +80,7 @@ public class AdminHomescreenFragment extends Fragment {
         //THIS IS JUST A TEST, YOU CAN SAFELY DELETE THIS AND THE BUTTON ASSOCIATED
         Button button = view.findViewById(R.id.init_course_catalogue);
         button.setOnClickListener(clickView -> {
-            CourseCatalog.getInstance();
+            CourseCatalogue.getInstance();
             CourseUtils.createCourse(
                     "CSCA57676",
                     "theory of man",

@@ -1,32 +1,13 @@
 package org.b07boys.walnut.courses;
 
-import android.util.Log;
+import java.util.Set;
 
-import org.b07boys.walnut.database.DatabasePaths;
-import org.b07boys.walnut.database.adapters.CourseAdapter;
-import org.b07boys.walnut.database.syncs.DatabaseCourseSync;
+public class CourseStructure {
 
-import java.util.HashSet;
+    private Set<Course> courses;
 
-public class CourseCatalog {
-
-    private static CourseCatalog catalog;
-
-    private HashSet<Course> courses;
-    private DatabaseCourseSync databaseCourseSync;
-
-    private CourseCatalog(){
-        courses = new HashSet<>();
-        databaseCourseSync = new DatabaseCourseSync(this, DatabasePaths.COURSES_AVAILABLE.path, CourseAdapter.class);
-        databaseCourseSync.startListening();
-    }
-
-    public static CourseCatalog getInstance()
-    {
-        if (catalog == null)
-            catalog = new CourseCatalog();
-
-        return catalog;
+    public CourseStructure(Set<Course> courses){
+        this.courses = courses;
     }
 
     public void addCourse(Course course){
@@ -41,7 +22,7 @@ public class CourseCatalog {
         return removeCourse(getCourseByUID(uid));
     }
 
-    public HashSet<Course> getCourses(){
+    public Set<Course> getCourses(){
         return courses;
     }
 
