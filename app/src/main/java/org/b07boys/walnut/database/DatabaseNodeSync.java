@@ -9,7 +9,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-public abstract class DatabaseNodeSync<T> extends DatabaseNode implements ChildEventListener {
+public abstract class DatabaseNodeSync<T extends DatabaseAdapter> extends DatabaseNode implements ChildEventListener {
 
     private final Class<T> clazz;
 

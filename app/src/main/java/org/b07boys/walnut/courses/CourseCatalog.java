@@ -1,5 +1,9 @@
 package org.b07boys.walnut.courses;
 
+import org.b07boys.walnut.database.DatabasePaths;
+import org.b07boys.walnut.database.adapters.CourseAdapter;
+import org.b07boys.walnut.database.syncs.DatabaseCourseSync;
+
 import java.util.HashSet;
 
 public class CourseCatalog {
@@ -7,9 +11,12 @@ public class CourseCatalog {
     private static CourseCatalog catalog;
 
     private HashSet<Course> courses;
+    private DatabaseCourseSync databaseCourseSync;
 
     private CourseCatalog(){
         courses = new HashSet<>();
+        databaseCourseSync = new DatabaseCourseSync(DatabasePaths.COURSES_AVAILABLE.path, CourseAdapter.class);
+        databaseCourseSync.startListening();
     }
 
     public static CourseCatalog getInstance()
@@ -26,6 +33,10 @@ public class CourseCatalog {
 
     public boolean removeCourse(Course course){
         return courses.remove(course);
+    }
+
+    public boolean removeCourseByUID(String uid) {
+        return removeCourse(getCourseByUID(uid));
     }
 
     public HashSet<Course> getCourses(){
