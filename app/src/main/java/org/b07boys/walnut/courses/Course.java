@@ -10,9 +10,10 @@ public class Course {
     private Course[] prerequisites;
     private String name;
     private String code;
-    private SessionTypeEnum[] offeringSessions;
+    private SessionTypeEnum.SessionType[] offeringSessions;
 
-    public Course(String code, String name, SessionTypeEnum[] offeringSessions, Course[] prerequisites) {
+    public Course(String code, String name, SessionTypeEnum.SessionType[] offeringSessions,
+                  Course[] prerequisites) {
         //TODO generate UID @Lucas
         this.prerequisites = prerequisites;
         this.name = name;
@@ -48,11 +49,11 @@ public class Course {
         this.code = code;
     }
 
-    public SessionTypeEnum[] getOfferingSessions() {
+    public SessionTypeEnum.SessionType[] getOfferingSessions() {
         return offeringSessions;
     }
 
-    public void setOfferingSessions(SessionTypeEnum[] offeringSessions) {
+    public void setOfferingSessions(SessionTypeEnum.SessionType[] offeringSessions) {
         this.offeringSessions = offeringSessions;
     }
 
