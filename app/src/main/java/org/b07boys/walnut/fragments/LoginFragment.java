@@ -17,11 +17,19 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.auth.AccountUtils;
+import org.b07boys.walnut.auth.UserType;
+import org.b07boys.walnut.database.DatabaseNode;
+import org.b07boys.walnut.database.PromiseReceivedData;
 import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
@@ -128,9 +136,15 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
 
     @Override
     public void navigateToHomescreen() {
-        String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        if (UID.equals("qVtJSWUhTsdckl2GAkxkPfzFhHz2")) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
-        else Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        AccountUtils.getUserType(currentUser, userType -> {
+            if (userType == UserType.ADMIN)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
+            else if (userType == UserType.STUDENT)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
+        });
     }
 
     public String getEmail() {
