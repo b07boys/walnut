@@ -3,28 +3,27 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.auth.AccountUtils;
+import org.b07boys.walnut.auth.UserType;
 import org.b07boys.walnut.presenters.LoginPresenter;
 import org.b07boys.walnut.databinding.FragmentLoginBinding;
 import org.b07boys.walnut.models.AuthenticationModel;
+import org.b07boys.walnut.presenters.LoginPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,15 +127,21 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
 
     @Override
     public void navigateToHomescreen() {
-        String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        if (UID.equals("qVtJSWUhTsdckl2GAkxkPfzFhHz2")) Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
-        else Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        AccountUtils.getUserType(currentUser, userType -> {
+            if (userType == UserType.ADMIN)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
+            else if (userType == UserType.STUDENT)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
+        });
     }
 
-    private String getEmail() {
+    public String getEmail() {
         return binding.emailTextField.getText().toString();
     }
-    private String getPassword() {
+    public String getPassword() {
         return binding.passwordTextField.getText().toString();
     }
 }

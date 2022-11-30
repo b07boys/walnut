@@ -67,10 +67,14 @@
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_welcomeFragment_to_adminHomescreenFragment"
-            app:destination="@id/adminHomescreenFragment" />
+            app:destination="@id/adminHomescreenFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_studentHomescreenFragment"
-            app:destination="@id/studentHomescreenFragment" />
+            app:destination="@id/studentHomescreenFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/adminHomescreenFragment"

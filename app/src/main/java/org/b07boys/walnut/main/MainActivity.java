@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             mlp.leftMargin = insets.left;
             mlp.bottomMargin = imeVisible ? imeHeight : insets.bottom;
             mlp.rightMargin = insets.right;
+            mlp.topMargin = insets.top;
             v.setLayoutParams(mlp);
             return WindowInsetsCompat.CONSUMED;
         });
