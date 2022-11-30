@@ -1,5 +1,7 @@
 package org.b07boys.walnut.database.syncs;
 
+import android.util.Log;
+
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalog;
 import org.b07boys.walnut.database.DatabaseNodeSync;
@@ -9,15 +11,17 @@ public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
 
     private CourseCatalog courseCatalog;
 
-    public DatabaseCourseSync(String node, Class<CourseAdapter> clazz) {
+    public DatabaseCourseSync(CourseCatalog courseCatalog, String node, Class<CourseAdapter> clazz) {
         super(node, clazz);
-        courseCatalog = CourseCatalog.getInstance();
+        this.courseCatalog = courseCatalog;
     }
 
     @Override
     protected void childAdded(CourseAdapter courseAdapter, String key) {
         Course course = courseAdapter.createCourse(key);
         courseCatalog.addCourse(course);
+        //test
+        Log.v("ADD_COURSE", course.toString());
     }
 
     @Override
@@ -27,11 +31,14 @@ public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
             childAdded(courseAdapter, key);
         else
             courseAdapter.mapToCourse(course);
+        //test
+        Log.v("CHANGE_COURSE", courseAdapter.createCourse(key).toString());
     }
 
     @Override
-    protected void childRemoved(CourseAdapter object, String key) {
+    protected void childRemoved(CourseAdapter courseAdapter, String key) {
         courseCatalog.removeCourseByUID(key);
+        Log.v("REMOVE_COURSE", "uid: " + key);
     }
 
     @Override

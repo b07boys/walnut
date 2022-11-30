@@ -1,5 +1,7 @@
 package org.b07boys.walnut.courses;
 
+import android.util.Log;
+
 import org.b07boys.walnut.database.DatabasePaths;
 import org.b07boys.walnut.database.adapters.CourseAdapter;
 import org.b07boys.walnut.database.syncs.DatabaseCourseSync;
@@ -15,7 +17,7 @@ public class CourseCatalog {
 
     private CourseCatalog(){
         courses = new HashSet<>();
-        databaseCourseSync = new DatabaseCourseSync(DatabasePaths.COURSES_AVAILABLE.path, CourseAdapter.class);
+        databaseCourseSync = new DatabaseCourseSync(this, DatabasePaths.COURSES_AVAILABLE.path, CourseAdapter.class);
         databaseCourseSync.startListening();
     }
 

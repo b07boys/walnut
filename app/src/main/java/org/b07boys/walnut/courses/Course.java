@@ -60,9 +60,29 @@ public class Course {
     @NonNull
     @Override
     public String toString() {
-        return code + ": " + name +
-                "\nPrerequisites: " /*TODO: convert to uid: + Arrays.toString(prerequisites)*/ +
-                "\nOffered in: " + Arrays.toString(offeringSessions);
+
+        CourseCatalog courseCatalog = CourseCatalog.getInstance();
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("UID: ")
+                .append(uid)
+                .append("\n")
+                .append(code)
+                .append(": ")
+                .append(name)
+                .append("\nPrerequisites: ");
+
+        for (String prereqUID : prerequisiteUIDS) {
+            Course course = courseCatalog.getCourseByUID(prereqUID);
+            builder.append(course != null ? course.getCode() : prereqUID)
+                    .append(" ");
+        }
+
+        builder.append("\nOffered in: ")
+                .append(Arrays.toString(offeringSessions));
+
+        return builder.toString();
     }
 
     @Override
