@@ -8,19 +8,32 @@
     android:background="#BEBEBE"
     tools:context=".fragments.StudentHomescreenFragment">
 
-<EditText
-    android:id="@+id/search_bar"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_margin="10dp"
-    android:gravity="center"
-    android:hint="Search in this section by course code or title"
-    android:textColor="#0B0A0A"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.473"
-    app:layout_constraintStart_toStartOf="parent"
-    tools:ignore="MissingConstraints"
-    tools:layout_editor_absoluteY="16dp"> </EditText>
+    <TextView
+        android:id="@+id/my_courses_label"
+        android:layout_width="105dp"
+        android:layout_height="27dp"
+        android:text="My Courses"
+        android:textColor="#0B0A0A"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/add_course_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Course"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
