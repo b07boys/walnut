@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
-    private String uid;
+    private final String uid;
     private String[] prerequisiteUIDS;
     private String name;
     private String code;
@@ -61,7 +61,7 @@ public class Course {
     @Override
     public String toString() {
 
-        CourseCatalog courseCatalog = CourseCatalog.getInstance();
+        CourseCatalogue courseCatalog = CourseCatalogue.getInstance();
 
         StringBuilder builder = new StringBuilder();
 
@@ -85,16 +85,4 @@ public class Course {
         return builder.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return code.equals(course.code);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code);
-    }
 }

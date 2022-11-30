@@ -1,4 +1,6 @@
-package org.b07boys.walnut.courses;
+package org.b07boys.walnut.user;
+
+import org.b07boys.walnut.courses.Course;
 
 import java.util.ArrayList;
 
