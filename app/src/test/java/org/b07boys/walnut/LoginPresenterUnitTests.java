@@ -99,4 +99,27 @@ public class LoginPresenterUnitTests {
         verify(loginView).showSnackbar(anyString(), eq("Try again"));
         verify(loginView).clearPasswordInput();
     }
+
+    @Test
+    public void successful_forgot_password() {
+        LoginPresenter presenter = new LoginPresenter(loginView, authModel);
+        doAnswer(invocationOnMock -> {
+            ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(null);
+            return null;
+        }).when(authModel).resetPassword(any(AuthStatusCallback.class), eq("a@gmail.com"));
+        presenter.resetPassword("a@gmail.com"); //Valid credentials
+        verify(loginView).showSnackbar(eq("Password reset email sent!"), eq(""));
+    }
+
+    @Test
+    public void no_email_forgot_password() {
+        LoginPresenter presenter = new LoginPresenter(loginView, authModel);
+        doAnswer(invocationOnMock -> {
+            ((AuthStatusCallback)invocationOnMock.getArguments()[0]).isAuthSuccessful(exception);
+            return null;
+        }).when(authModel).resetPassword(any(AuthStatusCallback.class), eq("a@gmail.com"));
+        when(exception.getMessage()).thenReturn("");
+        presenter.resetPassword("a@gmail.com"); //Valid credentials
+        verify(loginView).showSnackbar(anyString(), eq("Try again"));
+    }
 }
