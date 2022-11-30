@@ -1,4 +1,7 @@
-package org.b07boys.walnut.courses;
+package org.b07boys.walnut.timeline;
+
+import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.user.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -1,4 +1,6 @@
-package org.b07boys.walnut.courses;
+package org.b07boys.walnut.timeline;
+
+import org.b07boys.walnut.courses.Session;
 
 import java.util.LinkedHashSet;
 

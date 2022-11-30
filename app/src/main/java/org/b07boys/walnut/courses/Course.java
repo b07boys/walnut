@@ -61,7 +61,7 @@ public class Course {
     @Override
     public String toString() {
 
-        CourseCatalog courseCatalog = CourseCatalog.getInstance();
+        CourseCatalogue courseCatalog = CourseCatalogue.getInstance();
 
         StringBuilder builder = new StringBuilder();
 
