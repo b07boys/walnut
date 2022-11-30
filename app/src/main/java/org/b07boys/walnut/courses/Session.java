@@ -4,9 +4,9 @@ import java.util.HashSet;
 
 public class Session {
     private HashSet<Course> courses;
-    private SessionTypeEnum.SessionType session;
+    private SessionType session;
 
-    public Session(HashSet<Course> courses, SessionTypeEnum.SessionType session) {
+    public Session(HashSet<Course> courses, SessionType session) {
         this.courses = courses;
         this.session = session;
     }
@@ -19,11 +19,11 @@ public class Session {
         this.courses = courses;
     }
 
-    public SessionTypeEnum.SessionType getSession() {
+    public SessionType getSession() {
         return session;
     }
 
-    public void setSession(SessionTypeEnum.SessionType session) {
+    public void setSession(SessionType session) {
         this.session = session;
     }
 
