@@ -8,7 +8,7 @@ public enum DatabasePaths {
 
     public final String path;
 
-    private DatabasePaths(String path) {
+    DatabasePaths(String path) {
         this.path = path;
     }
 

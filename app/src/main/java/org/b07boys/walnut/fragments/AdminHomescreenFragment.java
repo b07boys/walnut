@@ -2,13 +2,17 @@ package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.courses.CourseCatalog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,4 +67,16 @@ public class AdminHomescreenFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin_homescreen, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        //THIS IS JUST A TEST, YOU CAN SAFELY DELETE THIS AND THE BUTTON ASSOCIATED
+        Button button = (Button) view.findViewById(R.id.init_course_catalogue);
+        button.setOnClickListener(clickView -> CourseCatalog.getInstance());
+
+    }
+
 }

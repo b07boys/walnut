@@ -13,28 +13,21 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class CourseAdapter implements DatabaseAdapter {
 
-    private String code;
-    private String name;
-    private Map<String, String> offeringSessions;
-    private Map<String, String> prerequisites;
+    public String code;
+    public String name;
+    public String offeringSessions;
+    public String prerequisites;
 
     public CourseAdapter() {
         // this constructor is required for firebase parsing
     }
 
-    public CourseAdapter(String code, String name, SessionType[] offeringSessions, Course[] prerequisites) {
+    public CourseAdapter(String code, String name, SessionType[] offeringSessions, String[] prerequisites) {
 
         this.code = code;
         this.name = name;
-
-        this.offeringSessions = new HashMap<>();
-        this.prerequisites = new HashMap<>();
-
-        for (SessionType sessionType : offeringSessions)
-            this.offeringSessions.put(sessionType.name(), "");
-
-        for (Course course : prerequisites)
-            this.prerequisites.put(course.getUID(), "");
+        this.offeringSessions = convertSessionArrayToString(offeringSessions);
+        this.prerequisites = convertUIDArrayToString(prerequisites);
 
     }
 
@@ -54,8 +47,8 @@ public class CourseAdapter implements DatabaseAdapter {
     public void mapToCourse(Course course) {
         course.setCode(code);
         course.setName(name);
-        course.setOfferingSessions(convertSessionTypesToArray());
-        course.setPrerequisiteUIDS(convertPrerequisitesToArray());
+        course.setOfferingSessions(convertSessionStringToArray(offeringSessions));
+        course.setPrerequisiteUIDS(convertUIDStringToArray(prerequisites));
     }
 
     @Exclude
@@ -64,28 +57,65 @@ public class CourseAdapter implements DatabaseAdapter {
                 uid,
                 code,
                 name,
-                convertSessionTypesToArray(),
-                convertPrerequisitesToArray()
+                convertSessionStringToArray(offeringSessions),
+                convertUIDStringToArray(prerequisites)
         );
     }
 
     @Exclude
-    private SessionType[] convertSessionTypesToArray() {
+    private String convertSessionArrayToString(SessionType[] sessionTypes) {
 
-        SessionType[] sessionTypes = new SessionType[offeringSessions.size()];
+        StringBuilder builder = new StringBuilder();
 
-        int i = 0;
-        for (String key : offeringSessions.keySet()) {
-            sessionTypes[i] = SessionType.valueOf(key);
-            i++;
-        }
+        for (SessionType sessionType : sessionTypes)
+            builder.append(sessionType.name()).append(" ");
 
-        return sessionTypes;
+        return builder.toString().trim();
     }
 
     @Exclude
-    private String[] convertPrerequisitesToArray() {
-        return prerequisites.keySet().toArray(new String[0]);
+    private String convertUIDArrayToString(String[] uidArray) {
+
+        StringBuilder builder = new StringBuilder();
+
+        for(String uid : uidArray)
+            builder.append(uid).append(" ");
+
+        return builder.toString().trim();
+    }
+
+    @Exclude
+    private SessionType[] convertSessionStringToArray(String sessionString) {
+
+        String[] splitString = sessionString.split(" ");
+
+        int length = splitString.length;
+
+        SessionType[] sessionArray = new SessionType[length];
+
+        for (int i = 0; i < length; i++) {
+            try {
+                sessionArray[i] = SessionType.valueOf(splitString[i]);
+            } catch (IllegalArgumentException ignored) {
+                sessionArray[i] = SessionType.INVALID;
+            }
+        }
+
+        return sessionArray;
+    }
+
+    @Exclude
+    private String[] convertUIDStringToArray(String uidString) {
+
+        String[] splitString = uidString.split(" ");
+
+        int length = splitString.length;
+
+        String[] uidArray = new String[length];
+
+        System.arraycopy(splitString, 0, uidArray, 0, length);
+
+        return uidArray;
     }
 
 }
