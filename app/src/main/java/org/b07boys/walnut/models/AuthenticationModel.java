@@ -1,7 +1,6 @@
 package org.b07boys.walnut.models;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.b07boys.walnut.auth.AuthStatusCallback;
 
