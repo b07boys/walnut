@@ -41,8 +41,4 @@ public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
         Log.v("REMOVE_COURSE", "uid: " + key);
     }
 
-    @Override
-    protected void childMoved(CourseAdapter object, String key) {
-        // TODO: if implementing ordering, do it here
-    }
 }
