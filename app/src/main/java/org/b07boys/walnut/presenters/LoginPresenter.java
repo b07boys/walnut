@@ -1,7 +1,9 @@
 package org.b07boys.walnut.presenters;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-
+import com.google.firebase.auth.FirebaseUser;
+import org.b07boys.walnut.database.DatabaseNode;
 import org.b07boys.walnut.auth.AuthStatusCallback;
 import org.b07boys.walnut.models.AuthenticationModel;
 
@@ -20,7 +22,11 @@ public class LoginPresenter {
             view.showSnackbar("Username or password cannot be empty", "");
         } else {
             authModel.login(e -> {
-                if (e == null) view.navigateToHomescreen();
+                if (e == null) {
+
+                    view.navigateToHomescreen();
+
+                }
                 else if (e instanceof FirebaseAuthInvalidUserException) {
                     view.showSnackbar("The email or password does not exist", "");
                 } else {

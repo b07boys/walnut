@@ -88,9 +88,11 @@ public class WelcomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (AccountUtils.getUserType(currentUser) == UserType.ADMIN)
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAdminHomescreenFragment());
-        else if (AccountUtils.getUserType(currentUser) == UserType.STUDENT)
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment());
+        AccountUtils.getUserType(currentUser, userType -> {
+            if (userType == UserType.ADMIN)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAdminHomescreenFragment());
+            else if (userType == UserType.STUDENT)
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment());
+        });
     }
 }
