@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseStructure;
 import org.b07boys.walnut.courses.CourseUtils;
@@ -76,21 +77,20 @@ public class AdminHomescreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        CourseCatalogue courseCatalogue = CourseCatalogue.getInstance();
 
         //THIS IS JUST A TEST, YOU CAN SAFELY DELETE THIS AND THE BUTTON ASSOCIATED
         Button button = view.findViewById(R.id.init_course_catalogue);
         button.setOnClickListener(clickView -> {
-            CourseCatalogue.getInstance();
-            CourseUtils.createCourse(
-                    "CSCA57676",
-                    "theory of man",
-                    new SessionType[]{SessionType.SUMMER},
-                    new String[]{"so_funny"}
-            ).addOnSuccessListener(task -> {
-                Log.d("CREATE_SUCCESS", "Added!");
-            }).addOnFailureListener(exception -> {
-                Log.w("CREATE_FAILURE", "failed create", exception);
-            });
+
+            // cleaning up the db
+            for (Course course : courseCatalogue.getCourses()) {
+                String uid = course.getUID();
+                if (!uid.equals("test_uid")) {
+                    CourseUtils.removeCourse(uid);
+                }
+            }
+
         });
 
     }
