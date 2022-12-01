@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // To instentiate course since they start before doing anything
+        CourseCatalogue.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
