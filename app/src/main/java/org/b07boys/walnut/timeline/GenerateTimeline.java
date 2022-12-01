@@ -77,7 +77,19 @@ public class GenerateTimeline {
         Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
 
         //iterate through sessions
+        int[] lastSessions = {1,1};
         for (Session session : timeline.getSessions()) {
+            //check if 3 empty sessions in a row
+            if(session.getCourses() == null && lastSessions[0] == 0 && lastSessions[1] == 0){
+                return false;
+            }
+            lastSessions[1] = lastSessions[0];
+            if(session.getCourses() == null){
+                lastSessions[0] = 0;
+            }else{
+                lastSessions[0] = 1;
+            }
+
             List<Course> currentCourses = new ArrayList<>();
             //iterate through courses
             for (Course course : session.getCourses()) {
@@ -104,20 +116,15 @@ public class GenerateTimeline {
         return true;
     }
 
+    public static String formatAsText(Timeline timeline){
+        StringBuilder builder = new StringBuilder();
+        for(Session session : timeline.getSessions()){
+            builder.append("\n").append(session.getSessionType()).append(": ");
+            for(Course course : session.getCourses()){
+                builder.append(course.toString()).append("\t");
+            }
+        }
 
-    public static ArrayList<ArrayList<ArrayList<Course>>> generate(
-            ArrayList<ArrayList<Course>> timeline, ArrayList<Course> desiredCourses,
-            ArrayList<Course> takenCourses, int maxCoursesPerSem){
-
-        ArrayList<ArrayList<ArrayList<Course>>> timelinePossibilities = new ArrayList<>();
-        gen(timeline,desiredCourses,takenCourses,maxCoursesPerSem);
-
-        return timelinePossibilities;
-    }
-
-    private static void gen(
-            ArrayList<ArrayList<Course>> timeline, ArrayList<Course> desiredCourses,
-            ArrayList<Course> takenCourses, int maxCoursesPerSem){
-
+        return builder.toString();
     }
 }
