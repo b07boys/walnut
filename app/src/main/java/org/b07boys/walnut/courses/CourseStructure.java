@@ -1,29 +1,61 @@
 package org.b07boys.walnut.courses;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CourseStructure {
 
     private final Set<Course> courses;
+    private Set<OnChangeCourseListener> listeners;
 
     public CourseStructure(Set<Course> courses){
         this.courses = courses;
+        listeners = new HashSet<>();
     }
 
     public void addCourse(Course course){
         courses.add(course);
+        notifyAdd(course);
     }
 
-    public boolean removeCourse(Course course){
-        return courses.remove(course);
+    public void removeCourse(Course course){
+        courses.remove(course);
+        notifyRemove(course);
     }
 
-    public boolean removeCourseByUID(String uid) {
-        return removeCourse(getCourseByUID(uid));
+    public void removeCourseByUID(String uid) {
+        removeCourse(getCourseByUID(uid));
     }
 
     public Set<Course> getCourses(){
         return courses;
+    }
+
+    public void registerListener(OnChangeCourseListener listener) {
+        listeners.add(listener);
+    }
+
+    public void unregisterListener(OnChangeCourseListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void modifyCourse(Course course) {
+        notifyModify(course);
+    }
+
+    private void notifyAdd(Course course) {
+        for (OnChangeCourseListener listener : listeners)
+            listener.onAdd(course);
+    }
+
+    private void notifyRemove(Course course) {
+        for (OnChangeCourseListener listener : listeners)
+            listener.onRemove(course);
+    }
+
+    private void notifyModify(Course course) {
+        for (OnChangeCourseListener listener : listeners)
+            listener.onModify(course);
     }
 
 
