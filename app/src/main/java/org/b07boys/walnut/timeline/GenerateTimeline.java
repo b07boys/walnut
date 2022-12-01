@@ -4,12 +4,11 @@ import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.Session;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.courses.SessionUtils;
+import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,7 +24,7 @@ public class GenerateTimeline {
      */
     public static ArrayList<Timeline> generateTimeline(User user, int maxCoursesPerSem, SessionType sessionType){
         Set<Course> coursesTaken = user.getTakenCourses().getCourses();
-        HashSet<Course> coursesDesired = getCoursesDesired(coursesTaken);
+        ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
         ArrayList<Timeline> timelines = new ArrayList<>();
 
         assert coursesDesired != null;
@@ -53,7 +52,7 @@ public class GenerateTimeline {
             }
 
             //check if potentialTimeline is vaild and add to timelines
-            if(checkTimeline(potentialTimeline)) timelines.add(potentialTimeline);
+            if(checkTimeline(potentialTimeline, maxCoursesPerSem)) timelines.add(potentialTimeline);
 
             timeline[0]++;
             for (int i = 0; i < timeline.length; i++){
@@ -68,14 +67,40 @@ public class GenerateTimeline {
         return timelines;
     }
 
-    public static HashSet<Course> getCoursesDesired(Set<Course> coursesTaken){
-    
+    public static ArrayList<Course> getCoursesDesired(Set<Course> coursesTaken){
+
         //TODO
         return null;
     }
 
-    public static boolean checkTimeline(Timeline timeline){
+    public static boolean checkTimeline(Timeline timeline, int maxCoursesPerSem){
+        Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
 
+        //iterate through sessions
+        for (Session session : timeline.getSessions()) {
+            List<Course> currentCourses = new ArrayList<>();
+            //iterate through courses
+            for (Course course : session.getCourses()) {
+                //check session
+                boolean isOffered = false;
+                for(int i = 0; i < course.getOfferingSessions().length; i++){
+                    if(course.getOfferingSessions()[i] == session.getSessionType()){
+                        isOffered = true;
+                    }
+                }
+                if(!isOffered) return false;
+
+                //check each prereqs
+                String[] prereqs = course.getPrerequisiteUIDS();
+                for (String prereq : prereqs) {
+                    if (TakenCourses.getInstance().getCourseByUID(prereq) == null) {
+                        return false;
+                    }
+                    currentCourses.add(TakenCourses.getInstance().getCourseByUID(prereq));
+                }
+            }
+            coursesTaken.addAll(currentCourses);
+        }
         return true;
     }
 
