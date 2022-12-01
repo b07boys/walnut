@@ -1,7 +1,6 @@
 package org.b07boys.walnut.courses;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Session {
@@ -27,11 +26,11 @@ public class Session {
     }
 
 
-    public SessionType getSession() {
+    public SessionType getSessionType() {
         return session;
     }
 
-    public void setSession(SessionType session) {
+    public void setSessionType(SessionType session) {
         this.session = session;
     }
 
