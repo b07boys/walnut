@@ -5,12 +5,13 @@ import org.b07boys.walnut.user.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 
 public class GenerateTimeline {
 
     public static Timeline generateTimeline(User user, int maxCoursesPerSem){
-        ArrayList<Course> coursesTaken = user.getTakenCourses();
+        Set<Course> coursesTaken = user.getTakenCourses().getCourses();
         HashSet<Course> coursesDesired = getCoursesDesired(coursesTaken);
         ArrayList<Timeline> timelines = new ArrayList<>();
 
@@ -38,7 +39,7 @@ public class GenerateTimeline {
         return null;
     }
 
-    public static HashSet<Course> getCoursesDesired(ArrayList<Course> coursesTaken){
+    public static HashSet<Course> getCoursesDesired(Set<Course> coursesTaken){
         //TODO
         return null;
     }
