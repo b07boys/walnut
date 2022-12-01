@@ -1,17 +1,13 @@
 package org.b07boys.walnut.user;
 
-import org.b07boys.walnut.courses.Course;
-
-import java.util.ArrayList;
-
 public class User {
 
     private static User instance;
 
-    private ArrayList<Course> takenCourses;
+    private TakenCourses takenCourses;
 
     private User() {
-        takenCourses = new ArrayList<>();
+        takenCourses = TakenCourses.getInstance();
         populateFields();
     }
 
@@ -25,7 +21,7 @@ public class User {
         return instance;
     }
 
-    public ArrayList<Course> getTakenCourses() {
+    public TakenCourses getTakenCourses() {
         return takenCourses;
     }
 }
