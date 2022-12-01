@@ -116,20 +116,15 @@ public class GenerateTimeline {
         return true;
     }
 
+    public static String formatAsText(Timeline timeline){
+        StringBuilder builder = new StringBuilder();
+        for(Session session : timeline.getSessions()){
+            builder.append("\n").append(session.getSessionType()).append(": ");
+            for(Course course : session.getCourses()){
+                builder.append(course.toString()).append("\t");
+            }
+        }
 
-    public static ArrayList<ArrayList<ArrayList<Course>>> generate(
-            ArrayList<ArrayList<Course>> timeline, ArrayList<Course> desiredCourses,
-            ArrayList<Course> takenCourses, int maxCoursesPerSem){
-
-        ArrayList<ArrayList<ArrayList<Course>>> timelinePossibilities = new ArrayList<>();
-        gen(timeline,desiredCourses,takenCourses,maxCoursesPerSem);
-
-        return timelinePossibilities;
-    }
-
-    private static void gen(
-            ArrayList<ArrayList<Course>> timeline, ArrayList<Course> desiredCourses,
-            ArrayList<Course> takenCourses, int maxCoursesPerSem){
-
+        return builder.toString();
     }
 }
