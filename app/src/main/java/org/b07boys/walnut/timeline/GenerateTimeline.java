@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 
 public class GenerateTimeline {
@@ -23,8 +24,8 @@ public class GenerateTimeline {
      * @return an ArrayList of Timelines that are valid for the user
      */
     public static ArrayList<Timeline> generateTimeline(User user, int maxCoursesPerSem, SessionType sessionType){
-        ArrayList<Course> coursesTaken = user.getTakenCourses();
-        ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
+        Set<Course> coursesTaken = user.getTakenCourses().getCourses();
+        HashSet<Course> coursesDesired = getCoursesDesired(coursesTaken);
         ArrayList<Timeline> timelines = new ArrayList<>();
 
         assert coursesDesired != null;
@@ -67,7 +68,8 @@ public class GenerateTimeline {
         return timelines;
     }
 
-    public static ArrayList<Course> getCoursesDesired(ArrayList<Course> coursesTaken){
+    public static HashSet<Course> getCoursesDesired(Set<Course> coursesTaken){
+    
         //TODO
         return null;
     }
