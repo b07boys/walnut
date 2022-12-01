@@ -1,13 +1,18 @@
 package org.b07boys.walnut.user;
 
+import org.b07boys.walnut.timeline.ValidTimelines;
+
 public class User {
 
     private static User instance;
 
-    private TakenCourses takenCourses;
+    private final TakenCourses takenCourses;
+
+    private final ValidTimelines validTimelines;
 
     private User() {
         takenCourses = TakenCourses.getInstance();
+        validTimelines = ValidTimelines.getInstance();
         populateFields();
     }
 
@@ -23,5 +28,9 @@ public class User {
 
     public TakenCourses getTakenCourses() {
         return takenCourses;
+    }
+
+    public ValidTimelines getValidTimelines(){
+        return validTimelines;
     }
 }
