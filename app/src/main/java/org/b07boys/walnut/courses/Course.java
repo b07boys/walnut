@@ -6,31 +6,31 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
-    enum Session{FALL, WINTER, SUMMER}
-    private Object UID;
-    private Course[] prerequisites;
+    private final String uid;
+    private String[] prerequisiteUIDS;
     private String name;
     private String code;
-    private Session[] offeringSessions;
+    private SessionType[] offeringSessions;
 
-    public Course(String code, String name, Session[] offeringSessions, Course[] prerequisites) {
-        //TODO generate UID @Lucas
-        this.prerequisites = prerequisites;
+    public Course(String uid, String code, String name, SessionType[] offeringSessions,
+                  String[] prerequisiteUIDS) {
+        this.uid = uid;
+        this.prerequisiteUIDS = prerequisiteUIDS;
         this.name = name;
         this.code = code;
         this.offeringSessions = offeringSessions;
     }
 
-    public Object getUID() {
-        return UID;
+    public String getUID() {
+        return uid;
     }
 
-    public Course[] getPrerequisites() {
-        return prerequisites;
+    public String[] getPrerequisiteUIDS() {
+        return prerequisiteUIDS;
     }
 
-    public void setPrerequisites(Course[] prerequisites) {
-        this.prerequisites = prerequisites;
+    public void setPrerequisiteUIDS(String[] prerequisiteUIDS) {
+        this.prerequisiteUIDS = prerequisiteUIDS;
     }
 
     public String getName() {
@@ -49,20 +49,40 @@ public class Course {
         this.code = code;
     }
 
-    public Session[] getOfferingSessions() {
+    public SessionType[] getOfferingSessions() {
         return offeringSessions;
     }
 
-    public void setOfferingSessions(Session[] offeringSessions) {
+    public void setOfferingSessions(SessionType[] offeringSessions) {
         this.offeringSessions = offeringSessions;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return code + ": " + name +
-                "\nPrerequisites: " + Arrays.toString(prerequisites) +
-                "\nOffered in: " + Arrays.toString(offeringSessions);
+
+        CourseCatalogue courseCatalog = CourseCatalogue.getInstance();
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("UID: ")
+                .append(uid)
+                .append("\n")
+                .append(code)
+                .append(": ")
+                .append(name)
+                .append("\nPrerequisites: ");
+
+        for (String prereqUID : prerequisiteUIDS) {
+            Course course = courseCatalog.getCourseByUID(prereqUID);
+            builder.append(course != null ? course.getCode() : prereqUID)
+                    .append(" ");
+        }
+
+        builder.append("\nOffered in: ")
+                .append(Arrays.toString(offeringSessions));
+
+        return builder.toString();
     }
 
     @Override
@@ -70,11 +90,11 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return code.equals(course.code);
+        return uid.equals(course.uid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code);
+        return Objects.hash(uid);
     }
 }
