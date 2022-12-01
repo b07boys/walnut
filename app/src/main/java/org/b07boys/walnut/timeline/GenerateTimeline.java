@@ -77,7 +77,19 @@ public class GenerateTimeline {
         Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
 
         //iterate through sessions
+        int[] lastSessions = {1,1};
         for (Session session : timeline.getSessions()) {
+            //check if 3 empty sessions in a row
+            if(session.getCourses() == null && lastSessions[0] == 0 && lastSessions[1] == 0){
+                return false;
+            }
+            lastSessions[1] = lastSessions[0];
+            if(session.getCourses() == null){
+                lastSessions[0] = 0;
+            }else{
+                lastSessions[0] = 1;
+            }
+
             List<Course> currentCourses = new ArrayList<>();
             //iterate through courses
             for (Course course : session.getCourses()) {
