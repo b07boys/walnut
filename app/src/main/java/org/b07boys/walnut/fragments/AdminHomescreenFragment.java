@@ -61,27 +61,8 @@ public class AdminHomescreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CourseCatalogue courseCatalogue = CourseCatalogue.getInstance();
-
-        binding.initCourseCatalogue.setOnClickListener(clickView -> {
-
-            // cleaning up the db
-            for (Course course : courseCatalogue.getCourses()) {
-                String uid = course.getUID();
-                if (!uid.equals("test_uid")) {
-                    CourseUtils.removeCourse(uid);
-                }
-            }
-
-            /*CourseUtils.createCourse(
-                    "CSCA48",
-                    "paco",
-                    new SessionType[]{SessionType.FALL},
-                    new String[]{"test_uid"});
-             */
-
-        });
+        }
 
     }
 
-}
+
