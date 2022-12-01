@@ -1,13 +1,21 @@
 package org.b07boys.walnut.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseUtils;
@@ -16,7 +24,6 @@ import org.b07boys.walnut.databinding.FragmentAddCoursePopUpBinding;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -138,21 +145,28 @@ public class AddCoursePopUpFragment extends DialogFragment {
                 binding.courseNameLayout.setErrorEnabled(false);
             }
 
-            if (!valid)
-                return;
-
-            CourseUtils.createCourse(
-                    code,
-                    name,
-                    getCheckedSessions(),
-                    getCheckedCourses()
-            );
+            if (valid)
+                CourseUtils.createCourse(
+                        code,
+                        name,
+                        getCheckedSessions(),
+                        getCheckedCourses()
+                ).addOnSuccessListener(task -> {
+                    sendSnackbar(getActivity().getWindow().getDecorView(), "Success!", Color.parseColor("#007F00"));
+                    getDialog().dismiss();
+                }).addOnFailureListener(er -> {
+                    sendSnackbar(getView(), "Error creating course", Color.parseColor("#007F00"));
+                });
 
 
         });
 
     }
 
-
+    private void sendSnackbar(View view, String message, int color) {
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+        snackbar.getView().setBackgroundColor(color);
+        snackbar.show();
+    }
 
 }
