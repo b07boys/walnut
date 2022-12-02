@@ -4,6 +4,7 @@ import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.Session;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.courses.SessionUtils;
+import org.b07boys.walnut.user.DesiredCourses;
 import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
 
@@ -17,7 +18,6 @@ public class GenerateTimeline {
     /**
      * Generates every possible valid timeline for a user
      *
-     * @param user object the student who's timeline to generate
      * @param maxCoursesPerSem the maximum number of courses the user wants to take in a single session
      * @param sessionType the next session
      * @return an ArrayList of Timelines that are valid for the user
@@ -25,7 +25,9 @@ public class GenerateTimeline {
     public static ArrayList<Timeline> generateTimeline(int maxCoursesPerSem, SessionType sessionType){
         User user = User.getInstance();
         Set<Course> coursesTaken = user.getTakenCourses().getCourses();
-        ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
+        ArrayList<Course> coursesDesired = new ArrayList<>();
+        coursesDesired.addAll(DesiredCourses.getInstance().getCourses());
+        //ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
         ArrayList<Timeline> timelines = new ArrayList<>();
 
         assert coursesDesired != null;
@@ -55,6 +57,7 @@ public class GenerateTimeline {
             //check if potentialTimeline is vaild and add to timelines
             if(checkTimeline(potentialTimeline, maxCoursesPerSem)) timelines.add(potentialTimeline);
 
+            //increment
             timeline[0]++;
             for (int i = 0; i < timeline.length; i++){
                 if (timeline[i] == timeline.length){
