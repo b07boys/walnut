@@ -7,6 +7,7 @@ import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseStructure;
 import org.b07boys.walnut.database.DatabaseNodeSync;
 import org.b07boys.walnut.database.adapters.CourseAdapter;
+import org.b07boys.walnut.fragments.AddCoursePopUpFragment;
 
 public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
 
