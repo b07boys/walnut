@@ -70,20 +70,7 @@ public class AdminHomescreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAdminHomescreenBinding.inflate(inflater, container, false);
-        binding.addCourseButton.setOnClickListener(viewButton -> {
-            DialogFragment addPopUp = new AddCoursePopUpFragment();
-            addPopUp.show(getActivity().getSupportFragmentManager(), "addPopUp");
-        });
-
-
-
-
-
         return binding.getRoot();
-
-
-
-
     }
 
     @Override
@@ -120,15 +107,25 @@ public class AdminHomescreenFragment extends Fragment {
                 for (int ind = 0; ind < stuff2.length; ind++){
                     stuff2[ind] = stuff[ind].name();
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                            .navigate(AdminHomescreenFragmentDirections
-                                    .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null).setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName()).setPrerequisites(temp.getCourse().getPrerequisiteUIDS()).setSessions(stuff2));
-                }
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                        .navigate(AdminHomescreenFragmentDirections
+                                .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null)
+                                .setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName())
+                                .setPrerequisites(temp.getCourse().getPrerequisiteUIDS())
+                                .setSessions(stuff2));
             }
         });
 
-        binding.floatingActionButton.setOnClickListener(viewButton -> {
+        /*binding.addCourseButton.setOnClickListener(viewButton -> {
+            DialogFragment addPopUp = new AddCoursePopUpFragment();
+            addPopUp.show(getActivity().getSupportFragmentManager(), "addPopUp");
+        });*/
+
+        binding.addCourseButton.setOnClickListener(viewButton -> {
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                    .navigate(AdminHomescreenFragmentDirections
+                            .actionAdminHomescreenFragmentToAddCoursePopUpFragment());
+        });
         SearchView search = binding.searchBar;
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

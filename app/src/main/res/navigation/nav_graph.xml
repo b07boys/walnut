@@ -82,9 +82,12 @@
         android:name="org.b07boys.walnut.fragments.AdminHomescreenFragment"
         android:label="fragment_admin_homescreen"
         tools:layout="@layout/fragment_admin_homescreen" >
-        <actionssssssssssssssssssssssssssssssssssssssssssss
+        <action
             android:id="@+id/action_adminHomescreenFragment_to_coursePopUpFragment"
             app:destination="@id/coursePopUpFragment" />
+        <action
+            android:id="@+id/action_adminHomescreenFragment_to_addCoursePopUpFragment"
+            app:destination="@id/addCoursePopUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseCoursesDesiredFragment"
@@ -121,4 +124,14 @@
             app:argType="string[]"
             app:nullable="true" />
     </dialog>
+    <dialog
+        android:id="@+id/addCoursePopUpFragment"
+        android:name="org.b07boys.walnut.fragments.AddCoursePopUpFragment"
+        android:label="fragment_add_course_pop_up"
+        tools:layout="@layout/fragment_add_course_pop_up" />
+    <fragment
+        android:id="@+id/studentAddCourseFragment"
+        android:name="org.b07boys.walnut.fragments.StudentAddCourseFragment"
+        android:label="fragment_student_add_course"
+        tools:layout="@layout/fragment_student_add_course" />
 </navigation>
