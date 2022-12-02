@@ -1,5 +1,6 @@
 package org.b07boys.walnut.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,14 +8,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.CourseUtils;
+import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentCoursePopUpBinding;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,9 +44,12 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
     private String mParam1;
     private String mParam2;
     private FragmentCoursePopUpBinding binding;
+    private Map<SessionType, MaterialButton> sessions;
+    private Map<String, CheckBox> prerequisites;
 
     public CoursePopUpFragment() {
-        // Required empty public constructor
+        sessions = new HashMap<>();
+        prerequisites = new HashMap<>();
     }
 
     /**
@@ -64,6 +79,50 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
         }
     }
 
+
+    private void setCheckboxes() {
+
+        MaterialButtonToggleGroup buttonToggleGroup = new MaterialButtonToggleGroup(getActivity());
+
+        String[] s = CoursePopUpFragmentArgs.fromBundle(getArguments()).getSessions();
+        for (SessionType sessionType : SessionType.values()) {
+
+            if (sessionType != SessionType.INVALID) {
+                MaterialButton button = (MaterialButton) getLayoutInflater().inflate(R.layout.button_layout, buttonToggleGroup, false);
+                button.setText(sessionType.name());
+                buttonToggleGroup.addView(button);
+                sessions.put(sessionType, button);
+                for(int i = 0; i<s.length; i++){
+                    if (sessionType.name().equals(s[i])){
+                        button.setChecked(true);
+                    }
+                }
+
+            }
+
+        }
+        binding.sessionLayout.addView(buttonToggleGroup);
+        String[] p = CoursePopUpFragmentArgs.fromBundle(getArguments()).getPrerequisites();
+        for (Course course : CourseCatalogue.getInstance().getCourses()) {
+
+            CheckBox checkBox = new CheckBox(getActivity());
+            checkBox.setText(course.getCode());
+
+            prerequisites.put(course.getUID(), checkBox);
+            binding.prerequisitesLayout.addView(checkBox);
+
+            for(int i = 0; i<p.length; i++){
+                Log.d("lll", course.getUID());
+                if (course.getUID().equals(p[i])){
+                    checkBox.setChecked(true);
+
+                }
+            }
+
+        }
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,9 +134,22 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.CourseCodeText.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseCode());
-        binding.courseTitleText.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseTitle());
-        binding.SessionsText.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getSessions().toString());
-        binding.PrerequisitesText.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getPrerequisites().toString());
-    }
-}
+
+        //binding.modifyCourseButton.setOnClickListener(buttonView -> {
+          //  CourseUtils.modifyCourse(uid,
+            //        code,
+              //      name,
+                //    sessions,
+                  //  prereqs
+                    //);
+
+           // CourseUtils.removeCourse(uid);
+        //});
+
+        binding.courseCodeField.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseCode());
+        binding.courseNameField.setText(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseTitle());
+        setCheckboxes();
+
+        boolean valid = true;
+
+}}

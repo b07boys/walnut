@@ -23,7 +23,8 @@
                 <EmulatorPanelState>
                   <option name="splitPanel">
                     <SplitPanelState>
-                      <option name="proportion" value="0.9886792302131653" />
+                      <option name="proportion" value="0.9882550239562988" />
+                      <option name="splitType" value="VERTICAL" />
                       <option name="firstComponent">
                         <EmulatorPanelState>
                           <option name="displayId" value="0" />
