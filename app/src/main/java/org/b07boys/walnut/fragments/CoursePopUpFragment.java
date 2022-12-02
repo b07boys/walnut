@@ -127,9 +127,6 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
             }
 
         }
-
-
-
     }
 
     @Override
@@ -179,6 +176,27 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
         }
 
         binding.modifyCourseButton.setOnClickListener(buttonView -> {
+            String code = binding.courseCodeField.getText().toString();
+            String name = binding.courseNameField.getText().toString();
+
+            boolean valid = true;
+
+            if (code.trim().equals("")) {
+                binding.courseCodeLayout.setErrorEnabled(true);
+                binding.courseCodeLayout.setError("Course code must not be empty");
+                valid = false;
+            } else {
+                binding.courseCodeLayout.setErrorEnabled(false);
+            }
+
+            if (name.trim().equals("")) {
+                binding.courseNameLayout.setErrorEnabled(true);
+                binding.courseNameLayout.setError("Course name must not be empty");
+                valid = false;
+            } else {
+                binding.courseNameLayout.setErrorEnabled(false);
+            }
+            if(valid){
             CourseUtils.modifyCourse(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseUID(),
                     binding.courseCodeField.getText().toString(),
                     binding.courseNameField.getText().toString(),
@@ -186,7 +204,7 @@ public class CoursePopUpFragment extends BottomSheetDialogFragment {
                     getCheckedCourses());
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(CoursePopUpFragmentDirections.actionCoursePopUpFragmentToAdminHomescreenFragment());
 
-        });
+        }});
 
         binding.deleteCourseButton.setOnClickListener(buttonView -> {
             CourseUtils.removeCourse(CoursePopUpFragmentArgs.fromBundle(getArguments()).getCourseUID());
