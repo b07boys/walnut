@@ -1,17 +1,18 @@
 package org.b07boys.walnut.user;
 
-import org.b07boys.walnut.courses.Course;
-
-import java.util.ArrayList;
+import org.b07boys.walnut.timeline.ValidTimelines;
 
 public class User {
 
     private static User instance;
 
-    private ArrayList<Course> takenCourses;
+    private final TakenCourses takenCourses;
+
+    private final ValidTimelines validTimelines;
 
     private User() {
-        takenCourses = new ArrayList<>();
+        takenCourses = TakenCourses.getInstance();
+        validTimelines = ValidTimelines.getInstance();
         populateFields();
     }
 
@@ -25,7 +26,11 @@ public class User {
         return instance;
     }
 
-    public ArrayList<Course> getTakenCourses() {
+    public TakenCourses getTakenCourses() {
         return takenCourses;
+    }
+
+    public ValidTimelines getValidTimelines(){
+        return validTimelines;
     }
 }

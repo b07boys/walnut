@@ -1,29 +1,36 @@
 package org.b07boys.walnut.courses;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Session {
-    private HashSet<Course> courses;
+    private List<Course> courses;
     private SessionType session;
 
-    public Session(HashSet<Course> courses, SessionType session) {
+    public Session(List<Course> courses, SessionType session) {
         this.courses = courses;
         this.session = session;
     }
 
-    public HashSet<Course> getCourses() {
+    public Session(SessionType session){
+        this.session = session;
+        courses = new ArrayList<>();
+    }
+
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(HashSet<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 
-    public SessionType getSession() {
+
+    public SessionType getSessionType() {
         return session;
     }
 
-    public void setSession(SessionType session) {
+    public void setSessionType(SessionType session) {
         this.session = session;
     }
 

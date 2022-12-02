@@ -3,15 +3,16 @@ package org.b07boys.walnut.database.syncs;
 import android.util.Log;
 
 import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseStructure;
 import org.b07boys.walnut.database.DatabaseNodeSync;
 import org.b07boys.walnut.database.adapters.CourseAdapter;
 
 public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
 
-    private CourseStructure courseStructure;
+    private CourseCatalogue courseStructure;
 
-    public DatabaseCourseSync(CourseStructure courseStructure, String node, Class<CourseAdapter> clazz) {
+    public DatabaseCourseSync(CourseCatalogue courseStructure, String node, Class<CourseAdapter> clazz) {
         super(node, clazz);
         this.courseStructure = courseStructure;
     }
@@ -27,10 +28,12 @@ public class DatabaseCourseSync extends DatabaseNodeSync<CourseAdapter> {
     @Override
     protected void childChanged(CourseAdapter courseAdapter, String key) {
         Course course = courseStructure.getCourseByUID(key);
-        if (course == null)
+        if (course == null) {
             childAdded(courseAdapter, key);
-        else
+        } else {
             courseAdapter.mapToCourse(course);
+            courseStructure.modifyCourse(course);
+        }
         //test
         Log.v("CHANGE_COURSE", courseAdapter.createCourse(key).toString());
     }

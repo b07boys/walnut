@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -60,6 +61,10 @@ public class AdminHomescreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAdminHomescreenBinding.inflate(inflater, container, false);
+        binding.addCourseButton.setOnClickListener(viewButton -> {
+            DialogFragment addPopUp = new AddCoursePopUpFragment();
+            addPopUp.show(getActivity().getSupportFragmentManager(), "addPopUp");
+        });
         return binding.getRoot();
     }
 
@@ -90,11 +95,8 @@ public class AdminHomescreenFragment extends Fragment {
             super.onCreate(savedInstanceState);
 
         }
-    }
-
-
-
 
     }
+}
 
 
