@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 import org.b07boys.walnut.user.TakenCourses;
 
@@ -52,6 +54,9 @@ public class StudentHomescreenFragment extends Fragment {
         binding.addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //CourseUtils.removeTakenCourse(CourseCatalogue.getInstance().getCourseByUID("test2_uid"));
+
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
             }
         });

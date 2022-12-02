@@ -28,4 +28,16 @@ public abstract class DatabaseSingleValueChange<T> extends DatabaseNode implemen
     public void onCancelled(@NonNull DatabaseError error) {
         Log.w("cancel", "value listener at node: " + getNode() + ":onCancelled", error.toException());
     }
+
+    public void startListening() {
+        attachListener();
+    }
+
+    public void attachListener() {
+        databaseReference.addValueEventListener(this);
+    }
+
+    public void detatchListener() {
+        databaseReference.removeEventListener(this);
+    }
 }
