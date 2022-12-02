@@ -60,7 +60,6 @@ public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
                 button.setText(sessionType.name());
                 buttonToggleGroup.addView(button);
                 sessions.put(sessionType, button);
-
             }
 
         }
