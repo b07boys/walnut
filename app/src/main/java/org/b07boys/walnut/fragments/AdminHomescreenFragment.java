@@ -8,11 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,8 +100,12 @@ public class AdminHomescreenFragment extends Fragment {
 
         ListView listView = (ListView) binding.courseList;
         listView.setAdapter(adapter);
-
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(AdminHomescreenFragmentDirections.actionAdminHomescreenFragmentToCoursePopUpFragment());
+            }
+        });
 
         SearchView search = binding.searchBar;
 
@@ -118,14 +124,6 @@ public class AdminHomescreenFragment extends Fragment {
 
     }
 
-    public class ListDisplay extends Activity {
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-        }
-
-    }
 }
 
 
