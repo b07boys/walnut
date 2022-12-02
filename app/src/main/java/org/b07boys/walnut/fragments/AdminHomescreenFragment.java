@@ -27,6 +27,8 @@ import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseStructure;
 import org.b07boys.walnut.courses.CourseUtils;
+import org.b07boys.walnut.courses.ModifyCourseType;
+import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.database.adapters.CourseListAdapter;
 import org.b07boys.walnut.databinding.FragmentAdminHomescreenBinding;
@@ -73,9 +75,27 @@ public class AdminHomescreenFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
+            @Override
+            public void onModify(Course course, ModifyCourseType modifyType) {
+                ArrayList<Course> coursesFromDb = new ArrayList<>(CourseCatalogue.getInstance().getCourses());
+                ArrayList<CourseListAdapter> adaptedCourses = new ArrayList<>();
+                for (Course c : coursesFromDb) {
+                    CourseListAdapter courseItem = new CourseListAdapter(c);
+                    adaptedCourses.add(courseItem);
+                }
+                ArrayAdapter adapter = new ArrayAdapter<>(getActivity(),
+                        R.layout.activity_listview, adaptedCourses);
+                binding.courseList.setAdapter(adapter);
+            }
+        });
+
         Set<Course> courses = CourseCatalogue.getInstance().getCourses();
 
         String[] courseCodes = new String[courses.size()];
@@ -109,17 +129,14 @@ public class AdminHomescreenFragment extends Fragment {
                 }
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
                         .navigate(AdminHomescreenFragmentDirections
-                                .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null)
+                                .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null,null)
                                 .setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName())
-                                .setPrerequisites(temp.getCourse().getPrerequisiteUIDS())
+                                .setPrerequisites(temp.getCourse().getPrerequisiteUIDS()).setCourseUID(temp.getCourse().getUID())
                                 .setSessions(stuff2));
             }
+
         });
 
-        /*binding.addCourseButton.setOnClickListener(viewButton -> {
-            DialogFragment addPopUp = new AddCoursePopUpFragment();
-            addPopUp.show(getActivity().getSupportFragmentManager(), "addPopUp");
-        });*/
 
         binding.addCourseButton.setOnClickListener(viewButton -> {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
@@ -140,6 +157,8 @@ public class AdminHomescreenFragment extends Fragment {
                 return false;
             }
         });
+
+
 
     }
 
