@@ -13,10 +13,9 @@ import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.SessionType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
-public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.ViewHolder> {
+public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecyclerViewAdapter.ViewHolder> {
     private ArrayList<CourseModel> courses;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTextView;
@@ -60,7 +59,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public CourseListAdapter(Set<Course> dataSet) {
+    public CourseRecyclerViewAdapter(Set<Course> dataSet) {
         courses = new ArrayList<>();
         for (Course c: dataSet) {
             CourseModel a = new CourseModel();
@@ -78,7 +77,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         }
     }*/
 
-    public CourseListAdapter(ArrayList<CourseModel> dataSet) {
+    public CourseRecyclerViewAdapter(ArrayList<CourseModel> dataSet) {
         this.courses = dataSet;
     }
 
