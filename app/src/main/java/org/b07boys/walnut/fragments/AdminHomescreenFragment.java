@@ -85,8 +85,6 @@ public class AdminHomescreenFragment extends Fragment {
     }
 
     public class ListDisplay extends Activity {
-
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
