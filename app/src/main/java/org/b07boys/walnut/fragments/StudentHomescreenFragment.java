@@ -65,6 +65,7 @@ public class StudentHomescreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        User.getInstance().getTakenCourses();
     }
 
     @Override
