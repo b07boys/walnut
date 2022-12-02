@@ -4,9 +4,11 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.database.DatabaseAdapter;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,16 +108,7 @@ public class CourseAdapter implements DatabaseAdapter {
 
     @Exclude
     private String[] convertUIDStringToArray(String uidString) {
-
-        String[] splitString = uidString.split(" ");
-
-        int length = splitString.length;
-
-        String[] uidArray = new String[length];
-
-        System.arraycopy(splitString, 0, uidArray, 0, length);
-
-        return uidArray;
+        return uidString.split(" ");
     }
 
 }
