@@ -82,7 +82,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
+        /*CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
             public void onAdd(Course course) {
                 binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
@@ -97,7 +97,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             public void onModify(Course course) {
                 binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
             }
-        });
+        }); */
 
 
         // Inflate the layout for this fragment

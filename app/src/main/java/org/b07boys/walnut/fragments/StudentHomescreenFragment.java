@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
+import org.b07boys.walnut.user.TakenCourses;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,9 +44,12 @@ public class StudentHomescreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        TakenCourses.getInstance();
+
         // Inflate the layout for this fragment
         binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
-        binding.choose.setOnClickListener(new View.OnClickListener() {
+        binding.addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
