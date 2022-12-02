@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 
 /**
@@ -43,6 +45,12 @@ public class StudentHomescreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
+        binding.choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
+            }
+        });
         return binding.getRoot();
     }
 
