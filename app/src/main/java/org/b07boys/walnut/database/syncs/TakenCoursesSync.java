@@ -1,44 +1,43 @@
 package org.b07boys.walnut.database.syncs;
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
-import org.b07boys.walnut.database.DatabaseNodeSync;
-import org.b07boys.walnut.database.adapters.TakenCoursesAdapter;
+import org.b07boys.walnut.database.DatabaseNodeEditor;
+import org.b07boys.walnut.database.DatabasePaths;
+import org.b07boys.walnut.database.DatabaseSingleValueChange;
 import org.b07boys.walnut.user.TakenCourses;
 
-public class TakenCoursesSync extends DatabaseNodeSync <TakenCoursesAdapter> {
+public class TakenCoursesSync extends DatabaseSingleValueChange <String> {
 
     private TakenCourses takenCourses;
-    private CourseCatalogue courseCatalgoue;
 
-    public TakenCoursesSync(TakenCourses takenCourses, String node, Class<TakenCoursesAdapter> clazz) {
-        super(node, clazz);
+    public TakenCoursesSync(TakenCourses takenCourses, String node) {
+        super(node, String.class);
         this.takenCourses = takenCourses;
-        courseCatalgoue = CourseCatalogue.getInstance();
     }
 
     @Override
-    protected void childAdded(TakenCoursesAdapter course, String key) {
-        for (String uid : course.getCourses()) {
-            Course courseTarget = courseCatalgoue.getCourseByUID(uid);
-            if (courseTarget == null) {
+    protected void onChange(String uids) {
+        if (uids == null) {
+            DatabaseNodeEditor nodeEditor = new DatabaseNodeEditor(DatabasePaths.COURSES_TAKEN.path);
+            nodeEditor.writeAsChild("",
+                    FirebaseAuth.getInstance().getCurrentUser().getUid(), "");
+            return;
+        }
+
+        takenCourses.getCourses().clear();
+        String[] courses = uids.split(" ");
+        for (String uid : courses) {
+            Course course = CourseCatalogue.getInstance().getCourseByUID(uid);
+            if (course == null) {
                 takenCourses.getCoursesNotInitialized().add(uid);
             } else {
-                takenCourses.addCourse(courseTarget);
+                takenCourses.addCourse(course);
             }
         }
     }
-
-    @Override
-    protected void childChanged(TakenCoursesAdapter course, String key) {
-        takenCourses.getCourses().clear();
-        childAdded(course, key);
-    }
-
-    @Override
-    protected void childRemoved(TakenCoursesAdapter course, String key) {
-        takenCourses.getCourses().clear();
-    }
-
-
 }
