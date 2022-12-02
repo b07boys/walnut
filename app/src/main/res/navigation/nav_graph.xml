@@ -104,5 +104,21 @@
         android:id="@+id/coursePopUpFragment"
         android:name="org.b07boys.walnut.fragments.CoursePopUpFragment"
         android:label="fragment_course_pop_up"
-        tools:layout="@layout/fragment_course_pop_up" />
+        tools:layout="@layout/fragment_course_pop_up">
+        <argument
+            android:name="courseTitle"
+            app:argType="string" />
+        <argument
+            android:name="courseCode"
+            app:argType="string"
+            android:defaultValue='' />
+        <argument
+            android:name="sessions"
+            app:argType="string[]"
+            app:nullable="true" />
+        <argument
+            android:name="prerequisites"
+            app:argType="string[]"
+            app:nullable="true" />
+    </dialog>
 </navigation>
