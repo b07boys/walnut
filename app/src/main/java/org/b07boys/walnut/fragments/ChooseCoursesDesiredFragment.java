@@ -19,12 +19,16 @@ import org.b07boys.walnut.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
+import org.b07boys.walnut.user.DesiredCourses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,18 +88,8 @@ public class ChooseCoursesDesiredFragment extends Fragment {
 
         CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
-            public void onAdd(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
-            }
-
-            @Override
-            public void onRemove(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
-            }
-
-            @Override
-            public void onModify(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
+            public void onModify(Course course, ModifyCourseType modifyType) {
+                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses()));
             }
         });
 
@@ -138,6 +132,15 @@ public class ChooseCoursesDesiredFragment extends Fragment {
                 } else if (checkedId == R.id.button3) {
                     if (isChecked) filter("SUMMER");
                     else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
+                }
+            }
+        });
+
+        binding.extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (CourseModel courseModel : ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses()) {
+                    if (courseModel.getChecked()) DesiredCourses.getInstance().addCourse(courseModel.getCourse());
                 }
             }
         });
