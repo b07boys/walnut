@@ -33,7 +33,7 @@ public class TakenCoursesAdapter implements DatabaseAdapter {
     }
 
     @Exclude
-    public String[] getCourse() {
+    public String[] getCourses() {
         return courses.split(" ");
     }
 }
