@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.b07boys.walnut.R;
@@ -27,11 +30,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AddCoursePopUpFragment extends DialogFragment {
+public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
 
     private FragmentAddCoursePopUpBinding binding;
 
-    private Map<SessionType, CheckBox> sessions;
+    private Map<SessionType, MaterialButton> sessions;
     private Map<String, CheckBox> prerequisites;
 
     public AddCoursePopUpFragment() {
@@ -47,36 +50,21 @@ public class AddCoursePopUpFragment extends DialogFragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        double scaleX = 0.8;
-        double scaleY = 0.8;
-
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * scaleX);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * scaleY);
-
-        getDialog().getWindow().setLayout(width, height);
-
-    }
-
     private void setCheckboxes() {
 
+        MaterialButtonToggleGroup buttonToggleGroup = new MaterialButtonToggleGroup(getActivity());
         for (SessionType sessionType : SessionType.values()) {
 
             if (sessionType != SessionType.INVALID) {
-
-                CheckBox checkBox = new CheckBox(getActivity());
-                checkBox.setText(sessionType.name());
-
-                sessions.put(sessionType, checkBox);
-
-                binding.sessionLayout.addView(checkBox);
+                MaterialButton button = (MaterialButton) getLayoutInflater().inflate(R.layout.button_layout, buttonToggleGroup, false);
+                button.setText(sessionType.name());
+                buttonToggleGroup.addView(button);
+                sessions.put(sessionType, button);
 
             }
 
         }
+        binding.sessionLayout.addView(buttonToggleGroup);
 
         for (Course course : CourseCatalogue.getInstance().getCourses()) {
 
@@ -95,7 +83,7 @@ public class AddCoursePopUpFragment extends DialogFragment {
 
         Set<SessionType> sessionTypes = new HashSet<>();
 
-        for (Map.Entry<SessionType, CheckBox> entry : sessions.entrySet()) {
+        for (Map.Entry<SessionType, MaterialButton> entry : sessions.entrySet()) {
             if (entry.getValue().isChecked())
                 sessionTypes.add(entry.getKey());
         }
