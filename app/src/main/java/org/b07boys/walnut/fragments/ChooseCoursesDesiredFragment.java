@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
@@ -19,12 +20,16 @@ import org.b07boys.walnut.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
+import org.b07boys.walnut.user.DesiredCourses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,22 +87,12 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
+        /*CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
-            public void onAdd(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
+            public void onModify(Course course, ModifyCourseType modifyType) {
+                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses()));
             }
-
-            @Override
-            public void onRemove(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
-            }
-
-            @Override
-            public void onModify(Course course) {
-                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
-            }
-        });
+        }); */
 
 
         // Inflate the layout for this fragment
@@ -139,6 +134,17 @@ public class ChooseCoursesDesiredFragment extends Fragment {
                     if (isChecked) filter("SUMMER");
                     else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
                 }
+            }
+        });
+
+        binding.extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (CourseModel courseModel : ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses()) {
+                    if (courseModel.getChecked()) DesiredCourses.getInstance().addCourse(courseModel.getCourse());
+                }
+
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(ChooseCoursesDesiredFragmentDirections.actionChooseCoursesDesiredFragmentToGeneratedTimelinesFragment());
             }
         });
 

@@ -9,6 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.b07boys.walnut.R;
+import org.b07boys.walnut.courses.SessionType;
+import org.b07boys.walnut.databinding.FragmentGeneratedTimelinesBinding;
+import org.b07boys.walnut.timeline.GenerateTimeline;
+import org.b07boys.walnut.timeline.Timeline;
+import org.b07boys.walnut.timeline.ValidTimelines;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +25,12 @@ import org.b07boys.walnut.R;
  * create an instance of this fragment.
  */
 public class GeneratedTimelinesFragment extends Fragment {
+    FragmentGeneratedTimelinesBinding binding;
+
+    ArrayList<Timeline> timelines;
+    ListIterator<Timeline> timelineIterator;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,12 +70,47 @@ public class GeneratedTimelinesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_generated_timelines, container, false);
+        binding = FragmentGeneratedTimelinesBinding.inflate(inflater, container, false);
+
+        binding.previous.setVisibility(View.INVISIBLE);
+        binding.next.setVisibility(View.INVISIBLE);
+
+        return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.generate.setOnClickListener(view13 -> {
+            timelines = GenerateTimeline.generateTimeline(5, SessionType.FALL);
+            //ValidTimelines.getInstance().setValidTimelines(timelines);
+            timelineIterator = timelines.listIterator();
+            binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+
+            binding.previous.setVisibility(View.VISIBLE);
+            binding.next.setVisibility(View.VISIBLE);
+            binding.generate.setVisibility(View.INVISIBLE);
+        });
+
+        binding.previous.setOnClickListener(view1 -> {
+            if(timelineIterator.hasPrevious()){
+                binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.previous()));
+            }
+        });
+
+        binding.next.setOnClickListener(view12 -> {
+            if(timelineIterator.hasNext()){
+                binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+            }
+        });
+    }
+
+
 }
