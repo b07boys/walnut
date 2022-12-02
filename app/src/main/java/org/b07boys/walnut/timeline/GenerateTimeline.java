@@ -22,7 +22,8 @@ public class GenerateTimeline {
      * @param sessionType the next session
      * @return an ArrayList of Timelines that are valid for the user
      */
-    public static ArrayList<Timeline> generateTimeline(User user, int maxCoursesPerSem, SessionType sessionType){
+    public static ArrayList<Timeline> generateTimeline(int maxCoursesPerSem, SessionType sessionType){
+        User user = User.getInstance();
         Set<Course> coursesTaken = user.getTakenCourses().getCourses();
         ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
         ArrayList<Timeline> timelines = new ArrayList<>();
