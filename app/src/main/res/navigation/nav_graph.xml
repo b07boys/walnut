@@ -81,7 +81,11 @@
         android:id="@+id/adminHomescreenFragment"
         android:name="org.b07boys.walnut.fragments.AdminHomescreenFragment"
         android:label="fragment_admin_homescreen"
-        tools:layout="@layout/fragment_admin_homescreen" />
+        tools:layout="@layout/fragment_admin_homescreen" >
+        <action
+            android:id="@+id/action_adminHomescreenFragment_to_addCoursePopUpFragment"
+            app:destination="@id/addCoursePopUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chooseCoursesDesiredFragment"
         android:name="org.b07boys.walnut.fragments.ChooseCoursesDesiredFragment"
@@ -96,4 +100,9 @@
         android:name="org.b07boys.walnut.fragments.GeneratedTimelinesFragment"
         android:label="fragment_generated_timelines"
         tools:layout="@layout/fragment_generated_timelines" />
+    <dialog
+        android:id="@+id/addCoursePopUpFragment"
+        android:name="org.b07boys.walnut.fragments.AddCoursePopUpFragment"
+        android:label="fragment_add_course_pop_up"
+        tools:layout="@layout/fragment_add_course_pop_up" />
 </navigation>

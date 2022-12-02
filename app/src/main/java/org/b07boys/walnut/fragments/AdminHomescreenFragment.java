@@ -63,8 +63,7 @@ public class AdminHomescreenFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.floatingActionButton.setOnClickListener(viewButton -> {
-            DialogFragment addPopUp = new AddCoursePopUpFragment();
-            addPopUp.show(getActivity().getSupportFragmentManager(), "addPopUp");
+
         });
 
     }
