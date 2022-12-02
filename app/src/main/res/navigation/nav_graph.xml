@@ -123,6 +123,13 @@
             android:name="prerequisites"
             app:argType="string[]"
             app:nullable="true" />
+        <argument
+            android:name="CourseUID"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_coursePopUpFragment_to_adminHomescreenFragment"
+            app:destination="@id/adminHomescreenFragment" />
     </dialog>
     <dialog
         android:id="@+id/addCoursePopUpFragment"
