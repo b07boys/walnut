@@ -10,13 +10,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
-import org.b07boys.walnut.CourseListAdapter;
+import org.b07boys.walnut.CourseRecyclerViewAdapter;
 import org.b07boys.walnut.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
@@ -27,7 +25,6 @@ import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,17 +85,17 @@ public class ChooseCoursesDesiredFragment extends Fragment {
         CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
             public void onAdd(Course course) {
-                binding.rv.setAdapter(new CourseListAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
+                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
             }
 
             @Override
             public void onRemove(Course course) {
-                binding.rv.setAdapter(new CourseListAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
+                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
             }
 
             @Override
             public void onModify(Course course) {
-                binding.rv.setAdapter(new CourseListAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
+                binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())); //Terrible
             }
         });
 
@@ -113,7 +110,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             temp.setCourse(course);
             courseModels.add(temp);
         }
-        binding.rv.setAdapter(new CourseListAdapter(courseModels));
+        binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
         binding.rv.setNestedScrollingEnabled(false);
 
         binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -134,13 +131,13 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
                 if (checkedId == R.id.button1) {
                     if (isChecked) filter("FALL");
-                    else binding.rv.setAdapter(new CourseListAdapter(courseModels));
+                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
                 } else if (checkedId == R.id.button2) {
                     if (isChecked) filter("WINTER");
-                    else binding.rv.setAdapter(new CourseListAdapter(courseModels));
+                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
                 } else if (checkedId == R.id.button3) {
                     if (isChecked) filter("SUMMER");
-                    else binding.rv.setAdapter(new CourseListAdapter(courseModels));
+                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
                 }
             }
         });
@@ -150,10 +147,10 @@ public class ChooseCoursesDesiredFragment extends Fragment {
 
     private void filter(String text) {
         // Store list of unfiltered current courses in the recyclerview and their state (checked or not)
-        ArrayList<CourseModel> courseModels = ((CourseListAdapter) binding.rv.getAdapter()).getCourses();
+        ArrayList<CourseModel> courseModels = ((CourseRecyclerViewAdapter) binding.rv.getAdapter()).getCourses();
         if (text == null) {
             // Return to previous state
-            binding.rv.setAdapter(new CourseListAdapter(courseModels));
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
         }
         ArrayList<CourseModel> filteredCourseModelList = new ArrayList<>();
         // Filter on session
@@ -161,15 +158,15 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             if (Arrays.asList(courseModel.getCourse().getOfferingSessions()).contains(SessionType.valueOf(text)))
             {
                 filteredCourseModelList.add(courseModel);
-                ArrayList<CourseModel> currentItems = ((CourseListAdapter) binding.rv.getAdapter()).getCourses();
+                ArrayList<CourseModel> currentItems = ((CourseRecyclerViewAdapter) binding.rv.getAdapter()).getCourses();
                 currentItems.indexOf(courseModel);
             }
         }
         if (!filteredCourseModelList.isEmpty()) {
             // Pass filtered list to adapter
-            binding.rv.setAdapter(new CourseListAdapter(filteredCourseModelList));
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(filteredCourseModelList));
         } else {
-            binding.rv.setAdapter(new CourseListAdapter(new ArrayList<CourseModel>()));
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<CourseModel>()));
         }
     }
 
