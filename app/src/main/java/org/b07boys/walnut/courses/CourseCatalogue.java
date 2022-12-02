@@ -21,6 +21,7 @@ public class CourseCatalogue extends CourseStructure {
     }
 
     public static CourseCatalogue getInstance() {
+
         if (instance == null)
             instance = new CourseCatalogue();
         return instance;
