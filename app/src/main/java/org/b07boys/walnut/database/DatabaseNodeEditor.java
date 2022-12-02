@@ -29,6 +29,12 @@ public class DatabaseNodeEditor extends DatabaseNode {
         return databaseReference.child(path).updateChildren(childUpdates);
     }
 
+    public Task<Void> writeAsChild(String path, String key, String value) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/" + key, value);
+        return databaseReference.child(path).updateChildren(childUpdates);
+    }
+
     public Task<Void> deleteValue(String path) {
         return databaseReference.child(path).removeValue();
     }

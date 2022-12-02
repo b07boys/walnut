@@ -4,6 +4,7 @@ public enum DatabasePaths {
 
     ADMINS("admins"),
     COURSES_AVAILABLE("courses_available"),
+    COURSES_TAKEN("courses_taken"),
     TIMELINES("timelines");
 
     public final String path;

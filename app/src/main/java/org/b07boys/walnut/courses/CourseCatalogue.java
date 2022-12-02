@@ -21,8 +21,13 @@ public class CourseCatalogue extends CourseStructure {
     }
 
     public static CourseCatalogue getInstance() {
+
         if (instance == null)
             instance = new CourseCatalogue();
         return instance;
     }
+
+    // see if course exists in course catalogue. if it does, we just add it to takencourses
+    // if not, we add to coursesnotinitializded
+
 }

@@ -82,9 +82,9 @@
         android:name="org.b07boys.walnut.fragments.AdminHomescreenFragment"
         android:label="fragment_admin_homescreen"
         tools:layout="@layout/fragment_admin_homescreen" >
-        <action
-            android:id="@+id/action_adminHomescreenFragment_to_addCoursePopUpFragment"
-            app:destination="@id/addCoursePopUpFragment" />
+        <actionssssssssssssssssssssssssssssssssssssssssssss
+            android:id="@+id/action_adminHomescreenFragment_to_coursePopUpFragment"
+            app:destination="@id/coursePopUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseCoursesDesiredFragment"
@@ -101,8 +101,24 @@
         android:label="fragment_generated_timelines"
         tools:layout="@layout/fragment_generated_timelines" />
     <dialog
-        android:id="@+id/addCoursePopUpFragment"
-        android:name="org.b07boys.walnut.fragments.AddCoursePopUpFragment"
-        android:label="fragment_add_course_pop_up"
-        tools:layout="@layout/fragment_add_course_pop_up" />
+        android:id="@+id/coursePopUpFragment"
+        android:name="org.b07boys.walnut.fragments.CoursePopUpFragment"
+        android:label="fragment_course_pop_up"
+        tools:layout="@layout/fragment_course_pop_up">
+        <argument
+            android:name="courseTitle"
+            app:argType="string" />
+        <argument
+            android:name="courseCode"
+            app:argType="string"
+            android:defaultValue='' />
+        <argument
+            android:name="sessions"
+            app:argType="string[]"
+            app:nullable="true" />
+        <argument
+            android:name="prerequisites"
+            app:argType="string[]"
+            app:nullable="true" />
+    </dialog>
 </navigation>
