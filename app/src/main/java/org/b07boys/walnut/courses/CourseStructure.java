@@ -45,17 +45,17 @@ public class CourseStructure {
 
     private void notifyAdd(Course course) {
         for (OnChangeCourseListener listener : listeners)
-            listener.onAdd(course);
+            listener.onModify(course, ModifyCourseType.ADD);
     }
 
     private void notifyRemove(Course course) {
         for (OnChangeCourseListener listener : listeners)
-            listener.onRemove(course);
+            listener.onModify(course, ModifyCourseType.REMOVE);
     }
 
     private void notifyModify(Course course) {
         for (OnChangeCourseListener listener : listeners)
-            listener.onModify(course);
+            listener.onModify(course, ModifyCourseType.MODIFY);
     }
 
 
