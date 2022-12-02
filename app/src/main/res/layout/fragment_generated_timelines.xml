@@ -12,28 +12,51 @@
         android:id="@+id/frag_gen_timelines"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:text=""
+        tools:layout_editor_absoluteX="-58dp"
+        tools:layout_editor_absoluteY="228dp" />
+
+    <EditText
+        android:id="@+id/max_courses"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:hint="Max courses per sem?"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="28dp"
         android:text="Previous"
-        app:layout_constraintBottom_toBottomOf="@+id/frag_gen_timelines"
-        app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines" />
+        app:layout_constraintEnd_toStartOf="@+id/next"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
+        app:layout_constraintTop_toBottomOf="@+id/generate" />
 
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="76dp"
         android:text="Next"
+        app:layout_constraintEnd_toEndOf="@+id/frag_gen_timelines"
+        app:layout_constraintTop_toBottomOf="@+id/generate" />
+
+    <Button
+        android:id="@+id/generate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Timelines"
         app:layout_constraintBottom_toBottomOf="@+id/frag_gen_timelines"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/frag_gen_timelines"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
+        app:layout_constraintTop_toTopOf="@+id/frag_gen_timelines"
+        app:layout_constraintVertical_bias="0.825" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

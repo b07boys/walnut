@@ -13,6 +13,7 @@ import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentGeneratedTimelinesBinding;
 import org.b07boys.walnut.timeline.GenerateTimeline;
 import org.b07boys.walnut.timeline.Timeline;
+import org.b07boys.walnut.timeline.ValidTimelines;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -77,9 +78,8 @@ public class GeneratedTimelinesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentGeneratedTimelinesBinding.inflate(inflater, container, false);
 
-        timelines = GenerateTimeline.generateTimeline(5, SessionType.FALL);
-        timelineIterator = timelines.listIterator();
-        binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+        binding.previous.setVisibility(View.INVISIBLE);
+        binding.next.setVisibility(View.INVISIBLE);
 
         return binding.getRoot();
     }
@@ -87,6 +87,17 @@ public class GeneratedTimelinesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
+        binding.generate.setOnClickListener(view13 -> {
+            timelines = GenerateTimeline.generateTimeline(5, SessionType.FALL);
+            //ValidTimelines.getInstance().setValidTimelines(timelines);
+            timelineIterator = timelines.listIterator();
+            binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+
+            binding.previous.setVisibility(View.VISIBLE);
+            binding.next.setVisibility(View.VISIBLE);
+            binding.generate.setVisibility(View.INVISIBLE);
+        });
 
         binding.previous.setOnClickListener(view1 -> {
             if(timelineIterator.hasPrevious()){

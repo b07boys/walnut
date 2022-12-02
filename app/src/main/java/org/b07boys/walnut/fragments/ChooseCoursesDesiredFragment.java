@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
@@ -142,6 +143,8 @@ public class ChooseCoursesDesiredFragment extends Fragment {
                 for (CourseModel courseModel : ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses()) {
                     if (courseModel.getChecked()) DesiredCourses.getInstance().addCourse(courseModel.getCourse());
                 }
+
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(ChooseCoursesDesiredFragmentDirections.actionChooseCoursesDesiredFragmentToGeneratedTimelinesFragment());
             }
         });
 
