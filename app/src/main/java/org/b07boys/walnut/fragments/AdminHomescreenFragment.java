@@ -128,6 +128,7 @@ public class AdminHomescreenFragment extends Fragment {
             }
         });
 
+        binding.floatingActionButton.setOnClickListener(viewButton -> {
         SearchView search = binding.searchBar;
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
