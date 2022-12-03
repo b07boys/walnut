@@ -40,4 +40,11 @@ public class Timeline {
     public boolean removeSession(Session session){
         return sessions.remove(session);
     }
+
+    public void clearTimeline(){
+        for(Session session : sessions){
+            session.getCourses().clear();
+        }
+        sessions.clear();
+    }
 }

@@ -14,7 +14,8 @@ import java.util.Set;
 
 
 public class GenerateTimeline {
-
+    private static int[] lastSessions = {1,1};
+    private static List<Course> currentCourses;
     /**
      * Generates every possible valid timeline for a user
      *
@@ -23,39 +24,75 @@ public class GenerateTimeline {
      * @return an ArrayList of Timelines that are valid for the user
      */
     public static ArrayList<Timeline> generateTimeline(int maxCoursesPerSem, SessionType sessionType){
-        User user = User.getInstance();
-        Set<Course> coursesTaken = user.getTakenCourses().getCourses();
-        ArrayList<Course> coursesDesired = new ArrayList<>();
-        coursesDesired.addAll(DesiredCourses.getInstance().getCourses());
+        currentCourses = new ArrayList<>();
+        //get courses desired from singleton
+        ArrayList<Course> coursesDesired = new ArrayList<>(DesiredCourses.getInstance().getCourses());
         //ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
+
+
+        //test
+        System.out.println("PRINTING COURSES DESIRED");
+        for(Course course : coursesDesired){
+            System.out.println(course);
+        }
+        System.out.println("PRINTING COURSES DESIRED2");
+        System.out.println(coursesDesired.size() + " COURSES DESIRED");
+
+        //test
+
+        //valid timelines
         ArrayList<Timeline> timelines = new ArrayList<>();
 
-        assert coursesDesired != null;
+        //array to generate all possible timelines
         int[] timeline = new int[coursesDesired.size()];
 
         for(int i = 0; i < timeline.length; i++){
-            timeline[i]++;
+            timeline[i] = 0;
         }
 
+        SessionType currentSession;
+
+        Timeline potentialTimeline = new Timeline(timeline.length);
         boolean running = true;
+        int c = 0;
         while(running){
+            //if(c % 100 == 0) System.out.println(c);
+            c++;
             // create timelines
-            Timeline potentialTimeline = new Timeline(timeline.length);
-            SessionType currentSession = sessionType;
+
+            //Timeline potentialTimeline = new Timeline(timeline.length); <-- bad
+            currentSession = sessionType;
+
+
+            System.out.print("\n##### CONVERTING TIMELINE FOR ");
+            for(int i = 0; i < timeline.length; i++) System.out.print(timeline[i] + " ");
+            System.out.println();
 
             //for each session
-            for(int i = 0; i < potentialTimeline.getSessions().size(); i++){
+            for(int i = 0; i < timeline.length; i++){
                 potentialTimeline.addSession(new Session(currentSession));
                 for(int j = 0; j < timeline.length; j++){
                     if(timeline[j] == i){
                         potentialTimeline.getSession(i).addCourse(coursesDesired.get(j));
+//                        System.out.println("##### ADDING " + coursesDesired.get(j).getName());
                     }
                 }
+                //increment session
                 currentSession = SessionUtils.subsequentSession(currentSession);
             }
 
-            //check if potentialTimeline is vaild and add to timelines
-            if(checkTimeline(potentialTimeline, maxCoursesPerSem)) timelines.add(potentialTimeline);
+            System.out.println("##### CONVERTED TIMELINE: " + formatAsText(potentialTimeline));
+
+            //check if potentialTimeline is valid and add to timelines
+            if(checkTimeline(potentialTimeline, maxCoursesPerSem)){
+                timelines.add(potentialTimeline);
+//                System.out.println("VALID TIMELINE FOUND");
+//                System.out.println(formatAsText(potentialTimeline));
+
+                potentialTimeline = new Timeline(timeline.length);
+            }else{
+                potentialTimeline.clearTimeline();
+            }
 
             //increment
             timeline[0]++;
@@ -68,20 +105,17 @@ public class GenerateTimeline {
             }
         }
 
+        System.out.println("##### RETURNING TIMELINES");
         return timelines;
     }
 
-    public static ArrayList<Course> getCoursesDesired(Set<Course> coursesTaken){
-
-        //TODO
-        return null;
-    }
 
     public static boolean checkTimeline(Timeline timeline, int maxCoursesPerSem){
         Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
-
+        lastSessions[0] = 1;
+        lastSessions[1] = 1;
         //iterate through sessions
-        int[] lastSessions = {1,1};
+
         for (Session session : timeline.getSessions()) {
             //check if 3 empty sessions in a row
             if(session.getCourses() == null && lastSessions[0] == 0 && lastSessions[1] == 0){
@@ -94,7 +128,10 @@ public class GenerateTimeline {
                 lastSessions[0] = 1;
             }
 
-            List<Course> currentCourses = new ArrayList<>();
+            //check if courses in session exceeds max
+            if(session.getCourses().size() > maxCoursesPerSem) return false;
+
+            currentCourses.clear();
             //iterate through courses
             for (Course course : session.getCourses()) {
                 //check session
@@ -121,11 +158,12 @@ public class GenerateTimeline {
     }
 
     public static String formatAsText(Timeline timeline){
+//        System.out.println("Formatting timeline");
         StringBuilder builder = new StringBuilder();
         for(Session session : timeline.getSessions()){
-            builder.append("\n").append(session.getSessionType()).append(": ");
+            builder.append("\n").append(session.getSessionType()).append(": |");
             for(Course course : session.getCourses()){
-                builder.append(course.toString()).append("\t");
+                builder.append("   ").append(course.getName()).append("   |");
             }
         }
 
