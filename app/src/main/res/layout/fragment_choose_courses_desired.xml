@@ -9,35 +9,36 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/extended_fab"
+        android:id="@+id/saveSelectedCoursesFab"
+        app:icon="@android:drawable/ic_input_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:contentDescription="s"
-        android:text="g" />
+        android:text="Save selected courses" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/topAppBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Walnut"
-            app:subtitle="Choose courses you wish to take"
-            app:subtitleCentered="true"
-            app:titleCentered="true"
-            app:menu="@menu/top_app_bar"
-            app:navigationIcon="@null" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/topAppBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="Walnut"
+                    app:subtitle="Choose courses you wish to take"
+                    app:subtitleCentered="true"
+                    app:titleCentered="true"
+                    app:menu="@menu/search_top_app_bar"
+                    app:navigationIcon="@null" />
+        
+            </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
