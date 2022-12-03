@@ -89,14 +89,30 @@ public class GeneratedTimelinesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.generate.setOnClickListener(view13 -> {
-            timelines = GenerateTimeline.generateTimeline(5, SessionType.FALL);
+            int maxCoursesInt;
+            try{
+                maxCoursesInt = Integer.parseInt(binding.maxCourses.getText().toString());
+            }catch(Exception e){
+                maxCoursesInt = 5;
+            }
+
+
+            timelines = GenerateTimeline.generateTimeline(maxCoursesInt, SessionType.FALL);
             //ValidTimelines.getInstance().setValidTimelines(timelines);
             timelineIterator = timelines.listIterator();
-            binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
 
-            binding.previous.setVisibility(View.VISIBLE);
-            binding.next.setVisibility(View.VISIBLE);
-            binding.generate.setVisibility(View.INVISIBLE);
+            if(timelineIterator.hasNext()) {
+                binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+
+                binding.previous.setVisibility(View.VISIBLE);
+                binding.next.setVisibility(View.VISIBLE);
+                binding.generate.setVisibility(View.INVISIBLE);
+                binding.maxCourses.setVisibility(View.INVISIBLE);
+            }else{
+                binding.fragGenTimelines.setText("NO VALID TIMELINES FOUND");
+                binding.generate.setVisibility(View.INVISIBLE);
+                binding.maxCourses.setVisibility(View.INVISIBLE);
+            }
         });
 
         binding.previous.setOnClickListener(view1 -> {
