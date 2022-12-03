@@ -25,6 +25,8 @@ import org.b07boys.walnut.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.ModifyCourseType;
+import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
 import org.b07boys.walnut.main.MainActivity;
@@ -91,12 +93,12 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /*CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
+        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
             public void onModify(Course course, ModifyCourseType modifyType) {
                 binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses()));
             }
-        }); */
+        });
 
 
         // Inflate the layout for this fragment
