@@ -2,17 +2,21 @@ package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
-import org.b07boys.walnut.courses.CourseCatalogue;
-import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
+import org.b07boys.walnut.main.MainActivity;
 import org.b07boys.walnut.user.TakenCourses;
 
 /**
@@ -47,6 +51,8 @@ public class StudentHomescreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Student Page");
+
         TakenCourses.getInstance();
 
         // Inflate the layout for this fragment
@@ -61,6 +67,24 @@ public class StudentHomescreenFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+                menuInflater.inflate(R.menu.main_top_app_bar, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
     }
 
     @Override

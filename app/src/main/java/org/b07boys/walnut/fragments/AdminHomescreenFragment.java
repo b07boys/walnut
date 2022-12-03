@@ -1,40 +1,36 @@
 package org.b07boys.walnut.fragments;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.DialogFragment;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
-import org.b07boys.walnut.courses.CourseStructure;
-import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.database.adapters.CourseListAdapter;
 import org.b07boys.walnut.databinding.FragmentAdminHomescreenBinding;
+import org.b07boys.walnut.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -64,7 +60,7 @@ public class AdminHomescreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Admin Page");
     }
 
     @Override
@@ -157,11 +153,25 @@ public class AdminHomescreenFragment extends Fragment {
                 return false;
             }
         });
-
-
-
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+                menuInflater.inflate(R.menu.main_top_app_bar, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
+    }
 }
 
 
