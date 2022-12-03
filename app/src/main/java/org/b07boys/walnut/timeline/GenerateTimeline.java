@@ -56,7 +56,7 @@ public class GenerateTimeline {
         boolean running = true;
         int c = 0;
         while(running){
-            //if(c % 100 == 0) System.out.println(c);
+            if(c % 1000000 == 0) System.out.println(c);
             c++;
             // create timelines
 
@@ -64,9 +64,9 @@ public class GenerateTimeline {
             currentSession = sessionType;
 
 
-            System.out.print("\n##### CONVERTING TIMELINE FOR ");
-            for(int i = 0; i < timeline.length; i++) System.out.print(timeline[i] + " ");
-            System.out.println();
+//            System.out.print("\n##### CONVERTING TIMELINE FOR ");
+//            for(int i = 0; i < timeline.length; i++) System.out.print(timeline[i] + " ");
+//            System.out.println();
 
             //for each session
             for(int i = 0; i < timeline.length; i++){
@@ -81,12 +81,12 @@ public class GenerateTimeline {
                 currentSession = SessionUtils.subsequentSession(currentSession);
             }
 
-            System.out.println("##### CONVERTED TIMELINE: " + formatAsText(potentialTimeline));
+//            System.out.println("##### CONVERTED TIMELINE: " + formatAsText(potentialTimeline));
 
             //check if potentialTimeline is valid and add to timelines
             if(checkTimeline(potentialTimeline, maxCoursesPerSem)){
                 timelines.add(potentialTimeline);
-//                System.out.println("VALID TIMELINE FOUND");
+                System.out.println("##### VALID TIMELINE FOUND");
 //                System.out.println(formatAsText(potentialTimeline));
 
                 potentialTimeline = new Timeline(timeline.length);
@@ -103,9 +103,14 @@ public class GenerateTimeline {
                     else running = false;
                 }
             }
+
+            if(timelines.size() > timeline.length) {
+                System.out.println("##### returning early, more than " + timeline.length + " timelines found");
+                running = false;
+            }
         }
 
-        System.out.println("##### RETURNING TIMELINES");
+        System.out.println("##### RETURNING " + timelines.size() + " TIMELINES");
         return timelines;
     }
 
@@ -119,6 +124,7 @@ public class GenerateTimeline {
         for (Session session : timeline.getSessions()) {
             //check if 3 empty sessions in a row
             if(session.getCourses() == null && lastSessions[0] == 0 && lastSessions[1] == 0){
+//                System.out.println("%%% invalid - 3 empty sessions");
                 return false;
             }
             lastSessions[1] = lastSessions[0];
@@ -129,7 +135,10 @@ public class GenerateTimeline {
             }
 
             //check if courses in session exceeds max
-            if(session.getCourses().size() > maxCoursesPerSem) return false;
+            if(session.getCourses().size() > maxCoursesPerSem){
+//                System.out.println("%%% inavlid - too many courses");
+                return false;
+            }
 
             currentCourses.clear();
             //iterate through courses
@@ -141,19 +150,25 @@ public class GenerateTimeline {
                         isOffered = true;
                     }
                 }
-                if(!isOffered) return false;
+                if(!isOffered){
+//                    System.out.println("%%% invalid - course not offered in session");
+                    return false;
+                }
 
                 //check each prereqs
                 String[] prereqs = course.getPrerequisiteUIDS();
                 for (String prereq : prereqs) {
-                    if (TakenCourses.getInstance().getCourseByUID(prereq) == null) {
+                    if (!prereq.equals("") && TakenCourses.getInstance().getCourseByUID(prereq) == null) {
+//                      System.out.println("%%% invalid - missing prereq");
                         return false;
                     }
-                    currentCourses.add(TakenCourses.getInstance().getCourseByUID(prereq));
+                    currentCourses.add(course);
+
                 }
             }
             coursesTaken.addAll(currentCourses);
         }
+        System.out.println("%%% timeline valid");
         return true;
     }
 
@@ -163,7 +178,11 @@ public class GenerateTimeline {
         for(Session session : timeline.getSessions()){
             builder.append("\n").append(session.getSessionType()).append(": |");
             for(Course course : session.getCourses()){
-                builder.append("   ").append(course.getName()).append("   |");
+                builder.append("   ")
+                        .append(course.getCode())
+                        .append(": ")
+                        .append(course.getName())
+                        .append("   |");
             }
         }
 

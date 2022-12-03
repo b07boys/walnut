@@ -89,12 +89,16 @@ public class GeneratedTimelinesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.generate.setOnClickListener(view13 -> {
+            binding.generate.setVisibility(View.INVISIBLE);
+            binding.fragGenTimelines.setText("Please wait. Generating timelines...");
+
             int maxCoursesInt;
             try{
                 maxCoursesInt = Integer.parseInt(binding.maxCourses.getText().toString());
             }catch(Exception e){
                 maxCoursesInt = 5;
             }
+            binding.maxCourses.setVisibility(View.INVISIBLE);
 
 
             timelines = GenerateTimeline.generateTimeline(maxCoursesInt, SessionType.FALL);
@@ -104,26 +108,31 @@ public class GeneratedTimelinesFragment extends Fragment {
             if(timelineIterator.hasNext()) {
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
 
-                binding.previous.setVisibility(View.VISIBLE);
+
                 binding.next.setVisibility(View.VISIBLE);
-                binding.generate.setVisibility(View.INVISIBLE);
-                binding.maxCourses.setVisibility(View.INVISIBLE);
             }else{
                 binding.fragGenTimelines.setText("NO VALID TIMELINES FOUND");
-                binding.generate.setVisibility(View.INVISIBLE);
-                binding.maxCourses.setVisibility(View.INVISIBLE);
             }
         });
 
         binding.previous.setOnClickListener(view1 -> {
             if(timelineIterator.hasPrevious()){
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.previous()));
+                binding.next.setVisibility(View.VISIBLE);
+            }
+
+            if(!timelineIterator.hasNext()){
+                binding.next.setVisibility(View.INVISIBLE);
             }
         });
 
         binding.next.setOnClickListener(view12 -> {
             if(timelineIterator.hasNext()){
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+                binding.previous.setVisibility(View.VISIBLE);
+            }
+            if(!timelineIterator.hasPrevious()){
+                binding.previous.setVisibility(View.INVISIBLE);
             }
         });
     }
