@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/studentHomescreenFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_search"
-        android:title="Something 1"/>
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/generatedTimelinesFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_login_icon"
-        android:title="Something 2"/>
+        android:icon="@drawable/ic_timeline"
+        android:title="Timeline"/>
 </menu>
