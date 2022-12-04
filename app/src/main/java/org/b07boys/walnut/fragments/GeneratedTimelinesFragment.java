@@ -8,16 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentGeneratedTimelinesBinding;
 import org.b07boys.walnut.timeline.GenerateTimeline;
 import org.b07boys.walnut.timeline.Timeline;
-import org.b07boys.walnut.timeline.ValidTimelines;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,9 +86,18 @@ public class GeneratedTimelinesFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
+        AtomicReference<SessionType> sessionType = new AtomicReference<>(SessionType.FALL);
+
+        binding.fall.setAlpha(0.5f);
+        binding.fall.setClickable(false);
+
         binding.generate.setOnClickListener(view13 -> {
             binding.generate.setVisibility(View.INVISIBLE);
             binding.fragGenTimelines.setText("Please wait. Generating timelines...");
+            binding.fall.setVisibility(View.INVISIBLE);
+            binding.winter.setVisibility(View.INVISIBLE);
+            binding.summer.setVisibility(View.INVISIBLE);
+            binding.startingSessionText.setVisibility(View.INVISIBLE);
 
             int maxCoursesInt;
             try{
@@ -101,40 +108,84 @@ public class GeneratedTimelinesFragment extends Fragment {
             binding.maxCourses.setVisibility(View.INVISIBLE);
 
 
-            timelines = GenerateTimeline.generateTimeline(maxCoursesInt, SessionType.FALL);
+            timelines = GenerateTimeline.generateTimeline(maxCoursesInt, sessionType.get());
             //ValidTimelines.getInstance().setValidTimelines(timelines);
             timelineIterator = timelines.listIterator();
 
             if(timelineIterator.hasNext()) {
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
 
-
-                binding.next.setVisibility(View.VISIBLE);
             }else{
                 binding.fragGenTimelines.setText("NO VALID TIMELINES FOUND");
             }
+
+            if(timelineIterator.hasNext()){
+                binding.next.setVisibility(View.VISIBLE);
+            }
         });
 
+        //previous button
         binding.previous.setOnClickListener(view1 -> {
             if(timelineIterator.hasPrevious()){
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.previous()));
                 binding.next.setVisibility(View.VISIBLE);
             }
 
-            if(!timelineIterator.hasNext()){
-                binding.next.setVisibility(View.INVISIBLE);
+            if(!timelineIterator.hasPrevious()){
+                binding.previous.setVisibility(View.INVISIBLE);
             }
         });
 
+        //next button
         binding.next.setOnClickListener(view12 -> {
             if(timelineIterator.hasNext()){
                 binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
                 binding.previous.setVisibility(View.VISIBLE);
             }
-            if(!timelineIterator.hasPrevious()){
-                binding.previous.setVisibility(View.INVISIBLE);
+            if(!timelineIterator.hasNext()){
+                binding.next.setVisibility(View.INVISIBLE);
             }
         });
+
+        //fall button
+        binding.fall.setOnClickListener(view14 -> {
+            sessionType.set(SessionType.FALL);
+
+            binding.fall.setClickable(false);
+            binding.winter.setClickable(true);
+            binding.summer.setClickable(true);
+
+            binding.fall.setAlpha(0.5f);
+            binding.winter.setAlpha(1f);
+            binding.summer.setAlpha(1f);
+        });
+
+        //winter button
+        binding.winter.setOnClickListener(view15 -> {
+            sessionType.set(SessionType.WINTER);
+
+            binding.fall.setClickable(true);
+            binding.winter.setClickable(false);
+            binding.summer.setClickable(true);
+
+            binding.fall.setAlpha(1f);
+            binding.winter.setAlpha(0.5f);
+            binding.summer.setAlpha(1f);
+        });
+
+        //summer button
+        binding.summer.setOnClickListener(view16 -> {
+            sessionType.set(SessionType.SUMMER);
+
+            binding.fall.setClickable(true);
+            binding.winter.setClickable(true);
+            binding.summer.setClickable(false);
+
+            binding.fall.setAlpha(1f);
+            binding.winter.setAlpha(1f);
+            binding.summer.setAlpha(0.5f);
+        });
+
     }
 
 
