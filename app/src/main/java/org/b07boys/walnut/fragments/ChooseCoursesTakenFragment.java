@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import org.b07boys.walnut.CourseModel;
-import org.b07boys.walnut.CourseRecyclerViewAdapter;
+import org.b07boys.walnut.lists.CourseModel;
+import org.b07boys.walnut.lists.CourseRecyclerViewAdapter;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
@@ -19,6 +19,7 @@ import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesTakenBinding;
+import org.b07boys.walnut.main.MainActivity;
 
 import java.util.ArrayList;
 
@@ -75,6 +76,7 @@ public class ChooseCoursesTakenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you've taken");
 
         CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override

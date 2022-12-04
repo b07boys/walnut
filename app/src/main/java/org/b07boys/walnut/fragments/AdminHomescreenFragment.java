@@ -17,22 +17,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
-import org.b07boys.walnut.courses.ModifyCourseType;
-import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
-import org.b07boys.walnut.database.adapters.CourseListAdapter;
+import org.b07boys.walnut.lists.CourseListAdapter;
 import org.b07boys.walnut.databinding.FragmentAdminHomescreenBinding;
 import org.b07boys.walnut.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
