@@ -1,4 +1,4 @@
-package org.b07boys.walnut.database.adapters;
+package org.b07boys.walnut.lists;
 
 import org.b07boys.walnut.courses.Course;
 

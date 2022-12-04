@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.auth.AccountUtils;
 import org.b07boys.walnut.auth.UserType;
-import org.b07boys.walnut.database.adapters.CourseListAdapter2;
 import org.b07boys.walnut.databinding.FragmentWelcomeBinding;
 
 /**

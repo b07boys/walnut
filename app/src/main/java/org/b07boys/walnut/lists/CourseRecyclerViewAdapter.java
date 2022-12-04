@@ -1,4 +1,4 @@
-package org.b07boys.walnut;
+package org.b07boys.walnut.lists;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.SessionType;
 
