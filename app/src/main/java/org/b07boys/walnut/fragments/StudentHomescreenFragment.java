@@ -1,7 +1,6 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,13 +23,9 @@ import androidx.navigation.Navigation;
 import org.b07boys.walnut.R;
 
 import org.b07boys.walnut.courses.Course;
-import org.b07boys.walnut.courses.CourseCatalogue;
-import org.b07boys.walnut.courses.CourseStructure;
-import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
-import org.b07boys.walnut.database.adapters.CourseListAdapter;
-import org.b07boys.walnut.database.adapters.CourseListAdapter2;
+import org.b07boys.walnut.lists.CourseListAdapter2;
 
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 import org.b07boys.walnut.main.MainActivity;

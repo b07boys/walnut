@@ -2,26 +2,21 @@ package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuHost;
-import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
-import org.b07boys.walnut.CourseRecyclerViewAdapter;
-import org.b07boys.walnut.CourseModel;
+import org.b07boys.walnut.lists.CourseRecyclerViewAdapter;
+import org.b07boys.walnut.lists.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
@@ -34,7 +29,6 @@ import org.b07boys.walnut.user.DesiredCourses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,45 +39,34 @@ public class ChooseCoursesDesiredFragment extends Fragment {
 
     FragmentChooseCoursesDesiredBinding binding;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public ChooseCoursesDesiredFragment() {
         // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * this fragment.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ChooseCoursesDesiredFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChooseCoursesDesiredFragment newInstance(String param1, String param2) {
-        ChooseCoursesDesiredFragment fragment = new ChooseCoursesDesiredFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ChooseCoursesDesiredFragment newInstance() {
+        return new ChooseCoursesDesiredFragment();
     }
+
+    private ArrayList<CourseModel> ogCourseModels;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you wish to take");
+
+        ogCourseModels = new ArrayList<>();
+        for (Course c : CourseCatalogue.getInstance().getCourses()) {
+            CourseModel temp = new CourseModel();
+            temp.setCourse(c);
+            ogCourseModels.add(temp);
+        }
     }
 
     @Override
@@ -127,7 +110,8 @@ public class ChooseCoursesDesiredFragment extends Fragment {
 
                             @Override
                             public boolean onQueryTextChange(String newText) {
-                                filterNameCode(newText);
+                                if (newText.isEmpty() && (ogCourseModels.size() == ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses().size())) ogCourseModels = ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses();
+                                filterNameCode(newText, ogCourseModels);
                                 return false;
                             }
                         });
@@ -193,15 +177,18 @@ public class ChooseCoursesDesiredFragment extends Fragment {
         }
     }
 
-    private void filterNameCode(String text) {
-        // Store list of unfiltered current courses in the recyclerview and their state (checked or not)
+    private void filterNameCode(String text, ArrayList<CourseModel> ogCourseModels) {
         ArrayList<CourseModel> courseModels = ((CourseRecyclerViewAdapter) binding.rv.getAdapter()).getCourses();
+
         if (text.isEmpty()) {
             // Return to previous state
             ArrayList<CourseModel> coursesFromDb = new ArrayList<>();
             for (Course c : CourseCatalogue.getInstance().getCourses()) {
                 CourseModel temp = new CourseModel();
                 temp.setCourse(c);
+                for (CourseModel cM : ogCourseModels) {
+                    if (cM.getCourse().getUID().equals(c.getUID()) && cM.getChecked()) temp.setChecked(true);
+                }
                 coursesFromDb.add(temp);
             }
             binding.rv.setAdapter(new CourseRecyclerViewAdapter(coursesFromDb));
@@ -209,7 +196,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
         }
         ArrayList<CourseModel> filteredCourseModelList = new ArrayList<>();
         // Filter on name or course code
-        for (CourseModel courseModel : courseModels) {
+        for (CourseModel courseModel : ogCourseModels) {
             if (courseModel.getCourse().getName().toLowerCase().contains(text.toLowerCase()) || courseModel.getCourse().getCode().toLowerCase().contains(text.toLowerCase()))
             {
                 filteredCourseModelList.add(courseModel);
