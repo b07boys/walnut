@@ -14,8 +14,8 @@ tools:context=".fragments.ChooseCoursesDesiredFragment">
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:layout_gravity="bottom|end"
-    android:contentDescription="s"
-    android:text="g" />
+    android:contentDescription="Save selected courses"
+    android:text="Save selected courses" />
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
