@@ -30,12 +30,12 @@ public class GenerateTimeline {
         //ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
 
         //test
-        System.out.println("PRINTING COURSES DESIRED");
+        System.out.println("##### PRINTING COURSES DESIRED");
         for(Course course : coursesDesired){
             System.out.println(course);
         }
-        System.out.println("PRINTING COURSES DESIRED2");
-        System.out.println(coursesDesired.size() + " COURSES DESIRED");
+        System.out.println("##### FINISHED PRINTING COURSES DESIRED");
+        System.out.println("##### " + coursesDesired.size() + " COURSES DESIRED");
 
         //test
 
@@ -47,17 +47,13 @@ public class GenerateTimeline {
         //array to generate all possible timelines
         int[] timeline = new int[coursesDesired.size()];
 
-        for(int i = 0; i < timeline.length; i++){
-            timeline[i] = 0;
-        }
-
         SessionType currentSession;
 
-        Timeline potentialTimeline = new Timeline(timeline.length);
+        Timeline potentialTimeline = new Timeline(Math.max(3,timeline.length));
         boolean running = true;
         int c = 0;
         while(running){
-            if(c % 1000000 == 0) System.out.println(c);
+            if(c % 1000000 == 0) System.out.println("currently on " + c);
             c++;
             // create timelines
 
@@ -66,11 +62,11 @@ public class GenerateTimeline {
 
 
 //            System.out.print("\n##### CONVERTING TIMELINE FOR ");
-//            for(int i = 0; i < timeline.length; i++) System.out.print(timeline[i] + " ");
+//            for (int k : timeline) System.out.print(k + " ");
 //            System.out.println();
 
             //for each session
-            for(int i = 0; i < timeline.length; i++){
+            for(int i = 0; i < Math.max(3,timeline.length); i++){
                 potentialTimeline.addSession(new Session(currentSession));
                 for(int j = 0; j < timeline.length; j++){
                     if(timeline[j] == i){
@@ -90,7 +86,7 @@ public class GenerateTimeline {
                 System.out.println("##### VALID TIMELINE FOUND");
 //                System.out.println(formatAsText(potentialTimeline));
 
-                potentialTimeline = new Timeline(timeline.length);
+                potentialTimeline = new Timeline(Math.max(3,timeline.length));
             }else{
                 potentialTimeline.clearTimeline();
             }
@@ -98,7 +94,7 @@ public class GenerateTimeline {
             //increment
             timeline[0]++;
             for (int i = 0; i < timeline.length; i++){
-                if (timeline[i] == timeline.length){
+                if (timeline[i] == Math.max(3,timeline.length)){
                     timeline[i] = 0;
                     if(i+1 != timeline.length) timeline[i+1]++;
                     else running = false;
@@ -118,6 +114,11 @@ public class GenerateTimeline {
 
     public static boolean checkTimeline(Timeline timeline, int maxCoursesPerSem){
         Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
+
+//        System.out.println("##### Printing courses taken");
+//        for(Course course : coursesTaken) System.out.println(course);
+//        System.out.println("##### FINISHED Printing courses taken");
+
         lastSessions[0] = 1;
         lastSessions[1] = 1;
         //iterate through sessions
@@ -188,5 +189,23 @@ public class GenerateTimeline {
         }
 
         return builder.toString();
+    }
+
+    public static boolean checkPrereqs(){
+        System.out.println("$$$$ PRINTING COURSES TAKEN");
+        for(Course course : TakenCourses.getInstance().getCourses()) System.out.println(course);
+        System.out.println("$$$$ FINISHED PRINTING COURSES TAKEN");
+
+        boolean hasAllPrereq = true;
+        for(Course course : DesiredCourses.getInstance().getCourses()){
+            boolean hasPrereqs = false;
+            for(String prereq : course.getPrerequisiteUIDS()){
+                if(TakenCourses.getInstance().getCourseByUID(prereq) != null)hasPrereqs = true;
+                if(DesiredCourses.getInstance().getCourseByUID(prereq) != null) hasPrereqs = true;
+                System.out.println(hasPrereqs);
+            }
+            if(!hasPrereqs) hasAllPrereq = false;
+        }
+        return hasAllPrereq;
     }
 }
