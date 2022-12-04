@@ -29,7 +29,6 @@ public class GenerateTimeline {
         ArrayList<Course> coursesDesired = new ArrayList<>(DesiredCourses.getInstance().getCourses());
         //ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
 
-
         //test
         System.out.println("PRINTING COURSES DESIRED");
         for(Course course : coursesDesired){
@@ -42,6 +41,8 @@ public class GenerateTimeline {
 
         //valid timelines
         ArrayList<Timeline> timelines = new ArrayList<>();
+
+        if(coursesDesired.size() == 0) return timelines;
 
         //array to generate all possible timelines
         int[] timeline = new int[coursesDesired.size()];
