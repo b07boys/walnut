@@ -93,6 +93,8 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        DesiredCourses.getInstance().getCourses().clear();
+
         CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
             public void onModify(Course course, ModifyCourseType modifyType) {
