@@ -47,6 +47,7 @@ import java.util.ArrayList;
 public class StudentHomescreenFragment extends Fragment {
 
     private @NonNull FragmentStudenthomescreenBinding binding;
+    private OnChangeCourseListener listener;
 
     public StudentHomescreenFragment() {
         // Required empty public constructor
@@ -97,7 +98,7 @@ public class StudentHomescreenFragment extends Fragment {
             public void onClick(View view) {
 
                 //CourseUtils.removeTakenCourse(CourseCatalogue.getInstance().getCourseByUID("test2_uid"));
-
+                deregisterListener();
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
             }
         });
@@ -107,7 +108,7 @@ public class StudentHomescreenFragment extends Fragment {
             public void onClick(View view) {
 
                 //CourseUtils.removeTakenCourse(CourseCatalogue.getInstance().getCourseByUID("test2_uid"));
-
+                deregisterListener();
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesTakenFragment());
             }
         });
@@ -139,17 +140,19 @@ public class StudentHomescreenFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        String[] takenCoursesUID = StudentHomescreenFragmentArgs.fromBundle(getArguments()).getTakenCoursesList();
-        ArrayList <CourseListAdapter2> takenCourses = new ArrayList<>();
-        ArrayList <Course> databaseTakenCourses = new ArrayList<>();
+
+    private void deregisterListener() {
+        if (listener != null) {
+            TakenCourses.getInstance().unregisterListener(listener);
+            listener = null;
+        }
+    }
+
+    private void updateCoursesTakenList() {
+        ArrayList<CourseListAdapter2> takenCourses = new ArrayList<>();
+        ArrayList<Course> databaseTakenCourses = new ArrayList<>();
         databaseTakenCourses.addAll(User.getInstance().getTakenCourses().getCourses());
-//        String[] courseItem = new String[takenCoursesUID.length];
         for (int i = 0; i < databaseTakenCourses.size(); i++) {
-//            CourseListAdapter2 temp = new CourseListAdapter2(CourseCatalogue.getInstance().getCourseByUID(takenCoursesUID[i]));
-//            takenCourses.add(temp);
             CourseListAdapter2 temp2 = new CourseListAdapter2(databaseTakenCourses.get(i));
             takenCourses.add(temp2);
         }
@@ -158,6 +161,24 @@ public class StudentHomescreenFragment extends Fragment {
 
         ListView listView = (ListView) binding.courseListView;
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        updateCoursesTakenList();
+
+        if (listener == null) {
+            listener = new OnChangeCourseListener() {
+                @Override
+                public void onModify(Course course, ModifyCourseType modifyType) {
+                    if (isVisible()) {
+                        updateCoursesTakenList();
+                    }
+                }
+            };
+            TakenCourses.getInstance().registerListener(listener);
+        }
 
     }
 }

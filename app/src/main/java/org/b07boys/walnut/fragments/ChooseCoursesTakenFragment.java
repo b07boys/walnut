@@ -103,18 +103,18 @@ public class ChooseCoursesTakenFragment extends Fragment {
         binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
         binding.rv.setNestedScrollingEnabled(false);
 
-        binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.search_bar:
-                        Toast toast = Toast.makeText(getActivity(), "Search functionality not yet implemented", Toast.LENGTH_SHORT);
-                        toast.show();
-                        break;
-                }
-                return true;
-            }
-        });
+//        binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.search_bar:
+//                        Toast toast = Toast.makeText(getActivity(), "Search functionality not yet implemented", Toast.LENGTH_SHORT);
+//                        toast.show();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
         binding.extendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
