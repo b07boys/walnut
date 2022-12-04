@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,17 +31,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
+public class AddCoursePopUpFragment extends CoursePopUpFragment {
 
     private FragmentAddCoursePopUpBinding binding;
-
-    private Map<SessionType, MaterialButton> sessions;
-    private Map<String, CheckBox> prerequisites;
-
-    public AddCoursePopUpFragment() {
-        sessions = new HashMap<>();
-        prerequisites = new HashMap<>();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +43,7 @@ public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
         return binding.getRoot();
     }
 
-    private void setCheckboxes() {
+    protected void setCheckboxes() {
 
         MaterialButtonToggleGroup buttonToggleGroup = new MaterialButtonToggleGroup(getActivity());
         for (SessionType sessionType : SessionType.values()) {
@@ -76,31 +69,6 @@ public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
 
         }
 
-    }
-
-    private SessionType[] getCheckedSessions() {
-
-        Set<SessionType> sessionTypes = new HashSet<>();
-
-        for (Map.Entry<SessionType, MaterialButton> entry : sessions.entrySet()) {
-            if (entry.getValue().isChecked())
-                sessionTypes.add(entry.getKey());
-        }
-
-        return sessionTypes.toArray(new SessionType[0]);
-
-    }
-
-    private String[] getCheckedCourses() {
-
-        Set<String> courses = new HashSet<>();
-
-        for (Map.Entry<String, CheckBox> entry : prerequisites.entrySet()) {
-            if (entry.getValue().isChecked())
-                courses.add(entry.getKey());
-        }
-
-        return courses.toArray(new String[0]);
     }
 
     @Override
@@ -140,7 +108,7 @@ public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
                         getCheckedCourses()
                 ).addOnSuccessListener(task -> {
                     sendSnackbar(getActivity().getWindow().getDecorView(), "Success!", Color.parseColor("#007F00"));
-                    getDialog().dismiss();
+                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(AddCoursePopUpFragmentDirections.actionAddCoursePopUpFragmentToAdminHomescreenFragment());
                 }).addOnFailureListener(er -> {
                     sendSnackbar(getView(), "Error creating course", Color.parseColor("#007F00"));
                 });
@@ -148,12 +116,6 @@ public class AddCoursePopUpFragment extends BottomSheetDialogFragment {
 
         });
 
-    }
-
-    private void sendSnackbar(View view, String message, int color) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
-        snackbar.getView().setBackgroundColor(color);
-        snackbar.show();
     }
 
 }

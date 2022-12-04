@@ -10,6 +10,7 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,7 @@ import java.util.Set;
 public class AdminHomescreenFragment extends Fragment {
 
     private FragmentAdminHomescreenBinding binding;
+    private ArrayAdapter<CourseListAdapter> adapter;
 
     public AdminHomescreenFragment() {
         // Required empty public constructor
@@ -71,66 +73,47 @@ public class AdminHomescreenFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private ArrayAdapter<CourseListAdapter> updateAdapter() {
 
+        ArrayList<CourseListAdapter> courses1 = new ArrayList<>();
+        for (Course c : CourseCatalogue.getInstance().getCourses()) {
+            CourseListAdapter temp2 = new CourseListAdapter(c);
+            courses1.add(temp2);
+        }
+
+        return new ArrayAdapter<>(getActivity(),
+                R.layout.activity_listview, courses1);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
-            @Override
-            public void onModify(Course course, ModifyCourseType modifyType) {
-                ArrayList<Course> coursesFromDb = new ArrayList<>(CourseCatalogue.getInstance().getCourses());
-                ArrayList<CourseListAdapter> adaptedCourses = new ArrayList<>();
-                for (Course c : coursesFromDb) {
-                    CourseListAdapter courseItem = new CourseListAdapter(c);
-                    adaptedCourses.add(courseItem);
-                }
-                ArrayAdapter adapter = new ArrayAdapter<>(getActivity(),
-                        R.layout.activity_listview, adaptedCourses);
-                binding.courseList.setAdapter(adapter);
-            }
+        adapter = updateAdapter();
+
+        CourseCatalogue.getInstance().registerListener((course, modifyType) -> {
+            adapter = updateAdapter();
+            binding.courseList.setAdapter(adapter);
         });
 
-        Set<Course> courses = CourseCatalogue.getInstance().getCourses();
-
-        String[] courseCodes = new String[courses.size()];
-
-        int i = 0;
-        for (Course course : courses) {
-            courseCodes[i] = course.getCode();
-            i++;
-        }
-
-        ArrayList<CourseListAdapter> courses1 = new ArrayList<>();
-        for (Course c : courses) {
-            CourseListAdapter temp2 = new CourseListAdapter(c);
-            courses1.add(temp2);
-        }
-
-        ArrayAdapter adapter = new ArrayAdapter<CourseListAdapter>(getActivity(),
-                R.layout.activity_listview, courses1);
 
         ListView listView = (ListView) binding.courseList;
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CourseListAdapter temp = ((CourseListAdapter)adapterView.getAdapter().getItem(i));
-                String text = "";
-                SessionType[] stuff = temp.getCourse().getOfferingSessions();
-                String[] stuff2 = new String[temp.getCourse().getOfferingSessions().length];
-                for (int ind = 0; ind < stuff2.length; ind++){
-                    stuff2[ind] = stuff[ind].name();
-                }
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                        .navigate(AdminHomescreenFragmentDirections
-                                .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null,null)
-                                .setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName())
-                                .setPrerequisites(temp.getCourse().getPrerequisiteUIDS()).setCourseUID(temp.getCourse().getUID())
-                                .setSessions(stuff2));
-            }
 
+        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
+            CourseListAdapter temp = ((CourseListAdapter)adapterView.getAdapter().getItem(i));
+            String text = "";
+            SessionType[] stuff = temp.getCourse().getOfferingSessions();
+            String[] stuff2 = new String[temp.getCourse().getOfferingSessions().length];
+            for (int ind = 0; ind < stuff2.length; ind++){
+                stuff2[ind] = stuff[ind].name();
+            }
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                    .navigate(AdminHomescreenFragmentDirections
+                            .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null,null)
+                            .setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName())
+                            .setPrerequisites(temp.getCourse().getPrerequisiteUIDS()).setCourseUID(temp.getCourse().getUID())
+                            .setSessions(stuff2));
         });
 
 
@@ -149,6 +132,7 @@ public class AdminHomescreenFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                Log.d("SEARCH_CHANGE", newText);
                 adapter.getFilter().filter(newText);
                 return false;
             }
