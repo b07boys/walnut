@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.auth.AccountUtils;
 import org.b07boys.walnut.auth.UserType;
+import org.b07boys.walnut.database.adapters.CourseListAdapter2;
 import org.b07boys.walnut.databinding.FragmentWelcomeBinding;
 
 /**
@@ -54,7 +55,7 @@ public class WelcomeFragment extends Fragment {
             if (userType == UserType.ADMIN)
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAdminHomescreenFragment());
             else if (userType == UserType.STUDENT)
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment());
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(WelcomeFragmentDirections.actionWelcomeFragmentToStudentHomescreenFragment(new String[0]));
         });
         // Inflate the layout for this fragment
         binding = FragmentWelcomeBinding.inflate(inflater, container, false);
