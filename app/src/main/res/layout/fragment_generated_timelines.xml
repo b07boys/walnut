@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text=""
-        tools:layout_editor_absoluteX="-58dp"
-        tools:layout_editor_absoluteY="228dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/max_courses"
@@ -30,10 +30,9 @@
         android:id="@+id/previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="28dp"
         android:text="Previous"
-        app:layout_constraintEnd_toStartOf="@+id/next"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
         app:layout_constraintTop_toBottomOf="@+id/generate" />
 
@@ -42,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="52dp"
         android:text="Next"
         app:layout_constraintEnd_toEndOf="@+id/frag_gen_timelines"
         app:layout_constraintTop_toBottomOf="@+id/generate" />
@@ -58,5 +57,43 @@
         app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
         app:layout_constraintTop_toTopOf="@+id/frag_gen_timelines"
         app:layout_constraintVertical_bias="0.825" />
+
+    <Button
+        android:id="@+id/fall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:text="fall"
+        app:layout_constraintEnd_toStartOf="@+id/winter"
+        app:layout_constraintTop_toTopOf="@+id/winter" />
+
+    <Button
+        android:id="@+id/winter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:text="winter"
+        app:layout_constraintEnd_toEndOf="@+id/frag_gen_timelines"
+        app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
+        app:layout_constraintTop_toTopOf="@+id/frag_gen_timelines" />
+
+    <Button
+        android:id="@+id/summer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="summer"
+        app:layout_constraintStart_toEndOf="@+id/winter"
+        app:layout_constraintTop_toTopOf="@+id/winter" />
+
+    <TextView
+        android:id="@+id/startingSessionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Choose starting session"
+        app:layout_constraintBottom_toTopOf="@+id/winter"
+        app:layout_constraintEnd_toEndOf="@+id/winter"
+        app:layout_constraintStart_toStartOf="@+id/winter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
