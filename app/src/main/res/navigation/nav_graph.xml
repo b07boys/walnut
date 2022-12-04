@@ -33,6 +33,11 @@
         <action
             android:id="@+id/action_studentHomescreenFragment_to_chooseCoursesDesiredFragment"
             app:destination="@id/chooseCoursesDesiredFragment" />
+        <action
+            android:id="@+id/action_studentHomescreenFragment_to_chooseCoursesTakenFragment"
+            app:destination="@id/chooseCoursesTakenFragment" />
+        <argument android:name="TakenCoursesList"
+            app:argType="string[]" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -137,8 +142,12 @@
         android:label="fragment_add_course_pop_up"
         tools:layout="@layout/fragment_add_course_pop_up" />
     <fragment
-        android:id="@+id/studentAddCourseFragment"
-        android:name="org.b07boys.walnut.fragments.StudentAddCourseFragment"
-        android:label="fragment_student_add_course"
-        tools:layout="@layout/fragment_student_add_course" />
+        android:id="@+id/chooseCoursesTakenFragment"
+        android:name="org.b07boys.walnut.fragments.ChooseCoursesTakenFragment"
+        android:label="fragment_choose_courses_taken"
+        tools:layout="@layout/fragment_choose_courses_taken" >
+        <action
+            android:id="@+id/action_chooseCoursesTakenFragment_to_studentHomescreenFragment"
+            app:destination="@id/studentHomescreenFragment" />
+    </fragment>
 </navigation>

@@ -113,7 +113,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
             if (userType == UserType.ADMIN)
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToAdminHomescreenFragment());
             else if (userType == UserType.STUDENT)
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment());
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToStudentHomescreenFragment(new String[0]));
         });
     }
 

@@ -8,6 +8,7 @@ import org.b07boys.walnut.database.DatabasePaths;
 import org.b07boys.walnut.database.adapters.CourseAdapter;
 import org.b07boys.walnut.user.TakenCourses;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
@@ -54,6 +55,22 @@ public class CourseUtils {
                     FirebaseAuth.getInstance().getCurrentUser().getUid(), builder.toString());
         }
         return null;
+    }
+
+    public static Task<Void> addTakenCourses(ArrayList<Course> courses) {
+
+        TakenCourses takenCourses = TakenCourses.getInstance();
+
+        StringBuilder builder = concatenateCourses(takenCourses.getCourses());
+
+        for (Course course : courses) {
+            if (!takenCourses.courseExists(course)) {
+                builder.append(course.getUID()).append(" ");
+            }
+        }
+        return new DatabaseNodeEditor(DatabasePaths.COURSES_TAKEN.path).writeAsChild("",
+                FirebaseAuth.getInstance().getCurrentUser().getUid(), builder.toString().trim());
+
     }
 
     public static Task<Void> removeTakenCourse(Course course) {
