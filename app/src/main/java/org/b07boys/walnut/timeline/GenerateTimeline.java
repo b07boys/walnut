@@ -190,4 +190,22 @@ public class GenerateTimeline {
 
         return builder.toString();
     }
+
+    public static boolean checkPrereqs(){
+        System.out.println("$$$$ PRINTING COURSES TAKEN");
+        for(Course course : TakenCourses.getInstance().getCourses()) System.out.println(course);
+        System.out.println("$$$$ FINISHED PRINTING COURSES TAKEN");
+
+        boolean hasAllPrereq = true;
+        for(Course course : DesiredCourses.getInstance().getCourses()){
+            boolean hasPrereqs = false;
+            for(String prereq : course.getPrerequisiteUIDS()){
+                if(TakenCourses.getInstance().getCourseByUID(prereq) != null)hasPrereqs = true;
+                if(DesiredCourses.getInstance().getCourseByUID(prereq) != null) hasPrereqs = true;
+                System.out.println(hasPrereqs);
+            }
+            if(!hasPrereqs) hasAllPrereq = false;
+        }
+        return hasAllPrereq;
+    }
 }
