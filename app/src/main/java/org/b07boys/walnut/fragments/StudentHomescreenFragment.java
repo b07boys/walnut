@@ -77,20 +77,6 @@ public class StudentHomescreenFragment extends Fragment {
 
         TakenCourses.getInstance();
 
-        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
-            @Override
-            public void onModify(Course course, ModifyCourseType modifyType) {
-                ArrayList <CourseListAdapter2> takenCourses = new ArrayList<>();
-                for (Course c : User.getInstance().getTakenCourses().getCourses()) {
-                    CourseListAdapter2 temp = new CourseListAdapter2(c);
-                    takenCourses.add(temp);
-                }
-                ArrayAdapter adapter = new ArrayAdapter<CourseListAdapter2>(getActivity(),
-                        R.layout.activity_listview, takenCourses);
-                binding.courseListView.setAdapter(adapter);
-            }
-        });
-
         // Inflate the layout for this fragment
         binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
         binding.addCourseButton.setOnClickListener(new View.OnClickListener() {

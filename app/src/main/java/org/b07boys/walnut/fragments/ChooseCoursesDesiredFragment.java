@@ -54,8 +54,6 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<Course> courses;
-
     public ChooseCoursesDesiredFragment() {
         // Required empty public constructor
     }
@@ -85,7 +83,6 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        courses = new ArrayList<>(CourseCatalogue.getInstance().getCourses());
         ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you wish to take");
     }
 

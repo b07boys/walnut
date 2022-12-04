@@ -110,7 +110,7 @@
         tools:layout="@layout/fragment_generated_timelines" />
     <dialog
         android:id="@+id/coursePopUpFragment"
-        android:name="org.b07boys.walnut.fragments.CoursePopUpFragment"
+        android:name="org.b07boys.walnut.fragments.EditCoursePopUpFragment"
         android:label="fragment_course_pop_up"
         tools:layout="@layout/fragment_course_pop_up">
         <argument
@@ -140,7 +140,11 @@
         android:id="@+id/addCoursePopUpFragment"
         android:name="org.b07boys.walnut.fragments.AddCoursePopUpFragment"
         android:label="fragment_add_course_pop_up"
-        tools:layout="@layout/fragment_add_course_pop_up" />
+        tools:layout="@layout/fragment_add_course_pop_up" >
+        <action
+            android:id="@+id/action_addCoursePopUpFragment_to_adminHomescreenFragment"
+            app:destination="@id/adminHomescreenFragment" />
+    </dialog>
     <fragment
         android:id="@+id/chooseCoursesTakenFragment"
         android:name="org.b07boys.walnut.fragments.ChooseCoursesTakenFragment"
