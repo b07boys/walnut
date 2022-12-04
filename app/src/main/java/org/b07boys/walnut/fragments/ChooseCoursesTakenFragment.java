@@ -1,20 +1,14 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import org.b07boys.walnut.CourseModel;
 import org.b07boys.walnut.CourseRecyclerViewAdapter;
@@ -22,9 +16,9 @@ import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.CourseUtils;
-import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
+import org.b07boys.walnut.courses.ModifyCourseType;
+import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesTakenBinding;
-import org.b07boys.walnut.user.DesiredCourses;
 
 import java.util.ArrayList;
 
@@ -82,12 +76,12 @@ public class ChooseCoursesTakenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /*CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
+        CourseCatalogue.getInstance().registerListener(new OnChangeCourseListener() {
             @Override
             public void onModify(Course course, ModifyCourseType modifyType) {
                 binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses()));
             }
-        }); */
+        });
 
 
         // Inflate the layout for this fragment
