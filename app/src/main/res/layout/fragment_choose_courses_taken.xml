@@ -24,20 +24,7 @@ tools:context=".fragments.ChooseCoursesDesiredFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Walnut"
-            app:subtitle="Choose courses you have taken"
-            app:subtitleCentered="true"
-            app:titleCentered="true"
-            app:menu="@menu/top_app_bar"
-            app:navigationIcon="@null" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="wrap_content"/>
 
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
