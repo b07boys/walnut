@@ -35,9 +35,7 @@ import org.b07boys.walnut.auth.UserType;
 import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.database.PromiseReceivedData;
 import org.b07boys.walnut.databinding.ActivityMainBinding;
-import org.b07boys.walnut.fragments.LoginFragmentDirections;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
