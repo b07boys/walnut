@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -48,21 +51,27 @@ public class ChooseCoursesTakenFragment extends Fragment {
         return fragment;
     }
 
+    private ArrayList<CourseModel> ogCourseModels;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //courses = new ArrayList<>(CourseCatalogue.getInstance().getCourses());
+        ogCourseModels = new ArrayList<>();
+        for (Course c : CourseCatalogue.getInstance().getCourses()) {
+            CourseModel temp = new CourseModel();
+            temp.setCourse(c);
+            ogCourseModels.add(temp);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you've taken");
+        ((MainActivity) getActivity()).setActionBarTitles("Walnut", "Choose courses you've taken");
 
         CourseCatalogue.getInstance().registerListener((course, modifyType) -> binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())));
 
 
-        // Inflate the layout for this fragment
         binding = FragmentChooseCoursesTakenBinding.inflate(inflater, container, false);
         binding.rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         // Initialize all courses into the list
@@ -92,6 +101,67 @@ public class ChooseCoursesTakenFragment extends Fragment {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(ChooseCoursesTakenFragmentDirections.actionChooseCoursesTakenFragmentToStudentHomescreenFragment(takenCoursesUID));
         });
 
+
+        binding.topAppBar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.search:
+                    SearchView searchView = (SearchView) item.getActionView();
+                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            if (newText.isEmpty() && (ogCourseModels.size() == ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses().size())) ogCourseModels = ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses();
+                            filterNameCode(newText, ogCourseModels);
+                            return false;
+                        }
+                    });
+                    break;
+            }
+            return true;
+        });
+
         return binding.getRoot();
+    }
+
+
+
+
+    private void filterNameCode(String text, ArrayList<CourseModel> ogCourseModels) {
+        ArrayList<CourseModel> courseModels = ((CourseRecyclerViewAdapter) binding.rv.getAdapter()).getCourses();
+
+        if (text.isEmpty()) {
+            // Return to previous state
+            ArrayList<CourseModel> coursesFromDb = new ArrayList<>();
+            for (Course c : CourseCatalogue.getInstance().getCourses()) {
+                CourseModel temp = new CourseModel();
+                temp.setCourse(c);
+                for (CourseModel cM : ogCourseModels) {
+                    if (cM.getCourse().getUID().equals(c.getUID()) && cM.getChecked())
+                        temp.setChecked(true);
+                }
+                coursesFromDb.add(temp);
+            }
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(coursesFromDb));
+            return;
+        }
+        ArrayList<CourseModel> filteredCourseModelList = new ArrayList<>();
+        // Filter on name or course code
+        for (CourseModel courseModel : ogCourseModels) {
+            if (courseModel.getCourse().getName().toLowerCase().contains(text.toLowerCase()) || courseModel.getCourse().getCode().toLowerCase().contains(text.toLowerCase())) {
+                filteredCourseModelList.add(courseModel);
+                ArrayList<CourseModel> currentItems = ((CourseRecyclerViewAdapter) binding.rv.getAdapter()).getCourses();
+                currentItems.indexOf(courseModel);
+            }
+        }
+        if (!filteredCourseModelList.isEmpty()) {
+            // Pass filtered list to adapter
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(filteredCourseModelList));
+        } else {
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<>()));
+        }
     }
 }
