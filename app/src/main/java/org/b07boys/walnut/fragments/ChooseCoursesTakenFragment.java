@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,7 +68,8 @@ public class ChooseCoursesTakenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).setActionBarTitles("Walnut", "Choose courses you've taken");
+
+        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you have taken");
 
         CourseCatalogue.getInstance().registerListener((course, modifyType) -> binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())));
 
