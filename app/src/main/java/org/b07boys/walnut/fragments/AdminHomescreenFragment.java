@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -59,6 +60,7 @@ public class AdminHomescreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Admin Page");
+        WindowCompat.setDecorFitsSystemWindows(getActivity().getWindow(), false);
     }
 
     @Override

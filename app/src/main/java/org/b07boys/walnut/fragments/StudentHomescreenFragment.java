@@ -12,8 +12,13 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -63,6 +68,7 @@ public class StudentHomescreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
         courseMap = new HashMap<>();
         User.getInstance().getTakenCourses();
+        WindowCompat.setDecorFitsSystemWindows(getActivity().getWindow(), false);
     }
 
     @Override
@@ -185,6 +191,5 @@ public class StudentHomescreenFragment extends Fragment {
             deregisterListener();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesTakenFragment());
         });
-
     }
 }
