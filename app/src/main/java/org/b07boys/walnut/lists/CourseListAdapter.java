@@ -7,7 +7,7 @@ public class CourseListAdapter {
 
     @Override
     public String toString() {
-        return course.getCode();
+        return course.getCode() + " " + course.getName();
     }
 
     public CourseListAdapter(Course course){
