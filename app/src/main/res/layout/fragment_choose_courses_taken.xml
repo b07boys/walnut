@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".fragments.ChooseCoursesDesiredFragment">
+tools:context=".fragments.ChooseCoursesTakenFragment">
 
 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
     app:layout_constraintBottom_toBottomOf="parent"
@@ -21,10 +21,25 @@ tools:context=".fragments.ChooseCoursesDesiredFragment">
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Walnut"
+            app:subtitle="Choose courses you have taken"
+            app:subtitleCentered="true"
+            app:titleCentered="true"
+            app:menu="@menu/search_top_app_bar"
+            app:navigationIcon="@null" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
