@@ -21,22 +21,22 @@ public class CourseListAdapter2ArrayAdapter extends ArrayAdapter<CourseListAdapt
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
 
         CourseListAdapter2 courseListAdapter2 = getItem(position);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_course_taken, parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.item_course_taken, parent, false);
         }
 
-        TextView courseTaken = convertView.findViewById(R.id.courseName);
-        Button deleteButton = convertView.findViewById(R.id.deleteButton);
+        TextView courseTaken = view.findViewById(R.id.courseName);
+        Button deleteButton = view.findViewById(R.id.deleteButton);
 
         courseTaken.setText(courseListAdapter2.toString());
 
         deleteButton.setOnClickListener(buttonView -> CourseUtils.removeTakenCourse(courseListAdapter2.getCourse()));
 
-        return convertView;
+        return view;
     }
 
 }
