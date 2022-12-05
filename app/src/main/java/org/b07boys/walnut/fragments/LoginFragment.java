@@ -3,9 +3,12 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +81,12 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
             public void afterTextChanged(Editable editable) {}
         });
         binding.forgotPasswordText.setOnClickListener(view1 -> presenter.resetPassword(getEmail()));
+        binding.passwordTextField.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (keyEvent != null && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) || i == EditorInfo.IME_ACTION_DONE) {
+                presenter.login(getEmail(), getPassword());
+            }
+            return false;
+        });
     }
 
     @Override

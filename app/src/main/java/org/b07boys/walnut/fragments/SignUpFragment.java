@@ -3,10 +3,14 @@ package org.b07boys.walnut.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -39,7 +43,7 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
      *
      * @return A new instance of fragment SignInFragment.
      */
-    public static SignUpFragment newInstance(String param1, String param2) {
+    public static SignUpFragment newInstance() {
         return new SignUpFragment();
     }
 
@@ -54,7 +58,13 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
-        binding.signUpButton.setOnClickListener(view -> presenter.signUp(getEmail(), getPassword()));
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.signUpButton.setOnClickListener(view1 -> presenter.signUp(getEmail(), getPassword()));
         binding.passwordTextField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -65,7 +75,12 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-        return binding.getRoot();
+        binding.passwordTextField.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (keyEvent != null && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) || i == EditorInfo.IME_ACTION_DONE) {
+                presenter.signUp(getEmail(), getPassword());
+            }
+            return false;
+        });
     }
 
     @Override
