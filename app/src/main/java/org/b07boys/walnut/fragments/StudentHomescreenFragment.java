@@ -22,6 +22,7 @@ import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 import org.b07boys.walnut.lists.CourseListAdapter2;
+import org.b07boys.walnut.lists.CourseListAdapter2ArrayAdapter;
 import org.b07boys.walnut.main.MainActivity;
 import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
@@ -111,10 +112,10 @@ public class StudentHomescreenFragment extends Fragment {
             CourseListAdapter2 temp2 = new CourseListAdapter2(databaseTakenCourses.get(i));
             takenCourses.add(temp2);
         }
-        ArrayAdapter adapter = new ArrayAdapter<CourseListAdapter2>(getActivity(),
+        CourseListAdapter2ArrayAdapter adapter = new CourseListAdapter2ArrayAdapter(getContext(),
                 R.layout.activity_listview, takenCourses);
 
-        ListView listView = (ListView) binding.courseListView;
+        ListView listView = binding.courseListView;
         listView.setAdapter(adapter);
     }
 

@@ -53,7 +53,6 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you wish to take");
 
         ogCourseModels = new ArrayList<>();
         for (Course c : CourseCatalogue.getInstance().getCourses()) {
@@ -66,6 +65,8 @@ public class ChooseCoursesDesiredFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you wish to take");
 
         DesiredCourses.getInstance().getCourses().clear();
 
