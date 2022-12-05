@@ -79,7 +79,7 @@ public class CourseUtils {
 
         if (takenCourses.courseExists(course)) {
 
-            takenCourses.getCourses().remove(course);
+            takenCourses.removeCourse(course);
 
             StringBuilder builder = concatenateCourses(takenCourses.getCourses());
 
