@@ -1,22 +1,15 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.google.android.material.button.MaterialButtonToggleGroup;
-
-import org.b07boys.walnut.lists.CourseRecyclerViewAdapter;
-import org.b07boys.walnut.lists.CourseModel;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
@@ -24,6 +17,8 @@ import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.databinding.FragmentChooseCoursesDesiredBinding;
+import org.b07boys.walnut.lists.CourseModel;
+import org.b07boys.walnut.lists.CourseRecyclerViewAdapter;
 import org.b07boys.walnut.main.MainActivity;
 import org.b07boys.walnut.user.DesiredCourses;
 
@@ -49,7 +44,6 @@ public class ChooseCoursesDesiredFragment extends Fragment {
      *
      * @return A new instance of fragment ChooseCoursesDesiredFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ChooseCoursesDesiredFragment newInstance() {
         return new ChooseCoursesDesiredFragment();
     }
@@ -96,57 +90,48 @@ public class ChooseCoursesDesiredFragment extends Fragment {
         binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
         binding.rv.setNestedScrollingEnabled(false);
 
-        binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.search:
-                        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) item.getActionView();
-                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                            @Override
-                            public boolean onQueryTextSubmit(String query) {
-                                return false;
-                            }
+        binding.topAppBar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.search:
+                    SearchView searchView = (SearchView) item.getActionView();
+                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            return false;
+                        }
 
-                            @Override
-                            public boolean onQueryTextChange(String newText) {
-                                if (newText.isEmpty() && (ogCourseModels.size() == ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses().size())) ogCourseModels = ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses();
-                                filterNameCode(newText, ogCourseModels);
-                                return false;
-                            }
-                        });
-                        break;
-                }
-                return true;
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            if (newText.isEmpty() && (ogCourseModels.size() == ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses().size())) ogCourseModels = ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses();
+                            filterNameCode(newText, ogCourseModels);
+                            return false;
+                        }
+                    });
+                    break;
             }
+            return true;
         });
 
 
-        binding.toggleButtonGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (checkedId == R.id.button1) {
-                    if (isChecked) filterSession("FALL");
-                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
-                } else if (checkedId == R.id.button2) {
-                    if (isChecked) filterSession("WINTER");
-                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
-                } else if (checkedId == R.id.button3) {
-                    if (isChecked) filterSession("SUMMER");
-                    else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
-                }
+        binding.toggleButtonGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (checkedId == R.id.button1) {
+                if (isChecked) filterSession("FALL");
+                else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
+            } else if (checkedId == R.id.button2) {
+                if (isChecked) filterSession("WINTER");
+                else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
+            } else if (checkedId == R.id.button3) {
+                if (isChecked) filterSession("SUMMER");
+                else binding.rv.setAdapter(new CourseRecyclerViewAdapter(courseModels));
             }
         });
 
-        binding.saveSelectedCoursesFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (CourseModel courseModel : ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses()) {
-                    if (courseModel.getChecked()) DesiredCourses.getInstance().addCourse(courseModel.getCourse());
-                }
-
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(ChooseCoursesDesiredFragmentDirections.actionChooseCoursesDesiredFragmentToGeneratedTimelinesFragment());
+        binding.saveSelectedCoursesFab.setOnClickListener(view -> {
+            for (CourseModel courseModel : ((CourseRecyclerViewAdapter)binding.rv.getAdapter()).getCourses()) {
+                if (courseModel.getChecked()) DesiredCourses.getInstance().addCourse(courseModel.getCourse());
             }
+
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(ChooseCoursesDesiredFragmentDirections.actionChooseCoursesDesiredFragmentToGeneratedTimelinesFragment());
         });
 
         return binding.getRoot();
@@ -173,7 +158,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             // Pass filtered list to adapter
             binding.rv.setAdapter(new CourseRecyclerViewAdapter(filteredCourseModelList));
         } else {
-            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<CourseModel>()));
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<>()));
         }
     }
 
@@ -208,7 +193,7 @@ public class ChooseCoursesDesiredFragment extends Fragment {
             // Pass filtered list to adapter
             binding.rv.setAdapter(new CourseRecyclerViewAdapter(filteredCourseModelList));
         } else {
-            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<CourseModel>()));
+            binding.rv.setAdapter(new CourseRecyclerViewAdapter(new ArrayList<>()));
         }
     }
 
