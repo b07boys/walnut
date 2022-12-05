@@ -23,12 +23,16 @@ import android.widget.ListView;
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
 import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.ModifyCourseType;
+import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.lists.CourseListAdapter;
 import org.b07boys.walnut.databinding.FragmentAdminHomescreenBinding;
 import org.b07boys.walnut.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +43,9 @@ public class AdminHomescreenFragment extends Fragment {
 
     private FragmentAdminHomescreenBinding binding;
     private ArrayAdapter<CourseListAdapter> adapter;
+    private OnChangeCourseListener listener;
+
+    private Map<Course, CourseListAdapter> courseMap;
 
     public AdminHomescreenFragment() {
         // Required empty public constructor
@@ -58,6 +65,7 @@ public class AdminHomescreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        courseMap = new HashMap<>();
         ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Admin Page");
     }
 
@@ -69,11 +77,32 @@ public class AdminHomescreenFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private ArrayAdapter<CourseListAdapter> updateAdapter() {
+    private void updateCourses(CourseListAdapter courseAdapter, ModifyCourseType modifyType) {
+
+        switch (modifyType) {
+
+            case ADD: {
+                adapter.add(courseAdapter);
+                break;
+            }
+
+            case REMOVE: {
+                adapter.remove(courseAdapter);
+                break;
+            }
+
+        }
+
+        adapter.notifyDataSetChanged();
+
+    }
+
+    private ArrayAdapter<CourseListAdapter> initializeAdapter() {
 
         ArrayList<CourseListAdapter> courses1 = new ArrayList<>();
         for (Course c : CourseCatalogue.getInstance().getCourses()) {
             CourseListAdapter temp2 = new CourseListAdapter(c);
+            courseMap.put(c, temp2);
             courses1.add(temp2);
         }
 
@@ -85,13 +114,27 @@ public class AdminHomescreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = updateAdapter();
+        if (adapter == null) {
+            adapter = initializeAdapter();
+        }
 
-        CourseCatalogue.getInstance().registerListener((course, modifyType) -> {
-            adapter = updateAdapter();
-            binding.courseList.setAdapter(adapter);
-        });
+        if (listener == null) {
+            listener = ((course, modifyType) -> {
 
+                CourseListAdapter courseAdapter;
+
+                if (courseMap.containsKey(course)) {
+                    courseAdapter = courseMap.get(course);
+                } else {
+                    courseAdapter = new CourseListAdapter(course);
+                    courseMap.put(course, courseAdapter);
+                }
+
+                updateCourses(courseAdapter, modifyType);
+
+            });
+            CourseCatalogue.getInstance().registerListener(listener);
+        }
 
         ListView listView = (ListView) binding.courseList;
         listView.setAdapter(adapter);
