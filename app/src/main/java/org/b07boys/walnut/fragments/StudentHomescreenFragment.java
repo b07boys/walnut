@@ -1,6 +1,7 @@
 package org.b07boys.walnut.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.CourseCatalogue;
+import org.b07boys.walnut.courses.CourseUtils;
 import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
@@ -41,6 +44,7 @@ public class StudentHomescreenFragment extends Fragment {
 
     private @NonNull FragmentStudenthomescreenBinding binding;
     private OnChangeCourseListener listener;
+    private OnChangeCourseListener listenerCatalogue;
 
     private Map<Course, CourseListAdapter2> courseMap;
 
@@ -100,14 +104,6 @@ public class StudentHomescreenFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-
-    private void deregisterListener() {
-        if (listener != null) {
-            TakenCourses.getInstance().unregisterListener(listener);
-            listener = null;
-        }
     }
 
     private void updateCourses(CourseListAdapter2ArrayAdapter arrayAdapter, CourseListAdapter2 course, ModifyCourseType modifyType) {
@@ -176,13 +172,25 @@ public class StudentHomescreenFragment extends Fragment {
             TakenCourses.getInstance().registerListener(listener);
         }
 
+        if (listenerCatalogue == null) {
+            listenerCatalogue = (course, modifyType) -> {
+                if (modifyType == ModifyCourseType.REMOVE || modifyType == ModifyCourseType.MODIFY) {
+                    if (courseMap.containsKey(course)) {
+                        updateCourses(arrayAdapter, courseMap.get(course), modifyType);
+                    }
+                    if (TakenCourses.getInstance().courseExists(course)) {
+                        CourseUtils.removeTakenCourse(course);
+                    }
+                }
+            };
+            CourseCatalogue.getInstance().registerListener(listenerCatalogue);
+        }
+
         binding.addCourseButton.setOnClickListener(view1 -> {
-            StudentHomescreenFragment.this.deregisterListener();
             Navigation.findNavController(StudentHomescreenFragment.this.getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
         });
 
         binding.addCoursesTaken.setOnClickListener(view1 -> {
-            deregisterListener();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesTakenFragment());
         });
 
