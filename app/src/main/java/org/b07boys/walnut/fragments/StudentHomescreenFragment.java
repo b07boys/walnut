@@ -11,23 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-
+import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
-
-import androidx.annotation.Nullable;
-
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
-
 import org.b07boys.walnut.courses.Course;
-import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
-import org.b07boys.walnut.lists.CourseListAdapter2;
-
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
+import org.b07boys.walnut.lists.CourseListAdapter2;
 import org.b07boys.walnut.main.MainActivity;
 import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
@@ -74,26 +68,6 @@ public class StudentHomescreenFragment extends Fragment {
 
         // Inflate the layout for this fragment
         binding = FragmentStudenthomescreenBinding.inflate(inflater, container, false);
-        binding.addCourseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //CourseUtils.removeTakenCourse(CourseCatalogue.getInstance().getCourseByUID("test2_uid"));
-                deregisterListener();
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
-            }
-        });
-
-        binding.addCoursesTaken.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //CourseUtils.removeTakenCourse(CourseCatalogue.getInstance().getCourseByUID("test2_uid"));
-                deregisterListener();
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesTakenFragment());
-            }
-        });
-
         return binding.getRoot();
     }
 
@@ -150,16 +124,23 @@ public class StudentHomescreenFragment extends Fragment {
         updateCoursesTakenList();
 
         if (listener == null) {
-            listener = new OnChangeCourseListener() {
-                @Override
-                public void onModify(Course course, ModifyCourseType modifyType) {
-                    if (isVisible()) {
-                        updateCoursesTakenList();
-                    }
+            listener = (course, modifyType) -> {
+                if (isVisible()) {
+                    updateCoursesTakenList();
                 }
             };
             TakenCourses.getInstance().registerListener(listener);
         }
+
+        binding.addCourseButton.setOnClickListener(view1 -> {
+            StudentHomescreenFragment.this.deregisterListener();
+            Navigation.findNavController(StudentHomescreenFragment.this.getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
+        });
+
+        binding.addCoursesTaken.setOnClickListener(view1 -> {
+            deregisterListener();
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesTakenFragment());
+        });
 
     }
 }
