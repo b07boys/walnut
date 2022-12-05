@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import org.b07boys.walnut.R;
 import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.ModifyCourseType;
 import org.b07boys.walnut.courses.OnChangeCourseListener;
 import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 import org.b07boys.walnut.lists.CourseListAdapter2;
@@ -28,6 +29,8 @@ import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +41,8 @@ public class StudentHomescreenFragment extends Fragment {
 
     private @NonNull FragmentStudenthomescreenBinding binding;
     private OnChangeCourseListener listener;
+
+    private Map<Course, CourseListAdapter2> courseMap;
 
     public StudentHomescreenFragment() {
         // Required empty public constructor
@@ -56,6 +61,7 @@ public class StudentHomescreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        courseMap = new HashMap<>();
         User.getInstance().getTakenCourses();
     }
 
@@ -104,31 +110,68 @@ public class StudentHomescreenFragment extends Fragment {
         }
     }
 
-    private void updateCoursesTakenList() {
+    private void updateCourses(CourseListAdapter2ArrayAdapter arrayAdapter, CourseListAdapter2 course, ModifyCourseType modifyType) {
+
+        switch (modifyType) {
+
+            case ADD: {
+                arrayAdapter.add(course);
+                break;
+            }
+
+            case REMOVE: {
+                arrayAdapter.remove(course);
+                break;
+            }
+
+            default:
+                break;
+
+        }
+
+        arrayAdapter.notifyDataSetChanged();
+
+    }
+
+    private CourseListAdapter2ArrayAdapter initializeCourses() {
+
+        ArrayList<Course> databaseTakenCourses = new ArrayList<>(User.getInstance().getTakenCourses().getCourses());
+
         ArrayList<CourseListAdapter2> takenCourses = new ArrayList<>();
-        ArrayList<Course> databaseTakenCourses = new ArrayList<>();
-        databaseTakenCourses.addAll(User.getInstance().getTakenCourses().getCourses());
+
         for (int i = 0; i < databaseTakenCourses.size(); i++) {
-            CourseListAdapter2 temp2 = new CourseListAdapter2(databaseTakenCourses.get(i));
+            Course course = databaseTakenCourses.get(i);
+            CourseListAdapter2 temp2 = new CourseListAdapter2(course);
+            courseMap.put(course, temp2);
             takenCourses.add(temp2);
         }
-        CourseListAdapter2ArrayAdapter adapter = new CourseListAdapter2ArrayAdapter(getContext(),
-                R.layout.activity_listview, takenCourses);
 
-        ListView listView = binding.courseListView;
-        listView.setAdapter(adapter);
+        return new CourseListAdapter2ArrayAdapter(getContext(),
+                R.layout.activity_listview, takenCourses);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateCoursesTakenList();
+
+        CourseListAdapter2ArrayAdapter arrayAdapter = initializeCourses();
+
+        binding.courseListView.setAdapter(arrayAdapter);
 
         if (listener == null) {
             listener = (course, modifyType) -> {
-                if (isVisible()) {
-                    updateCoursesTakenList();
+
+                CourseListAdapter2 courseAdapter;
+
+                if (courseMap.containsKey(course)) {
+                    courseAdapter = courseMap.get(course);
+                } else {
+                    courseAdapter = new CourseListAdapter2(course);
+                    courseMap.put(course, courseAdapter);
                 }
+
+                updateCourses(arrayAdapter, courseAdapter, modifyType);
+
             };
             TakenCourses.getInstance().registerListener(listener);
         }

@@ -49,17 +49,12 @@ public class TakenCourses extends CourseStructure {
                 String courseUID = course.getUID();
                 if (coursesNotInitialized.contains(courseUID)) {
                     coursesNotInitialized.remove(courseUID);
-                    addCourse(course);
+                    if (!courseExists(course))
+                        addCourse(course);
                 }
             }
         });
 
-    }
-
-    @Override
-    public void addCourse(Course course) {
-        super.addCourse(course);
-        Log.v("TAKEN_COURSE_ADD", course.toString());
     }
 
 }
