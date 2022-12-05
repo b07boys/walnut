@@ -152,7 +152,8 @@ public class AdminHomescreenFragment extends Fragment {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
                     .navigate(AdminHomescreenFragmentDirections
                             .actionAdminHomescreenFragmentToCoursePopUpFragment("",null,null,null)
-                            .setCourseCode(temp.getCourse().getCode()).setCourseTitle(temp.getCourse().getName())
+                            .setCourseCode(temp.getCourse().getCode())
+                            .setCourseTitle(temp.getCourse().getName())
                             .setPrerequisites(temp.getCourse().getPrerequisiteUIDS()).setCourseUID(temp.getCourse().getUID())
                             .setSessions(stuff2));
         });

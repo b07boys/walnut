@@ -28,15 +28,6 @@ public class EditCoursePopUpFragment extends CoursePopUpFragment {
 
     private FragmentCoursePopUpBinding binding;
 
-    private Map<SessionType, MaterialButton> sessions;
-    private Map<String, CheckBox> prerequisites;
-
-    public EditCoursePopUpFragment() {
-        sessions = new HashMap<>();
-        prerequisites = new HashMap<>();
-    }
-
-
     protected void setCheckboxes() {
 
         MaterialButtonToggleGroup buttonToggleGroup = new MaterialButtonToggleGroup(getActivity());
