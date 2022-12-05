@@ -1,6 +1,7 @@
 package org.b07boys.walnut.timeline;
 
 import org.b07boys.walnut.courses.Course;
+import org.b07boys.walnut.courses.CourseCatalogue;
 import org.b07boys.walnut.courses.Session;
 import org.b07boys.walnut.courses.SessionType;
 import org.b07boys.walnut.courses.SessionUtils;
@@ -198,9 +199,11 @@ public class GenerateTimeline {
 
         boolean hasAllPrereq = true;
         for(Course course : DesiredCourses.getInstance().getCourses()){
+            System.out.println("Checking " +  course);
             boolean hasPrereqs = false;
             for(String prereq : course.getPrerequisiteUIDS()){
-                if(TakenCourses.getInstance().getCourseByUID(prereq) != null)hasPrereqs = true;
+                if(CourseCatalogue.getInstance().getCourseByUID(prereq) == null) hasPrereqs = true;
+                if(TakenCourses.getInstance().getCourseByUID(prereq) != null) hasPrereqs = true;
                 if(DesiredCourses.getInstance().getCourseByUID(prereq) != null) hasPrereqs = true;
                 System.out.println(hasPrereqs);
             }
