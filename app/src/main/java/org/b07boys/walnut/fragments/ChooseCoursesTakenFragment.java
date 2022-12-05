@@ -68,9 +68,6 @@ public class ChooseCoursesTakenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        ((MainActivity)getActivity()).setActionBarTitles("Walnut", "Choose courses you have taken");
-
         CourseCatalogue.getInstance().registerListener((course, modifyType) -> binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())));
 
 

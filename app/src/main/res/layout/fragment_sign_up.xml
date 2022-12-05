@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
         android:text="Sign up"
         app:icon="@drawable/ic_register_icon"
         app:layout_constraintBottom_toBottomOf="parent"
