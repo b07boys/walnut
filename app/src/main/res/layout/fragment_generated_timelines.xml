@@ -16,15 +16,23 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <EditText
-        android:id="@+id/max_courses"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:hint="Max courses per sem?"
-        android:inputType="number"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/max_courses_layout"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/max_courses"
+            android:layout_marginTop="16dp"
+            android:hint="Max courses per sem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/previous"
@@ -63,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
-        android:text="fall"
+        android:text="Fall"
         app:layout_constraintEnd_toStartOf="@+id/winter"
         app:layout_constraintTop_toTopOf="@+id/winter" />
 
@@ -72,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="164dp"
-        android:text="winter"
+        android:text="Winter"
         app:layout_constraintEnd_toEndOf="@+id/frag_gen_timelines"
         app:layout_constraintStart_toStartOf="@+id/frag_gen_timelines"
         app:layout_constraintTop_toTopOf="@+id/frag_gen_timelines" />
@@ -82,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="summer"
+        android:text="Summer"
         app:layout_constraintStart_toEndOf="@+id/winter"
         app:layout_constraintTop_toTopOf="@+id/winter" />
 

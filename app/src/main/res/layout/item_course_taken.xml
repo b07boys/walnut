@@ -12,13 +12,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
         app:icon="@drawable/ic_baseline_delete_24"
         app:iconSize="30dp"
-        app:iconTint="#BEBEBE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
