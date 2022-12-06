@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="courseName"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/deleteButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

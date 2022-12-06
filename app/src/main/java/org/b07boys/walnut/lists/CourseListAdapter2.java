@@ -13,6 +13,12 @@ public class CourseListAdapter2 extends CourseListAdapter{
 
     @Override
     public String toString() {
-        return course.getCode() + " " + course.getName();
+
+        String fullName = course.getCode() + " " + course.getName();
+
+        if (fullName.length() > 40)
+            fullName = fullName.substring(0, 40) + "...";
+
+        return fullName;
     }
 }
