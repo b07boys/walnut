@@ -9,7 +9,10 @@ import org.b07boys.walnut.user.DesiredCourses;
 import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
 
+
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -210,5 +213,62 @@ public class GenerateTimeline {
             if(!hasPrereqs) hasAllPrereq = false;
         }
         return hasAllPrereq;
+    }
+
+    public static Timeline generateTimeline2(int maxCoursesPerSem, SessionType sessionType){
+        //get courses desired from singleton
+        ArrayList<Course> coursesDesired = new ArrayList<>(DesiredCourses.getInstance().getCourses());
+        //ArrayList<Course> coursesDesired = getCoursesDesired(coursesTaken);
+
+        Set<Course> coursesTaken = TakenCourses.getInstance().getCourses();
+
+        //test
+        System.out.println("##### PRINTING COURSES DESIRED");
+        for(Course course : coursesDesired){
+            System.out.println(course);
+        }
+        System.out.println("##### FINISHED PRINTING COURSES DESIRED");
+        System.out.println("##### " + coursesDesired.size() + " COURSES DESIRED");
+
+        if(coursesDesired.size() == 0) return new Timeline();
+
+        Timeline timeline = new Timeline();
+        Session curSession = new Session(sessionType);
+        sessionType = SessionUtils.subsequentSession(sessionType);
+        timeline.addSession(curSession);
+
+        Iterator<Course> coursesDesiredIterator = coursesDesired.iterator();
+
+        Course curCourse;
+
+        while(coursesDesiredIterator.hasNext()){
+            if(curSession.getCourses().size() >= maxCoursesPerSem){
+                coursesTaken.addAll(curSession.getCourses());
+
+                curSession = new Session(sessionType);
+                sessionType = SessionUtils.subsequentSession(sessionType);
+                timeline.addSession(curSession);
+            }
+
+            curCourse = coursesDesiredIterator.next();
+            boolean isTakable = true;
+
+            for(String prereq : curCourse.getPrerequisiteUIDS()){
+                if (!prereq.equals("") && TakenCourses.getInstance().getCourseByUID(prereq) == null) {
+//                      System.out.println("%%% invalid - missing prereq");
+                    isTakable = false;
+                }
+            }
+
+            if(isTakable) curSession.addCourse(curCourse);
+            coursesDesiredIterator.remove();
+
+            if(!coursesDesiredIterator.hasNext() && coursesDesired.size() != 0){
+                coursesDesiredIterator = coursesDesired.iterator();
+            }
+        }
+
+
+        return timeline;
     }
 }

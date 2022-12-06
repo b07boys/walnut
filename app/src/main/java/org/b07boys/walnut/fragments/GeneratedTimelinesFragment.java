@@ -89,20 +89,22 @@ public class GeneratedTimelinesFragment extends Fragment {
                 return;
             }
 
-            timelines = GenerateTimeline.generateTimeline(maxCoursesInt, sessionType.get());
-            //ValidTimelines.getInstance().setValidTimelines(timelines);
-            timelineIterator = timelines.listIterator();
+//            timelines = GenerateTimeline.generateTimeline(maxCoursesInt, sessionType.get());
+//            //ValidTimelines.getInstance().setValidTimelines(timelines);
+//            timelineIterator = timelines.listIterator();
+//
+//            if(timelineIterator.hasNext()) {
+//                binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
+//
+//            }else{
+//                binding.fragGenTimelines.setText("NO VALID TIMELINES FOUND");
+//            }
+//
+//            if(timelineIterator.hasNext()){
+//                binding.next.setVisibility(View.VISIBLE);
+//            }
 
-            if(timelineIterator.hasNext()) {
-                binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(timelineIterator.next()));
-
-            }else{
-                binding.fragGenTimelines.setText("NO VALID TIMELINES FOUND");
-            }
-
-            if(timelineIterator.hasNext()){
-                binding.next.setVisibility(View.VISIBLE);
-            }
+            binding.fragGenTimelines.setText(GenerateTimeline.formatAsText(GenerateTimeline.generateTimeline2(maxCoursesInt, sessionType.get())));
         });
 
         //previous button
