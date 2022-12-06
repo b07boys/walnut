@@ -70,7 +70,6 @@ public class ChooseCoursesTakenFragment extends Fragment {
                              Bundle savedInstanceState) {
         CourseCatalogue.getInstance().registerListener((course, modifyType) -> binding.rv.setAdapter(new CourseRecyclerViewAdapter(CourseCatalogue.getInstance().getCourses())));
 
-
         binding = FragmentChooseCoursesTakenBinding.inflate(inflater, container, false);
         binding.rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         // Initialize all courses into the list

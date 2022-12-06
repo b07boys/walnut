@@ -28,6 +28,7 @@ import org.b07boys.walnut.databinding.FragmentStudenthomescreenBinding;
 import org.b07boys.walnut.lists.CourseListAdapter2;
 import org.b07boys.walnut.lists.CourseListAdapter2ArrayAdapter;
 import org.b07boys.walnut.main.MainActivity;
+import org.b07boys.walnut.user.DesiredCourses;
 import org.b07boys.walnut.user.TakenCourses;
 import org.b07boys.walnut.user.User;
 
@@ -45,6 +46,8 @@ public class StudentHomescreenFragment extends Fragment {
     private @NonNull FragmentStudenthomescreenBinding binding;
     private OnChangeCourseListener listener;
     private OnChangeCourseListener listenerCatalogue;
+
+    private CourseListAdapter2ArrayAdapter arrayAdapter;
 
     private Map<Course, CourseListAdapter2> courseMap;
 
@@ -86,6 +89,7 @@ public class StudentHomescreenFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -107,7 +111,7 @@ public class StudentHomescreenFragment extends Fragment {
         binding = null;
     }
 
-    private void updateCourses(CourseListAdapter2ArrayAdapter arrayAdapter, CourseListAdapter2 course, ModifyCourseType modifyType) {
+    private void updateCourses(CourseListAdapter2 course, ModifyCourseType modifyType) {
 
         switch (modifyType) {
 
@@ -151,7 +155,7 @@ public class StudentHomescreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CourseListAdapter2ArrayAdapter arrayAdapter = initializeCourses();
+        arrayAdapter = initializeCourses();
 
         binding.courseListView.setAdapter(arrayAdapter);
 
@@ -167,7 +171,7 @@ public class StudentHomescreenFragment extends Fragment {
                     courseMap.put(course, courseAdapter);
                 }
 
-                updateCourses(arrayAdapter, courseAdapter, modifyType);
+                updateCourses(courseAdapter, modifyType);
 
             };
             TakenCourses.getInstance().registerListener(listener);
@@ -177,10 +181,7 @@ public class StudentHomescreenFragment extends Fragment {
             listenerCatalogue = (course, modifyType) -> {
                 if (modifyType == ModifyCourseType.REMOVE || modifyType == ModifyCourseType.MODIFY) {
                     if (courseMap.containsKey(course)) {
-                        updateCourses(arrayAdapter, courseMap.get(course), modifyType);
-                    }
-                    if (TakenCourses.getInstance().courseExists(course)) {
-                        CourseUtils.removeTakenCourse(course);
+                        updateCourses(courseMap.get(course), modifyType);
                     }
                 }
             };
@@ -189,6 +190,7 @@ public class StudentHomescreenFragment extends Fragment {
 
         binding.addCourseButton.setOnClickListener(view1 -> {
             Navigation.findNavController(StudentHomescreenFragment.this.getActivity(), R.id.nav_host_fragment).navigate(StudentHomescreenFragmentDirections.actionStudentHomescreenFragmentToChooseCoursesDesiredFragment());
+            DesiredCourses.getInstance().getCourses().clear();
         });
 
         binding.addCoursesTaken.setOnClickListener(view1 -> {
