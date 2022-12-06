@@ -11,6 +11,7 @@
         android:layout_width="105dp"
         android:layout_height="27dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         android:text="My Courses"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/course_list_view"
@@ -42,6 +43,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:id="@+id/course_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
