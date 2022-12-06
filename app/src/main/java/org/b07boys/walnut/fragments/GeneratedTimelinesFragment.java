@@ -82,6 +82,7 @@ public class GeneratedTimelinesFragment extends Fragment {
                 maxCoursesInt = 5;
             }
             binding.maxCourses.setVisibility(View.INVISIBLE);
+            binding.maxCoursesLayout.setVisibility(View.GONE);
 
             if(!GenerateTimeline.checkPrereqs()){
                 binding.fragGenTimelines.setText("MISSING PREREQS - NO VALID TIMELINES FOUND");
