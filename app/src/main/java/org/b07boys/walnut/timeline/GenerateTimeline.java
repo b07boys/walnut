@@ -257,14 +257,34 @@ public class GenerateTimeline {
                 if (!prereq.equals("") && TakenCourses.getInstance().getCourseByUID(prereq) == null) {
 //                      System.out.println("%%% invalid - missing prereq");
                     isTakable = false;
+                    break;
                 }
             }
 
-            if(isTakable) curSession.addCourse(curCourse);
-            coursesDesiredIterator.remove();
+            if(isTakable){
+                isTakable = false;
+                for(SessionType session : curCourse.getOfferingSessions()){
+                    if (session == sessionType) {
+                        isTakable = true;
+                        break;
+                    }
+                }
+            }
+
+            if(isTakable) {
+                curSession.addCourse(curCourse);
+                coursesDesiredIterator.remove();
+                System.out.println("##### ADDING " + curCourse.getName() + " TO TIMELINE");
+            }
 
             if(!coursesDesiredIterator.hasNext() && coursesDesired.size() != 0){
                 coursesDesiredIterator = coursesDesired.iterator();
+
+                coursesTaken.addAll(curSession.getCourses());
+
+                curSession = new Session(sessionType);
+                sessionType = SessionUtils.subsequentSession(sessionType);
+                timeline.addSession(curSession);
             }
         }
 
